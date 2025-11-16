@@ -1,5 +1,6 @@
 from customtkinter import *
 from PIL import Image
+from Frame_Registro import frame_registro
 import os
 
 
@@ -10,7 +11,7 @@ class Pruebas(CTk):
         screen_width = self.winfo_screenwidth()  
         screen_height = self.winfo_screenheight() 
 
-        self.configure(fg_color="#3f3941")
+        self.configure(fg_color="#1d1c1c")
 
         x = (screen_width/2) - (self.ancho/2)
         y = (screen_height/2) - (self.alto/2)
@@ -26,7 +27,7 @@ class Pruebas(CTk):
         icono_path = os.path.join(icono)
         self.iconbitmap(icono_path)
 
-        self.back = CTkFrame(self, width=500, height=600)
+        self.back = CTkFrame(self, width=500, height=600, fg_color="#E4D7D7")
         self.back.place(x=400, y=60)
 
         icon_path = os.path.join(os.path.dirname(__file__), "Img", "Acceso.png")
@@ -36,28 +37,33 @@ class Pruebas(CTk):
         self.AccesoLabel.pack(pady=20)
         self.AccesoLabel.place(x=150, y=50)
     
-        self.entry = CTkEntry(self.back, width=200, placeholder_text="Usuario")
+        self.entry = CTkEntry(self.back, width=200, placeholder_text="Cédula")
         self.entry.pack(pady=3)
         self.entry.place(x=150, y=300)
 
         self.entry_password = CTkEntry(self.back, width=200, placeholder_text="Contraseña", show="*")
         self.entry_password.pack(pady=3)
         self.entry_password.place(x=150, y=350)
-
+        
         self.boton = CTkButton(self.back, text="Iniciar sesión", command=self.boton_IniciarSesion)
-        self.boton.configure(fg_color="#99949C")
+        self.boton.configure(fg_color="#625B66")
+        self.boton._hover_color = "#7A7282"
         self.boton.pack(pady=20)
         self.boton.place(x=180, y=400)
 
         self.boton2 = CTkButton(self.back, text="Registrarse", command=self.boton_Registrarse)
+        self.boton2.configure(fg_color="#625B66")
+        self.boton2._hover_color = "#7A7282"
         self.boton2.pack(pady=20)
         self.boton2.place(x=180, y=450)
     
     def boton_IniciarSesion(self):
-        pass
+        Cedula = self.entry.get()
+        Contraseña = self.entry_password.get()
+        print(f"Cedula: {Cedula} | Contraseña: {Contraseña}")
 
     def boton_Registrarse(self):
-        pass
+        self.frame_registro = frame_registro(self)
 
     def iniciar(self):
         self.mainloop()

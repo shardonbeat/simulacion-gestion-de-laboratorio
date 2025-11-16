@@ -1,23 +1,6 @@
-# CLASE ABUELA USUARIO
-
 from datetime import *
 
 # Registro De Usuarios
-
-class Investigdor:
-    
-    def __init__(self):
-        self.nombre = ObtenerNombre()
-        self.apellido = ObtenerApellido()
-        self.cedula = ObtenerCédula()
-        self.contraseña = ObtenerContraseña()
-        self.nacimiento = ObtenerNacimiento()
-        self.correo_electronico = ObtenerCorreo()
-        self.rol = 'No asignada.'
-        self.nivel_autorizacion = 0
-
-def ObtenerDatosParaDB(self):
-    return (self.nombre, self.apellido, self.cedula, self.contraseña, self.nacimiento, self.correo_electronico, self.rol, self.nivel_autorizacion)
 
 def ObtenerNombre():
     while True:
@@ -82,3 +65,13 @@ def ObtenerCorreo():
             return correo
         else:
             print('Correo Invalido.\n')
+
+def ObtenerRol():
+        
+        rol = 'investigador'
+        print("Rol valido.")
+        return rol
+
+def ObtenerNivelAutorizacion():
+    nivel_autorizacion = 1
+    return nivel_autorizacion

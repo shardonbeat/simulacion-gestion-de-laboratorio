@@ -4,7 +4,7 @@ db = sqlite3.connect('laboratorio.db')
 cursor = db.cursor()
 
 def CrearTablaRegistro():
-    query = """
+    query = '''
             CREATE TABLE IF NOT EXISTS Registro( 
                 id_Usuarios INTEGER PRIMARY KEY AUTOINCREMENT,
                 Nombre CHAR(12) NOT NULL,
@@ -16,8 +16,24 @@ def CrearTablaRegistro():
                 rol CHAR(30) NOT NULL,
                 nivel_autorizacion INTEGER NOT NULL
             );
-        """  
-    cursor.executescript(query)
-    print(query)
+            ''' 
+    try:
+        cursor.executescript(query)
+        db.commit()
+    except:
+        print("Error en la base de datos")
 
-    db.commit
+def Registrarse():
+	insert = """
+		INSERT INTO Registro (Nombre, Apellido, Cedula, Contraseña, Fecha_nacimiento, Correo, rol, nivel_autorizacion)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+	"""
+	cursor.execute(insert)
+	db.commit()
+	print("Usuario registrado")
+
+if __name__ == "__main__":
+    CrearTablaRegistro()
+    Registrarse()
+    db.close()
+    

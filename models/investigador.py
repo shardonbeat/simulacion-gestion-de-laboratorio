@@ -16,8 +16,8 @@ class Investigdor:
         self.rol = 'No asignada.'
         self.nivel_autorizacion = 0
 
-    def __str__(self):
-        return f'{self.nombre};{self.apellido};{self.cedula};{self.contraseña};{self.nacimiento};{self.correo_electronico}'
+def ObtenerDatosParaDB(self):
+    return (self.nombre, self.apellido, self.cedula, self.contraseña, self.nacimiento, self.correo_electronico, self.rol, self.nivel_autorizacion)
 
 def ObtenerNombre():
     while True:

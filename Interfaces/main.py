@@ -3,7 +3,6 @@ from PIL import Image
 from Frame_Registro import frame_registro
 import os
 
-
 class Pruebas(CTk):
     def __init__(self):
         super().__init__()

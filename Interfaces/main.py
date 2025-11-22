@@ -1,33 +1,41 @@
 from customtkinter import *
 from PIL import Image
-import os
 
+from db import BDD
 
-class Pruebas(CTk):
+from frameLogin import frameLogin
+from frameMain import frameMain
+from frameRegister import frameRegister
+from frameAdmin import frameAdmin
+
+set_default_color_theme("blue")
+
+class App:
     def __init__(self):
-        super().__init__()
-        self.geometry("400x300")
-        self.title("Laboratorio de investigación científica")
+        self.ventana = CTk()
+        self.bdd = BDD()
+        self.ventana.geometry("400x300")
+        self.ventana.title("Laboratorio de investigación científica")
 
         icono = os.path.join(os.path.dirname(__file__), "Img", "Laboratorio.ico")
         icono_path = os.path.join(icono)
-        self.iconbitmap(icono_path)
+        self.ventana.iconbitmap(icono_path)
 
-        self.configure(fg_color="#98939f")
+        ## Frames
+        self.frameLogin = frameLogin(self.ventana, self)
+        self.frameLogin.place(
+            relx=0, rely=0,
+            relwidth=1, relheight=1
+        )
+        self.frameMain = frameMain(self.ventana, self)
 
-        self.label = CTkLabel(self, text="Interfaz de Pruebas")
-        self.label.pack(pady=20)
+        self.frameRegister = frameRegister(self.ventana, self)
 
-        self.boton = CTkButton(self, text="Presioname", command=self.boton_presionado)
-        self.boton.pack(pady=20)
-    
-    def boton_presionado(self):
-        print("Botón presionado!")
-
+        self.frameAdmin = frameAdmin(self.ventana, self)
+        
     def iniciar(self):
-        self.mainloop()
+        self.ventana.mainloop()
 
 
 if __name__ == "__main__":
-    app = Pruebas()
-    app.iniciar()
+    App().iniciar()

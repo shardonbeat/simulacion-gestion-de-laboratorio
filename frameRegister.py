@@ -40,55 +40,54 @@ class frameRegister (CTkFrame):
 
         self.input_username = CTkEntry(
 			master=self,
-			font=('Arial', 25), text_color='black',
+			font=('Arial', 15), text_color='black',
 			placeholder_text="Nombre de Usuario", placeholder_text_color='black',
-			justify='center',
-			border_color='black', fg_color='white', border_width=5
+			border_color='black', fg_color='white', bg_color="#2b2b39"
         )
         self.input_username.place(relx=0.35, rely=0.30,
-			relwidth=0.3, relheight=0.1, anchor=CENTER)
+			relwidth=0.12, relheight=0.05)
         
         self.input_cedula = CTkEntry(
 			master=self,
-			font=('Arial', 25), text_color='black',
+			font=('Arial', 15), text_color='black',
 			placeholder_text="Cédula", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color='white', border_width=5
+			border_color='black', fg_color='white', bg_color="#2b2b39"
         )
-        self.input_cedula.place(relx=0.65, rely=0.30,
-			relwidth=0.3, relheight=0.1, anchor=CENTER)
+        self.input_cedula.place(relx=0.53, rely=0.30,
+			relwidth=0.12, relheight=0.05)
         
         self.input_password = CTkEntry(
 			master=self,
-			font=('Arial', 25), text_color='black',
+			font=('Arial', 15), text_color='black',
 			placeholder_text="Contraseña", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color='white', border_width=5
+			border_color='black', fg_color='white', bg_color="#2b2b39"
         )
         self.input_password.place(relx=0.35, rely=0.45,
-			relwidth=0.3, relheight=0.1, anchor=CENTER)
+			relwidth=0.12, relheight=0.05)
         
         self.input_nacimiento = CTkEntry(
             master=self,
-            font=('Arial', 25), text_color='black',
+            font=('Arial', 15), text_color='black',
             placeholder_text="Fecha de Nacimiento (YYYY-MM-DD)", 
             placeholder_text_color='black',
             justify='center',
-            border_color='black', fg_color='white', border_width=5
+            border_color='black', fg_color='white', bg_color="#2b2b39"
         )
-        self.input_nacimiento.place(relx=0.65, rely=0.45,
-			relwidth=0.3, relheight=0.1, anchor=CENTER)
+        self.input_nacimiento.place(relx=0.53, rely=0.60,
+			relwidth=0.12, relheight=0.05)
         
         self.mail_input = CTkEntry(
             master=self,
-            font=('Arial', 25), text_color='black',
+            font=('Arial', 15), text_color='black',
             placeholder_text="Correo Electrónico",
             placeholder_text_color='black',
             justify='center',
-            border_color='black', fg_color='white', border_width=5
+            border_color='black', fg_color='white', bg_color="#2b2b39"
         )
-        self.mail_input.place(relx=0.5, rely=0.60,
-            relwidth=0.3, relheight=0.1, anchor=CENTER)
+        self.mail_input.place(relx=0.35, rely=0.60,
+            relwidth=0.12, relheight=0.05,)
         
         ## Botones
 
@@ -96,14 +95,14 @@ class frameRegister (CTkFrame):
         self.register_button = CTkButton(
             master=self,
             text="Enviar Solicitud",
-            font=('Arial', 20),
-            fg_color="#474aff",
-            hover_color="#353edc",
+            font=('Arial', 15),
+            hover_color="#898995",
+            fg_color="#72737f",
             command=self.registrar_usuario
         )
         self.register_button.place(
             relx=0.5, rely=0.80,
-            relwidth=0.4, relheight=0.1,
+            relwidth=0.12, relheight=0.05,
             anchor=CENTER
         )
 

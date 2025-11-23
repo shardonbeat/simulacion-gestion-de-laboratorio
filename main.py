@@ -15,7 +15,8 @@ class App:
     def __init__(self):
         self.ventana = CTk()
         self.bdd = BDD()
-        self.ventana.geometry("400x300")
+        self.ventana.geometry("1280x720")
+        self.ventana.resizable(False, False)
         self.ventana.title("Laboratorio de investigación científica")
         
         icono = os.path.join(os.path.dirname(__file__), "Img", "Laboratorio.ico")

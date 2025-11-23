@@ -31,7 +31,7 @@ class frameLogin (CTkFrame):
 		self.labelUsuario = CTkLabel(
 			master = self, text = "Laboratorio de investigación científica",
 			text_color = "#ffffff",
-			font = ("Arial", 15, "bold"), corner_radius = 15,
+			font = ("Times New Roman", 15, "bold"), corner_radius = 15,
 			fg_color = "#8b8b9f",
 			bg_color= "#2b2b39"
 		)
@@ -92,6 +92,7 @@ class frameLogin (CTkFrame):
 		self.login_button = CTkButton(
 			master=self, text="Iniciar sesión",
             font=('Times New Roman', 15, 'bold'),
+			hover_color="#898995",
 			corner_radius=15,
             fg_color="#72737f",
 			bg_color="#2b2b39",
@@ -108,6 +109,7 @@ class frameLogin (CTkFrame):
 		self.register_button = CTkButton(
 			master=self, text="Registrarse",
             font=('Times New Roman', 15, 'bold'),
+			hover_color="#898995",
 			corner_radius=15,
             fg_color="#72737f",
 			bg_color="#2b2b39",

@@ -6,20 +6,35 @@ class frameRegister (CTkFrame):
         super().__init__(master)
         self.main = main
         self.configure(
-            fg_color = "#ebebeb",
+            fg_color = "#A79D8A",
             corner_radius = 0,
         )
 
         ## Labels
+
+        self.labelFondo = CTkLabel(
+			master = self,
+			text = "",
+			fg_color = "#2b2b39",
+			corner_radius=15
+		)
+        self.labelFondo.place(
+			relx=0.5, rely=0.5,
+			relwidth=0.35, relheight=0.7,
+			anchor=CENTER
+		)
+
+
         self.labelRegister = CTkLabel(
             master = self, text = "Registro de nuevo usuario",
             text_color = "#ffffff",
-            font = ("Arial", 20, "bold"), corner_radius = 15,
-            fg_color = "#474aff"
+            font = ("Times New Roman", 15, "bold"), corner_radius = 15,
+            fg_color = "#8b8b9f",
+            bg_color= "#2b2b39"
         )
         self.labelRegister.place(
-            relx=0.5, rely=0.1,
-            relwidth=0.6, relheight=0.15,
+            relx=0.5, rely=0.2,
+            relwidth=0.3, relheight=0.05,
             anchor=CENTER
         )
 
@@ -103,14 +118,15 @@ class frameRegister (CTkFrame):
             master=self,
             text = 'Volver',
             font=('Arial', 25),
-            text_color="#4000FF",
-            fg_color="#ebebeb",
+            text_color="#000000",
+            fg_color="#A79D8A",
+            hover_color="#BAAF9B",
             image=self.back_image,
             command=self.volver_login
         )
         self.back_button.place(
             relx=0, rely=0,
-            relwidth=0.15, relheight=0.1,
+            relwidth=0.10, relheight=0.05,
             anchor=NW
         )
 

@@ -42,7 +42,7 @@ class frameRegister (CTkFrame):
 			master=self,
 			font=('Arial', 15), text_color='black',
 			placeholder_text="Nombre de Usuario", placeholder_text_color='black',
-			border_color='black', fg_color='white', bg_color="#2b2b39"
+			border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
         )
         self.input_username.place(relx=0.35, rely=0.30,
 			relwidth=0.12, relheight=0.05)
@@ -52,7 +52,7 @@ class frameRegister (CTkFrame):
 			font=('Arial', 15), text_color='black',
 			placeholder_text="Cédula", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color='white', bg_color="#2b2b39"
+			border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
         )
         self.input_cedula.place(relx=0.53, rely=0.30,
 			relwidth=0.12, relheight=0.05)
@@ -60,12 +60,24 @@ class frameRegister (CTkFrame):
         self.input_password = CTkEntry(
 			master=self,
 			font=('Arial', 15), text_color='black',
+            show='*',
 			placeholder_text="Contraseña", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color='white', bg_color="#2b2b39"
+			border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
         )
         self.input_password.place(relx=0.35, rely=0.45,
 			relwidth=0.12, relheight=0.05)
+        
+        self.input_password2 = CTkEntry(
+			master=self,
+			font=('Arial', 15), text_color='black',
+            show='*',
+			placeholder_text="Confirmar Contraseña", placeholder_text_color='black',
+			justify='center',
+			border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
+        )
+        self.input_password2.place(relx=0.53, rely=0.45,
+			relwidth=0.13, relheight=0.05)
         
         self.input_nacimiento = CTkEntry(
             master=self,
@@ -73,7 +85,7 @@ class frameRegister (CTkFrame):
             placeholder_text="Fecha de Nacimiento (YYYY-MM-DD)", 
             placeholder_text_color='black',
             justify='center',
-            border_color='black', fg_color='white', bg_color="#2b2b39"
+            border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
         )
         self.input_nacimiento.place(relx=0.53, rely=0.60,
 			relwidth=0.12, relheight=0.05)
@@ -84,7 +96,7 @@ class frameRegister (CTkFrame):
             placeholder_text="Correo Electrónico",
             placeholder_text_color='black',
             justify='center',
-            border_color='black', fg_color='white', bg_color="#2b2b39"
+            border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
         )
         self.mail_input.place(relx=0.35, rely=0.60,
             relwidth=0.12, relheight=0.05,)
@@ -133,6 +145,7 @@ class frameRegister (CTkFrame):
         username = self.input_username.get()
         cedula = self.input_cedula.get()
         password = self.input_password.get()
+        password2 = self.input_password2.get()
         nacimiento = self.input_nacimiento.get()
         mail = self.mail_input.get()
         role = 'Investigador'  # Default role
@@ -142,7 +155,7 @@ class frameRegister (CTkFrame):
             username, cedula, password, nacimiento, mail, role, nivel_autorizacion
         )
 
-        if success:
+        if success and password == password2:
             print("Usuario registrado exitosamente.")
             # Optionally, clear the input fields after successful registration
             self.input_username.delete(0, 'end')

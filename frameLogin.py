@@ -10,7 +10,7 @@ class frameLogin (CTkFrame):
 			corner_radius = 0,
 		)
 
-		## Labels
+	## Labels
 			#@ Usuario
 		self.labelUsuario = CTkLabel(
 			master = self, text = "Cédula:",
@@ -58,7 +58,7 @@ class frameLogin (CTkFrame):
 		self.input_password.place(relx=0.5, rely=0.65,
 			relwidth=0.3, relheight=0.1, anchor=CENTER)
 		
-		## Botones
+	## Botones
 
 		self.login_button = CTkButton(
 			master=self, text="Iniciar sesión",
@@ -106,8 +106,10 @@ class frameLogin (CTkFrame):
 			relwidth=1, relheight=1
 		)
 
-	
-
+		'''
+		Función para obtener el nivel de autorización del usuario
+		y de acuerdo al nivel muestra el frame correspondiente.
+		'''
 	def obtener_nivel_autorizacion(self, data):
 		nivel = data['nivel_autorizacion']
 		

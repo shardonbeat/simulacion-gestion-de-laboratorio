@@ -49,6 +49,20 @@ class frameMain (CTkFrame):
             relwidth=0.2, relheight=0.05,
         )
 
+		self.Inicio = CTkButton(
+            master = self, text = "Inicio",
+            text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			hover_color="#898995",
+            font = ("Times New Roman", 20, "bold"),
+			command=self.volver_main
+        )
+		self.Inicio.place(
+            relx=0.05, rely=0.33,
+            relwidth=0.09, relheight=0.05,
+        )
+
 		self.Niveles = CTkLabel(
             master = self, text = "Niveles de acceso",
             text_color = "#ffffff",
@@ -57,7 +71,7 @@ class frameMain (CTkFrame):
             font = ("Times New Roman", 20, "bold")
         )
 		self.Niveles.place(
-            relx=0, rely=0.35,
+            relx=0, rely=0.4,
             relwidth=0.2, relheight=0.05,
         )
 
@@ -71,7 +85,7 @@ class frameMain (CTkFrame):
 			command=self.laboratorioNivel1
 		)
 		self.Nivel_1.place(
-			relx=0.02, rely=0.41,
+			relx=0.02, rely=0.46,
 			relwidth=0.1, relheight=0.04,
 		)
 
@@ -81,10 +95,11 @@ class frameMain (CTkFrame):
 			hover_color="#898995",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold")
+			font = ("Times New Roman", 15, "bold"),	
+			command= self.laboratorioNivel2
 		)
 		self.Nivel_2.place(
-			relx=0.02, rely=0.45,
+			relx=0.02, rely=0.50,
 			relwidth=0.1, relheight=0.04,
 		)
 
@@ -94,10 +109,11 @@ class frameMain (CTkFrame):
 			hover_color="#898995",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold")
+			font = ("Times New Roman", 15, "bold"),
+			command=self.laboratorioNivel3
 		)
 		self.Nivel_3.place(
-			relx=0.02, rely=0.49,
+			relx=0.02, rely=0.54,
 			relwidth=0.1, relheight=0.04,
 		)
 
@@ -245,6 +261,8 @@ class frameMain (CTkFrame):
 		self.Registros.destroy()
 		self.Reportes.destroy()
 		self.Historial.destroy()
+		self.cerrar_sesion.destroy()
+
 		self.labelContenido.configure(
 		text = "¡ Acceso al laboratorio nivel 1 otorgado !"
 		)
@@ -257,22 +275,43 @@ class frameMain (CTkFrame):
             Image.open("Img/Back_image.png"),
             size=(30, 30)
         )
-		self.back_button = CTkButton(
-            master=self,
-            text = 'Volver',
-            font=('Arial', 25),
-            text_color="#FFFFFF",
-            fg_color="#2b2b39",
-			bg_color="#2b2b39",
-            hover_color="#898995",
-			corner_radius=15,
-            image=self.back_image,
-            command=self.volver_main
+
+	def laboratorioNivel2(self):
+		self.AccesoNivel.destroy()
+		self.Sustancias.destroy()
+		self.Registros.destroy()
+		self.Reportes.destroy()
+		self.Historial.destroy()
+		self.cerrar_sesion.destroy()
+
+		self.labelContenido.configure(
+			text = "¡ Acceso al laboratorio nivel 2 otorgado !"
+		)
+		self.labelContenido.place(
+			relx=0.43, rely=0.15,
+			relwidth=0.3, relheight=0.05,
+		)
+
+		self.back_image = CTkImage(
+            Image.open("Img/Back_image.png"),
+            size=(30, 30)
         )
-		self.back_button.place(
-            relx=0.27, rely=0.8,
-            relwidth=0.12, relheight=0.05
-        )
+	
+	def laboratorioNivel3(self):
+		self.AccesoNivel.destroy()
+		self.Sustancias.destroy()
+		self.Registros.destroy()
+		self.Reportes.destroy()
+		self.Historial.destroy()
+		self.cerrar_sesion.destroy()
+
+		self.labelContenido.configure(
+			text = "¡ Acceso al laboratorio nivel 3 otorgado !"
+		)
+		self.labelContenido.place(
+			relx=0.43, rely=0.15,
+			relwidth=0.3, relheight=0.05,
+		)
 	
 	def volver_main(self):
 		self.main.frameMain.place_forget()

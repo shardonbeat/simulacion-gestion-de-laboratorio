@@ -109,6 +109,7 @@ class frameRegister (CTkFrame):
             text="Enviar Solicitud",
             font=('Arial', 15),
             hover_color="#898995",
+            bg_color="#2b2b39",
             fg_color="#72737f",
             command=self.registrar_usuario
         )

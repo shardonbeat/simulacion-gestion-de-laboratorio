@@ -1,13 +1,12 @@
 from customtkinter import *
-from PIL import Image
-
+import os
 from db import BDD
 
 from frameLogin import frameLogin
 from frameMain import frameMain
 from frameRegister import frameRegister
 from frameAdmin import frameAdmin
-import os
+
 
 set_default_color_theme("blue")
 

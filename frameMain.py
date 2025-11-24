@@ -100,6 +100,130 @@ class frameMain (CTkFrame):
 			relwidth=0.1, relheight=0.04,
 		)
 
+		self.labelFondo = CTkLabel(
+			master = self,
+			text = "",
+			fg_color = "#2b2b39",
+			bg_color= "#A79D8A",
+			corner_radius=15
+		)
+		self.labelFondo.place(
+			relx=0.25, rely=0.12,
+			relwidth=0.7, relheight=0.75,
+		)
+
+		self.labelContenido = CTkLabel(
+			master = self,
+			text = "¡ Bienvenido al laboratorio !",
+			text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 20, "bold"), corner_radius = 15,
+		)
+		self.labelContenido.place(
+			relx=0.49, rely=0.15,
+			relwidth=0.22, relheight=0.05,
+		)
+
+		self.AccesoImage = CTkImage(
+			Image.open("Img/Acceso-nivel.png"),
+			size = (64, 64)
+		)
+		self.AccesoNivel = CTkButton(
+			master = self, text = "Solicitar acceso",
+			text_color = "#ffffff",
+			hover_color="#898995",
+			fg_color= "#5e5e72",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),
+			compound="top",
+			image=self.AccesoImage,
+		)
+		self.AccesoNivel.place(
+			relx=0.33, rely=0.25,	
+			relwidth=0.15, relheight=0.2,
+		)
+
+		self.SustanciasImage = CTkImage(
+			Image.open("Img/sustancias-quimicas.png"),
+			size = (64, 64)
+		)
+
+		self.Sustancias = CTkButton(
+			master = self, text = "Solicitar sustancias",
+			text_color = "#ffffff",
+			hover_color="#898995",
+			fg_color= "#5e5e72",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),
+			compound="top",
+			image=self.SustanciasImage,
+		)
+		self.Sustancias.place(
+			relx=0.53, rely=0.25,
+			relwidth=0.15, relheight=0.2,
+		)
+
+		self.RegistrosImage = CTkImage(
+			Image.open("Img/Registros.png"),
+			size = (64, 64)
+		)
+
+		self.Registros = CTkButton(
+			master = self, text = "Hacer registros",
+			text_color = "#ffffff",
+			hover_color="#898995",
+			fg_color= "#5e5e72",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),
+			compound="top",
+			image=self.RegistrosImage,
+		)
+		self.Registros.place(
+			relx=0.73, rely=0.25,
+			relwidth=0.15, relheight=0.2,
+		)
+
+		self.reportesImage = CTkImage(
+			Image.open("Img/Reportes.png"),
+			size = (64, 64)
+		)
+
+		self.Reportes = CTkButton(
+			master = self, text = "Reportar incidencias",
+			text_color = "#ffffff",
+			hover_color="#898995",
+			fg_color= "#5e5e72",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),
+			compound="top",
+			image=self.reportesImage,
+		)
+		self.Reportes.place(
+			relx=0.43, rely=0.5,
+			relwidth=0.15, relheight=0.2,
+		)
+
+		self.HistorialImage = CTkImage(
+			Image.open("Img/Historial.png"),
+			size = (64, 64)
+		)
+
+		self.Historial = CTkButton(
+			master = self, text = "Ver historial",
+			text_color = "#ffffff",
+			hover_color="#898995",
+			fg_color= "#5e5e72",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),
+			compound="top",
+			image=self.HistorialImage,
+		)
+		self.Historial.place(
+			relx=0.63, rely=0.5,
+			relwidth=0.15, relheight=0.2,
+		)
+
 		self.cerrar_sesion = CTkButton(
 			master = self, text = "Cerrar sesión",
 			hover_color="#540c0c",

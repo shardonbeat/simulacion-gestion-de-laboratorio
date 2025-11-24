@@ -139,6 +139,7 @@ class frameLogin (CTkFrame):
 			relx=0, rely=0,
 			relwidth=1, relheight=1
 		)
+		self.limpiar_inputs()
 	
 	def limpiar_inputs(self):
 		self.input_user.delete(0, "end")

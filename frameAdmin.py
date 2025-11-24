@@ -36,7 +36,7 @@ class frameAdmin (CTkFrame):
 		)
 
         self.logotitulo = CTkLabel(
-            master = self, text = "Laboratorio científico // Administración",
+            master = self, text = "Laboratorio científico // Admin",
             text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
@@ -69,7 +69,7 @@ class frameAdmin (CTkFrame):
 		)
         
         self.Nivel_1.place(
-			relx=0.03, rely=0.41,
+			relx=0.02, rely=0.41,
 			relwidth=0.1, relheight=0.04,
 		)
         
@@ -83,7 +83,7 @@ class frameAdmin (CTkFrame):
 		)
         
         self.Nivel_2.place(
-			relx=0.035, rely=0.45,
+			relx=0.02, rely=0.45,
 			relwidth=0.1, relheight=0.04,
 		)
         
@@ -96,7 +96,7 @@ class frameAdmin (CTkFrame):
 			font = ("Times New Roman", 15, "bold")
 		)
         self.Nivel_3.place(
-			relx=0.03, rely=0.49,
+			relx=0.02, rely=0.49,
 			relwidth=0.1, relheight=0.04,
 		)
         

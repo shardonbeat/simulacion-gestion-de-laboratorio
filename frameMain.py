@@ -70,7 +70,7 @@ class frameMain (CTkFrame):
 			font = ("Times New Roman", 15, "bold")
 		)
 		self.Nivel_1.place(
-			relx=0.03, rely=0.41,
+			relx=0.02, rely=0.41,
 			relwidth=0.1, relheight=0.04,
 		)
 
@@ -83,7 +83,7 @@ class frameMain (CTkFrame):
 			font = ("Times New Roman", 15, "bold")
 		)
 		self.Nivel_2.place(
-			relx=0.035, rely=0.45,
+			relx=0.02, rely=0.45,
 			relwidth=0.1, relheight=0.04,
 		)
 
@@ -96,7 +96,7 @@ class frameMain (CTkFrame):
 			font = ("Times New Roman", 15, "bold")
 		)
 		self.Nivel_3.place(
-			relx=0.03, rely=0.49,
+			relx=0.02, rely=0.49,
 			relwidth=0.1, relheight=0.04,
 		)
 

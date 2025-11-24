@@ -42,7 +42,7 @@ class frameRegister (CTkFrame):
 			master=self,
 			font=('Arial', 15), text_color='black',
 			placeholder_text="Nombre de Usuario", placeholder_text_color='black',
-			border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
+			border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
         self.input_username.place(relx=0.35, rely=0.30,
 			relwidth=0.12, relheight=0.05)
@@ -52,7 +52,7 @@ class frameRegister (CTkFrame):
 			font=('Arial', 15), text_color='black',
 			placeholder_text="Cédula", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color="#948D8D", bg_color="#2b2b39",
+			border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39",
         )
         self.input_cedula.place(relx=0.53, rely=0.30,
 			relwidth=0.12, relheight=0.05)
@@ -71,7 +71,7 @@ class frameRegister (CTkFrame):
             show='*',
 			placeholder_text="Contraseña", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
+			border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
         self.input_password.place(relx=0.35, rely=0.45,
 			relwidth=0.12, relheight=0.05)
@@ -82,7 +82,7 @@ class frameRegister (CTkFrame):
             show='*',
 			placeholder_text="Confirmar Contraseña", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
+			border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
         self.input_password2.place(relx=0.53, rely=0.45,
 			relwidth=0.13, relheight=0.05)
@@ -101,7 +101,7 @@ class frameRegister (CTkFrame):
             placeholder_text="Fecha de Nacimiento (YYYY-MM-DD)", 
             placeholder_text_color='black',
             justify='center',
-            border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
+            border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
         self.input_nacimiento.place(relx=0.53, rely=0.60,
 			relwidth=0.12, relheight=0.05)
@@ -112,7 +112,7 @@ class frameRegister (CTkFrame):
             placeholder_text="Correo Electrónico",
             placeholder_text_color='black',
             justify='center',
-            border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
+            border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
         self.mail_input.place(relx=0.35, rely=0.60,
             relwidth=0.12, relheight=0.05,)
@@ -138,15 +138,14 @@ class frameRegister (CTkFrame):
             command=self.registrar_usuario
         )
         self.register_button.place(
-            relx=0.5, rely=0.80,
+            relx=0.5, rely=0.72,
             relwidth=0.12, relheight=0.05,
             anchor=CENTER
         )
 
         #@ Botón de volver al login
         self.back_image = CTkImage(
-            light_image=Image.open(os.path.join(os.path.dirname(__file__), "Img", "back_image.png")),
-            dark_image=Image.open(os.path.join(os.path.dirname(__file__), "Img", "back_image.png")),
+            Image.open("Img/Back_image.png"),
             size=(30, 30)
         )
 
@@ -154,16 +153,17 @@ class frameRegister (CTkFrame):
             master=self,
             text = 'Volver',
             font=('Arial', 25),
-            text_color="#000000",
-            fg_color="#A79D8A",
-            hover_color="#BAAF9B",
+            text_color="#FFFFFF",
+            fg_color="#2b2b39",
+            bg_color="#2b2b39",
+            hover_color="#898995",
+            corner_radius=15,
             image=self.back_image,
             command=self.volver_login
         )
         self.back_button.place(
-            relx=0, rely=0,
-            relwidth=0.10, relheight=0.05,
-            anchor=NW
+            relx=0.34, rely=0.78,
+            relwidth=0.12, relheight=0.05
         )
 
     def registrar_usuario(self):
@@ -204,7 +204,7 @@ class frameRegister (CTkFrame):
 
     ## Validaciones
     def validar_cedula(self):
-        if self.input_cedula.get().isdigit() and len(self.input_cedula.get()) == 8:
+        if self.input_cedula.get().isdigit() and 7 <= len(self.input_cedula.get()) <= 8:
             return True
         else:
             self.cedula_error.place(

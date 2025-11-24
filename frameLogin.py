@@ -65,7 +65,7 @@ class frameLogin (CTkFrame):
 			font=('Arial', 15), text_color='black',
 			placeholder_text="Cédula", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color="#948D8D",
+			border_color='black', fg_color="#BCB4B4",
 			bg_color="#2b2b39",
 			corner_radius=10
 		)
@@ -79,7 +79,7 @@ class frameLogin (CTkFrame):
 			font=('Arial', 15), text_color='black',
 			placeholder_text="Contraseña", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color="#948D8D",
+			border_color='black', fg_color="#BCB4B4",
 			bg_color="#2b2b39",
 			corner_radius=10,
 			show='*'

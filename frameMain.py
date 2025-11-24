@@ -67,7 +67,8 @@ class frameMain (CTkFrame):
 			hover_color="#898995",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold")
+			font = ("Times New Roman", 15, "bold"),
+			command=self.laboratorioNivel1
 		)
 		self.Nivel_1.place(
 			relx=0.02, rely=0.41,
@@ -237,6 +238,48 @@ class frameMain (CTkFrame):
 			relx=0.06, rely=0.9,
 			relwidth=0.08, relheight=0.04
 		)
+	
+	def laboratorioNivel1(self):
+		self.AccesoNivel.destroy()
+		self.Sustancias.destroy()
+		self.Registros.destroy()
+		self.Reportes.destroy()
+		self.Historial.destroy()
+		self.labelContenido.configure(
+		text = "¡ Acceso al laboratorio nivel 1 otorgado !"
+		)
+		self.labelContenido.place(
+			relx=0.43, rely=0.15,
+			relwidth=0.3, relheight=0.05,
+		)
+
+		self.back_image = CTkImage(
+            Image.open("Img/Back_image.png"),
+            size=(30, 30)
+        )
+		self.back_button = CTkButton(
+            master=self,
+            text = 'Volver',
+            font=('Arial', 25),
+            text_color="#FFFFFF",
+            fg_color="#2b2b39",
+			bg_color="#2b2b39",
+            hover_color="#898995",
+			corner_radius=15,
+            image=self.back_image,
+            command=self.volver_main
+        )
+		self.back_button.place(
+            relx=0.27, rely=0.8,
+            relwidth=0.12, relheight=0.05
+        )
+	
+	def volver_main(self):
+		self.main.frameRegister.place_forget()
+		self.main.frameLogin.place(
+            relx=0, rely=0,
+            relwidth=1, relheight=1
+        )
 
 	def cerrar(self):
 		self.main.frameMain.place_forget()

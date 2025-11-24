@@ -275,11 +275,14 @@ class frameMain (CTkFrame):
         )
 	
 	def volver_main(self):
-		self.main.frameRegister.place_forget()
-		self.main.frameLogin.place(
-            relx=0, rely=0,
-            relwidth=1, relheight=1
-        )
+		self.main.frameMain.place_forget()
+		go = frameMain(self.main.ventana, self.main)
+		self.main.frameMain = go
+		self.main.frameMain.place(
+			relx=0, rely=0,
+			relwidth=1, relheight=1
+		)
+		
 
 	def cerrar(self):
 		self.main.frameMain.place_forget()
@@ -287,6 +290,7 @@ class frameMain (CTkFrame):
             relx=0, rely=0,
             relwidth=1, relheight=1
         )
+
 
 
 

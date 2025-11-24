@@ -106,7 +106,7 @@ class frameRegister (CTkFrame):
         #@ Botón de registro
         self.register_button = CTkButton(
             master=self,
-            text="Enviar Solicitud",
+            text="Registrarse",
             font=('Arial', 15),
             hover_color="#898995",
             bg_color="#2b2b39",

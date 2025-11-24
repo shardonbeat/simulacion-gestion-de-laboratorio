@@ -62,7 +62,7 @@ class frameMain (CTkFrame):
         )
 
 		self.Nivel_1 = CTkButton(
-			master = self, text = "‣  Nivel bajo 1",
+			master = self, text = "‣  Nivel 1",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#2b2b39",
@@ -75,7 +75,7 @@ class frameMain (CTkFrame):
 		)
 
 		self.Nivel_2 = CTkButton(
-			master = self, text = "‣  Nivel medio 2",
+			master = self, text = "‣  Nivel 2",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#2b2b39",
@@ -88,7 +88,7 @@ class frameMain (CTkFrame):
 		)
 
 		self.Nivel_3 = CTkButton(
-			master = self, text = "‣  Nivel alto 3",
+			master = self, text = "‣  Nivel 3",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#2b2b39",

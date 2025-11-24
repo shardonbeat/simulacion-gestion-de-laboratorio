@@ -129,6 +129,7 @@ class frameLogin (CTkFrame):
 		if validar:
 			data = self.main.bdd.obtenerUsuario(cedula)
 			self.obtener_nivel_autorizacion(data)
+			self.limpiar_inputs()
 		else:
 			print("Cédula o contraseña incorrecta.")
 
@@ -138,6 +139,10 @@ class frameLogin (CTkFrame):
 			relx=0, rely=0,
 			relwidth=1, relheight=1
 		)
+	
+	def limpiar_inputs(self):
+		self.input_user.delete(0, "end")
+		self.input_password.delete(0, "end")
 
 		'''
 		Función para obtener el nivel de autorización del usuario

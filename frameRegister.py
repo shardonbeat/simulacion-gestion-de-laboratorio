@@ -52,10 +52,18 @@ class frameRegister (CTkFrame):
 			font=('Arial', 15), text_color='black',
 			placeholder_text="Cédula", placeholder_text_color='black',
 			justify='center',
-			border_color='black', fg_color="#948D8D", bg_color="#2b2b39"
+			border_color='black', fg_color="#948D8D", bg_color="#2b2b39",
         )
         self.input_cedula.place(relx=0.53, rely=0.30,
 			relwidth=0.12, relheight=0.05)
+        
+        self.cedula_error = CTkLabel(
+            master=self,
+            text="Cédula inválida",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
         
         self.input_password = CTkEntry(
 			master=self,
@@ -79,6 +87,14 @@ class frameRegister (CTkFrame):
         self.input_password2.place(relx=0.53, rely=0.45,
 			relwidth=0.13, relheight=0.05)
         
+        self.pass_error = CTkLabel(
+            master=self,
+            text="Las contraseñas no coinciden",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
+        
         self.input_nacimiento = CTkEntry(
             master=self,
             font=('Arial', 15), text_color='black',
@@ -100,6 +116,14 @@ class frameRegister (CTkFrame):
         )
         self.mail_input.place(relx=0.35, rely=0.60,
             relwidth=0.12, relheight=0.05,)
+        
+        self.email_error = CTkLabel(
+            master=self,
+            text="Correo electrónico inválido",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
         
         ## Botones
 
@@ -156,7 +180,12 @@ class frameRegister (CTkFrame):
             username, cedula, password, nacimiento, mail, role, nivel_autorizacion
         )
 
-        if success and password == password2:
+        if not self.validar_cedula():
+            print("Cédula inválida.")
+        if not self.comprobar_contraseñas():
+            print("Las contraseñas no coinciden.")
+        
+        if success and self.validar_cedula() and self.comprobar_contraseñas():
             print("Usuario registrado exitosamente.")
             # Optionally, clear the input fields after successful registration
             self.input_username.delete(0, 'end')
@@ -164,12 +193,40 @@ class frameRegister (CTkFrame):
             self.input_password.delete(0, 'end')
             self.input_nacimiento.delete(0, 'end')
             self.mail_input.delete(0, 'end')
-        else:
-            print("Error al registrar el usuario.")
 
+        
     def volver_login(self):
         self.main.frameRegister.place_forget()
         self.main.frameLogin.place(
             relx=0, rely=0,
             relwidth=1, relheight=1
         )
+
+    ## Validaciones
+    def validar_cedula(self):
+        if self.input_cedula.get().isdigit() and len(self.input_cedula.get()) == 8:
+            return True
+        else:
+            self.cedula_error.place(
+                relx=0.53, rely=0.35
+            )
+
+    def comprobar_contraseñas(self):
+        if self.input_password.get() == self.input_password2.get():
+            return True
+        else:
+            self.pass_error.place(
+                relx=0.43, rely=0.50
+            )
+
+    def comprobar_email(self):
+        # Simple email validation
+        if "@" in self.mail_input.get() and "." in self.mail_input.get():
+            return True
+        else:
+            return False
+
+    def limpiar_errores(self):
+        self.cedula_error.place_forget()
+        self.pass_error.place_forget()
+        self.email_error.place_forget()

@@ -12,7 +12,12 @@ class BDD:
         self.cursor.execute(query)
         return self.cursor.fetchone()
     
+    ## Crear la base de datos y las tablas necesarias
     def crear_bdd(self):
+        self.crear_tabla_usuarios()
+        self.crear_tabla_sustancias()
+
+    def crear_tabla_usuarios(self):
         query = '''
                 CREATE TABLE IF NOT EXISTS usuarios
                 (id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,6 +26,7 @@ class BDD:
                 password TEXT NOT NULL,
                 nacimiento TEXT NOT NULL,
                 mail TEXT NOT NULL,
+                capacitacion TEXT,
                 role TEXT NOT NULL,
                 nivel_autorizacion INTEGER NOT NULL
                 );
@@ -33,10 +39,53 @@ class BDD:
             VALUES (?, ?, ?, ?, ?, ?, ?);
             '''
 
-        # Crear un usuario administrador por defecto (idempotent)
+        # Crear un usuario administrador por defecto
         self.cursor.execute(insert_q, ('admin', '00000000', '1234', '1970-01-01', 'admin@example.com', 'admin', 3))
         self.conn.commit()
 
+    def crear_tabla_sustancias(self):
+        query = '''
+                CREATE TABLE IF NOT EXISTS sustancias
+                (id_sustancia INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                nivel_riesgo INTEGER NOT NULL,
+                cantidad INTEGER NOT NULL,
+                ubicacion TEXT NOT NULL,
+                fecha_vencimiento TEXT NOT NULL
+                );
+                '''
+        self.cursor.executescript(query)
+        self.conn.commit()
+
+    def crear_tabla_residuos(self):
+        query = '''
+                CREATE TABLE IF NOT EXISTS residuos
+                (id_residuo INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                tipo_residuo TEXT NOT NULL,
+                cantidad INTEGER NOT NULL,
+                fecha_almacenamiento TEXT NOT NULL,
+                fecha_retiro TEXT NOT NULL
+                );
+                '''
+        self.cursor.executescript(query)
+        self.conn.commit()
+
+    def crear_tabla_reportes(self):
+        query = '''
+                CREATE TABLE IF NOT EXISTS reportes
+                (id_reporte INTEGER PRIMARY KEY AUTOINCREMENT,
+                titulo TEXT NOT NULL,
+                contenido TEXT NOT NULL,
+                tipo_reporte TEXT NOT NULL,
+                fecha_creacion TEXT NOT NULL,
+                autor TEXT NOT NULL
+                );
+                '''
+        self.cursor.executescript(query)
+        self.conn.commit()
+
+    ## Funciones de la base de datos
     def verificarLogin(self, cedula, password):
             query = "SELECT 1 FROM usuarios WHERE cedula = ? AND password = ? LIMIT 1"
             cur = self.cursor.execute(query, (cedula, password))

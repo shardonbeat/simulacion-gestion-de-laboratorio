@@ -246,17 +246,24 @@ class frameRegister (CTkFrame):
 
         self.validar_username()
         
+        acceso = True
+        if not self.validar_username():
+            print("Nombre de usuario inválido.")
+            acceso = False
         if not self.validar_cedula():
             print("Cédula inválida.")
-            return
+            acceso = False
         if not self.comprobar_contraseñas():
             print("Las contraseñas no coinciden.")
-            return
+            acceso = False
         if not self.comprobar_email():
             print("Correo electrónico inválido.")
-            return
+            acceso = False
         if not self.comprobar_fecha():
             print("Fecha inválida.")
+            acceso = False
+
+        if not acceso:
             return
 
         campos = [username, cedula, password, nacimiento, mail]

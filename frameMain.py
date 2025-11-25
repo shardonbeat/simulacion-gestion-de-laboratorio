@@ -5,6 +5,7 @@ class frameMain (CTkFrame):
 	def __init__(self, master, main):
 		super().__init__(master)
 		self.main = main
+		data = self.main.bdd.obtener_usuario()
 		self.configure(
 			fg_color = "#A79D8A",
 			corner_radius = 0,
@@ -20,6 +21,27 @@ class frameMain (CTkFrame):
 			relx=0, rely=0,
 			relwidth=0.2, relheight=2,
 		)
+
+		# Safely extract username and rol from the returned data (may be None or shorter than expected)
+		if isinstance(data, dict):
+			username = data.get('username', 'Usuario')
+		elif isinstance(data, tuple) and len(data) > 0:
+			username = data[0]
+		else:
+			username = 'Usuario'
+
+		self.texto_usuario = CTkLabel(
+			master = self,
+			text = f"Hola, {username}!",
+			font = ("Arial", 15, "bold"),
+			text_color = "#ffffff",
+			fg_color = "#2b2b39"
+		)
+		self.texto_usuario.place(
+			relx=0, rely=0.6,
+			relwidth=0.2, relheight=0.1,
+		)
+		
 
 		self.image = CTkImage(
 			Image.open("Img/Laboratorio.ico"),
@@ -329,8 +351,3 @@ class frameMain (CTkFrame):
             relx=0, rely=0,
             relwidth=1, relheight=1
         )
-
-
-
-
-

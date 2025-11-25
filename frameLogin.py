@@ -150,12 +150,17 @@ class frameLogin (CTkFrame):
 		y de acuerdo al nivel muestra el frame correspondiente.
 		'''
 	def obtener_nivel_autorizacion(self, data):
-		nivel = data['nivel_autorizacion']
+		nivel = data['role']
 		
 		self.main.frameLogin.place_forget()
 
-		if nivel == 3:
+		if nivel == "Administrador de Cumplimiento":
 			self.main.frameAdmin.place(
+				relx=0, rely=0,
+				relwidth=1, relheight=1
+			)
+		elif nivel == "Coordinador de Seguridad":
+			self.main.FrameCoordinador.place(
 				relx=0, rely=0,
 				relwidth=1, relheight=1
 			)

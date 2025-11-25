@@ -1,6 +1,8 @@
 from customtkinter import *
 from PIL import Image
 
+from datetime import *
+
 class frameRegister (CTkFrame):
     def __init__(self, master, main):
         super().__init__(master)
@@ -106,6 +108,14 @@ class frameRegister (CTkFrame):
         self.input_nacimiento.place(relx=0.53, rely=0.60,
 			relwidth=0.12, relheight=0.05)
         
+        self.fecha_error = CTkLabel(
+            master=self,
+            text="Fecha inválida",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
+        
         self.mail_input = CTkEntry(
             master=self,
             font=('Arial', 15), text_color='black',
@@ -184,8 +194,11 @@ class frameRegister (CTkFrame):
             print("Cédula inválida.")
         if not self.comprobar_contraseñas():
             print("Las contraseñas no coinciden.")
+        if not self.comprobar_email():
+            print("Correo electrónico inválido.")
         
-        if success and self.validar_cedula() and self.comprobar_contraseñas():
+        if success and self.validar_cedula() and self.comprobar_contraseñas() \
+            and self.comprobar_email():
             print("Usuario registrado exitosamente.")
             # Optionally, clear the input fields after successful registration
             self.input_username.delete(0, 'end')
@@ -210,6 +223,7 @@ class frameRegister (CTkFrame):
             self.cedula_error.place(
                 relx=0.53, rely=0.35
             )
+            return False
 
     def comprobar_contraseñas(self):
         if self.input_password.get() == self.input_password2.get():
@@ -218,13 +232,36 @@ class frameRegister (CTkFrame):
             self.pass_error.place(
                 relx=0.43, rely=0.50
             )
+            return False
 
     def comprobar_email(self):
-        # Simple email validation
-        if "@" in self.mail_input.get() and "." in self.mail_input.get():
+        mail = self.mail_input.get()
+        mail_parts = mail.split('@')
+        if len(mail_parts) == 2 and '.' in mail_parts[1]:
+            return True
+        elif not mail:
+            self.email_error.place(
+                relx=0.35, rely=0.65
+            )
+            return False
+        elif mail == "@.":
+            self.email_error.place(
+                relx=0.35, rely=0.65
+            )
+            return False
+
+    def comprobar_fecha(self):
+        fecha = self.input_nacimiento.get()
+        fecha.strptime(fecha, '%Y-%m-%d')
+
+        if fecha < datetime.now().date():
             return True
         else:
+            self.fecha_error.place(
+                relx=0.53, rely=0.65
+            )
             return False
+
 
     def limpiar_errores(self):
         self.cedula_error.place_forget()

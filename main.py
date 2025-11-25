@@ -1,5 +1,5 @@
 from customtkinter import *
-import os
+
 from db import BDD
 
 from frameLogin import frameLogin
@@ -18,9 +18,8 @@ class App:
         self.ventana.resizable(False, False)
         self.ventana.title("Laboratorio de investigación científica")
         
-        icono = os.path.join(os.path.dirname(__file__), "Img", "Laboratorio.ico")
-        icono_path = os.path.join(icono)
-        self.ventana.iconbitmap(icono_path)
+        icono = "Img/Laboratorio.ico"
+        self.ventana.iconbitmap(icono)
 
         self.frameLogin = frameLogin(self.ventana, self)
         self.frameLogin.place(

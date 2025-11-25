@@ -40,7 +40,8 @@ class BDD:
             '''
 
         # Crear un usuario administrador por defecto
-        self.cursor.execute(insert_q, ('admin', '00000000', '1234', '1970-01-01', 'admin@example.com', 'admin', 3))
+        self.cursor.execute(insert_q, ('admin', '00000000', '1234', '1970-01-01', 
+                                       'admin@example.com', 'Administrador de Cumplimiento', 3))
         self.conn.commit()
 
     def crear_tabla_sustancias(self):
@@ -106,19 +107,24 @@ class BDD:
             return False
     
     def obtenerUsuario(self, cedula):
-        query = "SELECT username, cedula, nacimiento, mail, role, nivel_autorizacion FROM usuarios WHERE cedula = ? LIMIT 1"
+        # Seleccionar también la contraseña y mantener un orden consistente de columnas
+        query = "SELECT username, cedula, password, nacimiento, mail, role, nivel_autorizacion FROM usuarios WHERE cedula = ? LIMIT 1"
         cur = self.cursor.execute(query, (cedula,))
         r = cur.fetchone()
+        print(f"DEBUG - Número de columnas: {len(r) if r else 'None'}")
+        print(f"DEBUG - Columnas: {r}")
 
-        if r:
-            return {
-                'username': r[0],
-                'cedula': r[1],
-                'nacimiento': r[2],
-                'mail': r[3],
-                'role': r[4],
-                'nivel_autorizacion': r[5]
-            }
-        else:
+        # Evitar llamar a len() sobre None y mapear directamente las columnas esperadas
+        if not r:
             return None
+
+        return {
+            'username': r[0],
+            'cedula': r[1],
+            'password': r[2],
+            'nacimiento': r[3],
+            'mail': r[4],
+            'role': r[5],
+            'nivel_autorizacion': r[6]
+        }
         

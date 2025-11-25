@@ -354,7 +354,7 @@ class frameAdmin (CTkFrame):
 		
 
 	def cerrar(self):
-		self.main.frameMain.place_forget()
+		self.main.frameAdmin.place_forget()
 		self.main.frameLogin.place(
             relx=0, rely=0,
             relwidth=1, relheight=1

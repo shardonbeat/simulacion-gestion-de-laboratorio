@@ -290,6 +290,8 @@ class frameRegister (CTkFrame):
         self.limpiar_errores()
         self.limpiar_campos()
         self.main.frameRegister.place_forget()
+        go = frameRegister(self.main.ventana, self)
+        self.main.frameRegister = go
         self.main.frameLogin.place(
             relx=0, rely=0,
             relwidth=1, relheight=1
@@ -315,7 +317,7 @@ class frameRegister (CTkFrame):
             return False
         else:
             self.cedula_error2.place(
-                relx=0.52, rely=0.35
+                relx=0.55, rely=0.35
             )
             return False
 
@@ -338,7 +340,12 @@ class frameRegister (CTkFrame):
 
     def comprobar_email(self):
         mail = self.mail_input.get()
-        mail_parts = mail.split('@')
+        try:
+            mail_parts = mail.split('@')
+        except:
+            self.email_error1.place(
+                relx=0.35, rely=0.65
+            )
 
         if mail == "@.":
             self.email_error1.place(
@@ -358,7 +365,9 @@ class frameRegister (CTkFrame):
             fecha = self.input_nacimiento.get()
             fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
         except ValueError:
-            fecha = None
+            self.fecha_error1.place(
+                relx=0.53, rely=0.65
+            )
 
         if not fecha:
             self.fecha_error2.place(

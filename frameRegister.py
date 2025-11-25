@@ -235,28 +235,39 @@ class frameRegister (CTkFrame):
 
     def registrar_usuario(self):
         self.limpiar_errores()
+        self.texto_exito.place_forget()
         username = self.input_username.get()
         cedula = self.input_cedula.get()
         password = self.input_password.get()
-        password2 = self.input_password2.get()
         nacimiento = self.input_nacimiento.get()
         mail = self.mail_input.get()
         role = 'Investigador'  # Default role
         nivel_autorizacion = 1  # Default authorization level
 
+        self.validar_username()
+        
+        if not self.validar_cedula():
+            print("Cédula inválida.")
+            return
+        if not self.comprobar_contraseñas():
+            print("Las contraseñas no coinciden.")
+            return
+        if not self.comprobar_email():
+            print("Correo electrónico inválido.")
+            return
+        if not self.comprobar_fecha():
+            print("Fecha inválida.")
+            return
+
+        campos = [username, cedula, password, nacimiento, mail]
+        for campo in campos:
+            if not campo:
+                print("Todos los campos son obligatorios.")
+                return
+            
         success = self.main.bdd.registrarUsuario(
             username, cedula, password, nacimiento, mail, role, nivel_autorizacion
         )
-
-        self.validar_username()
-        if not self.validar_cedula():
-            print("Cédula inválida.")
-        if not self.comprobar_contraseñas():
-            print("Las contraseñas no coinciden.")
-        if not self.comprobar_email():
-            print("Correo electrónico inválido.")
-        if not self.comprobar_fecha():
-            print("Fecha inválida.")
         
         if success and self.validar_username() and self.validar_cedula() and self.comprobar_contraseñas() \
             and self.comprobar_email() and self.comprobar_fecha():

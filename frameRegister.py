@@ -153,6 +153,14 @@ class frameRegister (CTkFrame):
             anchor=CENTER
         )
 
+        self.texto_exito = CTkLabel(
+            master=self,
+            text="Usuario registrado exitosamente",
+            text_color="green",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
+
         #@ Botón de volver al login
         self.back_image = CTkImage(
             Image.open("Img/Back_image.png"),
@@ -177,6 +185,7 @@ class frameRegister (CTkFrame):
         )
 
     def registrar_usuario(self):
+        self.limpiar_errores()
         username = self.input_username.get()
         cedula = self.input_cedula.get()
         password = self.input_password.get()
@@ -196,19 +205,22 @@ class frameRegister (CTkFrame):
             print("Las contraseñas no coinciden.")
         if not self.comprobar_email():
             print("Correo electrónico inválido.")
+        if not self.comprobar_fecha():
+            print("Fecha inválida.")
         
         if success and self.validar_cedula() and self.comprobar_contraseñas() \
-            and self.comprobar_email():
+            and self.comprobar_email() and self.comprobar_fecha():
             print("Usuario registrado exitosamente.")
-            # Optionally, clear the input fields after successful registration
-            self.input_username.delete(0, 'end')
-            self.input_cedula.delete(0, 'end')
-            self.input_password.delete(0, 'end')
-            self.input_nacimiento.delete(0, 'end')
-            self.mail_input.delete(0, 'end')
+            self.limpiar_campos()
+            self.texto_exito.place(
+                relx=0.5, rely=0.68,
+                anchor=CENTER
+            )
 
         
     def volver_login(self):
+        self.limpiar_errores()
+        self.limpiar_campos()
         self.main.frameRegister.place_forget()
         self.main.frameLogin.place(
             relx=0, rely=0,
@@ -237,24 +249,25 @@ class frameRegister (CTkFrame):
     def comprobar_email(self):
         mail = self.mail_input.get()
         mail_parts = mail.split('@')
+
+        if mail == "@.":
+            self.email_error.place(
+                relx=0.35, rely=0.65
+            )
+            return False
+        if not mail:
+            self.email_error.place(
+                relx=0.35, rely=0.65
+            )
+            return False
         if len(mail_parts) == 2 and '.' in mail_parts[1]:
             return True
-        elif not mail:
-            self.email_error.place(
-                relx=0.35, rely=0.65
-            )
-            return False
-        elif mail == "@.":
-            self.email_error.place(
-                relx=0.35, rely=0.65
-            )
-            return False
 
     def comprobar_fecha(self):
         fecha = self.input_nacimiento.get()
-        fecha.strptime(fecha, '%Y-%m-%d')
+        fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
 
-        if fecha < datetime.now().date():
+        if fecha <= datetime.now().date():
             return True
         else:
             self.fecha_error.place(
@@ -262,8 +275,16 @@ class frameRegister (CTkFrame):
             )
             return False
 
+    def limpiar_campos(self):
+        self.input_username.delete(0, 'end')
+        self.input_cedula.delete(0, 'end')
+        self.input_password.delete(0, 'end')
+        self.input_password2.delete(0, 'end')
+        self.input_nacimiento.delete(0, 'end')
+        self.mail_input.delete(0, 'end')
 
     def limpiar_errores(self):
         self.cedula_error.place_forget()
         self.pass_error.place_forget()
         self.email_error.place_forget()
+        self.fecha_error.place_forget()

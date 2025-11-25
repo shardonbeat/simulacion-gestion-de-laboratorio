@@ -107,14 +107,9 @@ class BDD:
             return False
     
     def obtenerUsuario(self, cedula):
-        # Seleccionar también la contraseña y mantener un orden consistente de columnas
         query = "SELECT username, cedula, password, nacimiento, mail, role, nivel_autorizacion FROM usuarios WHERE cedula = ? LIMIT 1"
         cur = self.cursor.execute(query, (cedula,))
         r = cur.fetchone()
-        print(f"DEBUG - Número de columnas: {len(r) if r else 'None'}")
-        print(f"DEBUG - Columnas: {r}")
-
-        # Evitar llamar a len() sobre None y mapear directamente las columnas esperadas
         if not r:
             return None
 

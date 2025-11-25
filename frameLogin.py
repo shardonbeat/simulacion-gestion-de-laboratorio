@@ -58,6 +58,7 @@ class frameLogin (CTkFrame):
 			anchor=CENTER
 		)
 
+
 			#@ Cédula
 
 		self.input_user = CTkEntry(
@@ -121,6 +122,14 @@ class frameLogin (CTkFrame):
 			anchor=CENTER
 		)
 
+		self.error_label = CTkLabel(
+			master=self,
+			text="Cédula o contraseña incorrecta",
+			text_color="red",
+			font=("Times New Roman", 15, "bold"),
+			bg_color="#2b2b39"
+		)
+
 	## Funciones
 
 		#@ Función iniciar sesión
@@ -131,7 +140,10 @@ class frameLogin (CTkFrame):
 			self.obtener_nivel_autorizacion(data)
 			self.limpiar_inputs()
 		else:
-			print("Cédula o contraseña incorrecta.")
+			self.error_label.place(
+				relx=0.5, rely=0.77,
+				anchor=CENTER
+			)
 
 	def registrarse(self):
 		self.main.frameLogin.place_forget()

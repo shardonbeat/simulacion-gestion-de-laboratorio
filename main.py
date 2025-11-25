@@ -6,7 +6,7 @@ from frameLogin import frameLogin
 from frameMain import frameMain
 from frameRegister import frameRegister
 from frameAdmin import frameAdmin
-
+from FrameCoordinador import FrameCoordinador
 
 set_default_color_theme("blue")
 
@@ -30,6 +30,7 @@ class App:
         self.frameAdmin = frameAdmin(self.ventana, self)
         self.frameMain = frameMain(self.ventana, self)
         self.frameRegister = frameRegister(self.ventana, self)
+        self.FrameCoordinador = FrameCoordinador(self.ventana, self)
 
     def iniciar(self):
         self.ventana.mainloop()

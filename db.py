@@ -18,31 +18,42 @@ class BDD:
         self.crear_tabla_sustancias()
 
     def crear_tabla_usuarios(self):
-        query = '''
-                CREATE TABLE IF NOT EXISTS usuarios
-                (id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL,
-                cedula TEXT NOT NULL,
-                password TEXT NOT NULL,
-                nacimiento TEXT NOT NULL,
-                mail TEXT NOT NULL,
-                capacitacion TEXT,
-                role TEXT NOT NULL,
-                nivel_autorizacion INTEGER NOT NULL
-                );
-                '''
-        self.cursor.executescript(query)
+        try:
+            query = '''
+                    CREATE TABLE IF NOT EXISTS usuarios
+                    (id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL,
+                    cedula TEXT NOT NULL,
+                    password TEXT NOT NULL,
+                    nacimiento TEXT NOT NULL,
+                    mail TEXT NOT NULL,
+                    capacitacion TEXT,
+                    role TEXT NOT NULL,
+                    nivel_autorizacion INTEGER NOT NULL,
+                    CONSTRAINT user UNIQUE (cedula, password)
+                    );
+                    '''
+            self.cursor.executescript(query)
+            self.conn.commit()
 
-        # Use INSERT OR IGNORE so repeated initialization won't raise UNIQUE constraint errors
-        insert_q = '''
-            INSERT OR IGNORE INTO usuarios (username, cedula, password, nacimiento, mail, role, nivel_autorizacion)
-            VALUES (?, ?, ?, ?, ?, ?, ?);
-            '''
+            # Verificar si el usuario administrador ya existe y crearlo si no existe
+            self.cursor.execute('SELECT id_usuario FROM usuarios WHERE cedula = ?', ('00000000',))
+            admin_exists = self.cursor.fetchone()
 
-        # Crear un usuario administrador por defecto
-        self.cursor.execute(insert_q, ('admin', '00000000', '1234', '1970-01-01', 
-                                       'admin@example.com', 'Administrador de Cumplimiento', 3))
-        self.conn.commit()
+            if not admin_exists:
+                insert_q = '''
+                    INSERT OR IGNORE INTO usuarios (username, cedula, password, nacimiento, mail, role, nivel_autorizacion)
+                    VALUES (?, ?, ?, ?, ?, ?, ?);
+                    '''
+
+                # Crear un usuario administrador por defecto
+                self.cursor.execute(insert_q, ('admin', '00000000', '1234', '1970-01-01', 
+                                            'admin@example.com', 'Administrador de Cumplimiento', 3))
+                self.conn.commit()
+            else:
+                print("El usuario administrador ya existe.")
+        except Exception as e:
+            print(f"Error al crear tabla usuarios: {e}")
 
     def crear_tabla_sustancias(self):
         query = '''

@@ -143,9 +143,16 @@ class frameRegister (CTkFrame):
         self.input_nacimiento.place(relx=0.52, rely=0.60,
 			relwidth=0.13, relheight=0.05)
         
-        self.fecha_error = CTkLabel(
+        self.fecha_error1 = CTkLabel(
             master=self,
             text="Fecha inválida",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
+        self.fecha_error2 = CTkLabel(
+            master=self,
+            text="La fecha es obligatoria",
             text_color="red",
             font=("Times New Roman", 15, "bold"),
             bg_color="#2b2b39"
@@ -162,14 +169,21 @@ class frameRegister (CTkFrame):
         self.mail_input.place(relx=0.36, rely=0.60,
             relwidth=0.13, relheight=0.05,)
         
-        self.email_error = CTkLabel(
+        self.email_error1 = CTkLabel(
             master=self,
             text="Correo electrónico inválido",
             text_color="red",
             font=("Times New Roman", 15, "bold"),
             bg_color="#2b2b39"
         )
-        
+        self.email_error2 = CTkLabel(
+            master=self,
+            text="El correo es obligatorio",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
+
         ## Botones
 
         #@ Botón de registro
@@ -288,7 +302,15 @@ class frameRegister (CTkFrame):
             return False
 
     def comprobar_contraseñas(self):
-        if self.input_password.get() == self.input_password2.get():
+        password = self.input_password.get()
+        password2 = self.input_password2.get()
+
+        if not password or not password2:
+            self.pass_error2.place(
+                relx=0.43, rely=0.50
+            )
+            return False
+        elif password == password2:
             return True
         else:
             self.pass_error1.place(
@@ -301,26 +323,34 @@ class frameRegister (CTkFrame):
         mail_parts = mail.split('@')
 
         if mail == "@.":
-            self.email_error.place(
-                relx=0.35, rely=0.65
-            )
-            return False
-        if not mail:
-            self.email_error.place(
+            self.email_error1.place(
                 relx=0.35, rely=0.65
             )
             return False
         if len(mail_parts) == 2 and '.' in mail_parts[1]:
             return True
+        elif not mail:
+            self.email_error2.place(
+                relx=0.36, rely=0.65
+            )
+            return False
 
     def comprobar_fecha(self):
-        fecha = self.input_nacimiento.get()
-        fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
+        try:
+            fecha = self.input_nacimiento.get()
+            fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
+        except ValueError:
+            fecha = None
 
-        if fecha <= datetime.now().date():
+        if not fecha:
+            self.fecha_error2.place(
+                relx=0.53, rely=0.65
+            )
+            return False
+        elif fecha <= datetime.now().date():
             return True
         else:
-            self.fecha_error.place(
+            self.fecha_error1.place(
                 relx=0.53, rely=0.65
             )
             return False
@@ -339,5 +369,7 @@ class frameRegister (CTkFrame):
         self.cedula_error2.place_forget()
         self.pass_error1.place_forget()
         self.pass_error2.place_forget()
-        self.email_error.place_forget()
-        self.fecha_error.place_forget()
+        self.email_error1.place_forget()
+        self.email_error2.place_forget()
+        self.fecha_error1.place_forget()
+        self.fecha_error2.place_forget()

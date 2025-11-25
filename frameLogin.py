@@ -61,7 +61,7 @@ class frameLogin (CTkFrame):
 
 			#@ Cédula
 
-		self.input_user = CTkEntry(
+		self.input_cedula = CTkEntry(
 			master=self,
 			font=('Arial', 15, "bold"), text_color='black',
 			placeholder_text="Cédula", placeholder_text_color='black',
@@ -70,7 +70,7 @@ class frameLogin (CTkFrame):
 			bg_color="#2b2b39",
 			corner_radius=10
 		)
-		self.input_user.place(relx=0.5, rely=0.52,
+		self.input_cedula.place(relx=0.5, rely=0.52,
 			relwidth=0.15, relheight=0.05, anchor=CENTER)
 
 			#@ Contraseña
@@ -98,7 +98,7 @@ class frameLogin (CTkFrame):
             fg_color="#72737f",
 			bg_color="#2b2b39",
             command=lambda:self.iniciar_sesion(
-                self.input_user.get(), self.input_password.get()
+                self.input_cedula.get(), self.input_password.get()
             )
         )
 		self.login_button.place (
@@ -154,7 +154,7 @@ class frameLogin (CTkFrame):
 		self.limpiar_inputs()
 	
 	def limpiar_inputs(self):
-		self.input_user.delete(0, "end")
+		self.input_cedula.delete(0, "end")
 		self.input_password.delete(0, "end")
 
 		'''

@@ -52,6 +52,23 @@ class BDD:
                 self.conn.commit()
             else:
                 print("El usuario administrador ya existe.")
+
+            self.cursor.execute('SELECT id_usuario FROM usuarios WHERE cedula = ?', ('11111111',))
+            coordinador_exists = self.cursor.fetchone()
+
+            if not coordinador_exists:
+                insert_q = '''
+                    INSERT OR IGNORE INTO usuarios (username, cedula, password, nacimiento, mail, role, nivel_autorizacion)
+                    VALUES (?, ?, ?, ?, ?, ?, ?);
+                    '''
+
+                # Crear un usuario coordinador por defectos
+                self.cursor.execute(insert_q, ('coordinador', '11111111', '1234', '1980-01-01', 
+                                            'coordinador@example.com', 'Coordinador de Laboratorio', 2))
+                self.conn.commit()
+            else:
+                print("El usuario coordinador ya existe.")
+            
         except Exception as e:
             print(f"Error al crear tabla usuarios: {e}")
 
@@ -96,6 +113,38 @@ class BDD:
                 '''
         self.cursor.executescript(query)
         self.conn.commit()
+
+    def crear_tabla_solicitudes_acceso(self):
+        query = '''
+                CREATE TABLE IF NOT EXISTS solicitudes_acceso
+                (id_solicitud INTEGER PRIMARY KEY AUTOINCREMENT,
+                id_usuario INTEGER NOT NULL,
+                nivel_solicitado INTEGER NOT NULL,
+                motivo TEXT NOT NULL,
+                fecha_solicitud TEXT NOT NULL,
+                estado TEXT NOT NULL,
+                FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+                );
+                '''
+
+        self.cursor.executescript(query)
+        self.conn.commit()
+
+    def crear_tabla_solicitudes_sustancias(self):
+            query = '''
+                    CREATE TABLE IF NOT EXISTS solicitudes_sustancias
+                    (id_solicitud INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_usuario INTEGER NOT NULL,
+                    nombre_sustancia TEXT NOT NULL,
+                    cantidad_solicitada INTEGER NOT NULL,
+                    motivo TEXT NOT NULL,
+                    fecha_solicitud TEXT NOT NULL,
+                    estado TEXT NOT NULL,
+                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+                    );
+                    '''
+            self.cursor.executescript(query)
+            self.conn.commit()
 
     ## Funciones de la base de datos
     def verificarLogin(self, cedula, password):

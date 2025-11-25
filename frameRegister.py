@@ -50,6 +50,14 @@ class frameRegister (CTkFrame):
         self.input_username.place(relx=0.36, rely=0.30,
 			relwidth=0.13, relheight=0.05)
         
+        self.username_error = CTkLabel(
+            master=self,
+            text="El nombre es obligatorio",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
+        
         self.input_cedula = CTkEntry(
 			master=self,
 			font=('Arial', 12, "bold"), text_color='black',
@@ -60,7 +68,15 @@ class frameRegister (CTkFrame):
         self.input_cedula.place(relx=0.52, rely=0.30,
 			relwidth=0.13, relheight=0.05)
         
-        self.cedula_error = CTkLabel(
+        self.cedula_error1 = CTkLabel(
+            master=self,
+            text="La cédula es obligatoria",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
+        
+        self.cedula_error2 = CTkLabel(
             master=self,
             text="Cédula inválida",
             text_color="red",
@@ -90,9 +106,16 @@ class frameRegister (CTkFrame):
         self.input_password2.place(relx=0.52, rely=0.45,
 			relwidth=0.13, relheight=0.05)
         
-        self.pass_error = CTkLabel(
+        self.pass_error1 = CTkLabel(
             master=self,
             text="Las contraseñas no coinciden",
+            text_color="red",
+            font=("Times New Roman", 15, "bold"),
+            bg_color="#2b2b39"
+        )
+        self.pass_error2 = CTkLabel(
+            master=self,
+            text="La contraseña es obligatoria",
             text_color="red",
             font=("Times New Roman", 15, "bold"),
             bg_color="#2b2b39"
@@ -211,6 +234,7 @@ class frameRegister (CTkFrame):
             username, cedula, password, nacimiento, mail, role, nivel_autorizacion
         )
 
+        self.validar_username()
         if not self.validar_cedula():
             print("Cédula inválida.")
         if not self.comprobar_contraseñas():
@@ -220,7 +244,7 @@ class frameRegister (CTkFrame):
         if not self.comprobar_fecha():
             print("Fecha inválida.")
         
-        if success and self.validar_cedula() and self.comprobar_contraseñas() \
+        if success and self.validar_username() and self.validar_cedula() and self.comprobar_contraseñas() \
             and self.comprobar_email() and self.comprobar_fecha():
             print("Usuario registrado exitosamente.")
             self.limpiar_campos()
@@ -240,12 +264,26 @@ class frameRegister (CTkFrame):
         )
 
     ## Validaciones
+    def validar_username(self):
+        if self.input_username.get():
+            return True
+        else:
+            self.username_error.place(
+                relx=0.363, rely=0.35
+            )
+            return False
+
     def validar_cedula(self):
         if self.input_cedula.get().isdigit() and 7 <= len(self.input_cedula.get()) <= 8:
             return True
+        elif not self.input_cedula.get():
+            self.cedula_error1.place(
+                relx=0.528, rely=0.35
+            )
+            return False
         else:
-            self.cedula_error.place(
-                relx=0.53, rely=0.35
+            self.cedula_error2.place(
+                relx=0.52, rely=0.35
             )
             return False
 
@@ -253,7 +291,7 @@ class frameRegister (CTkFrame):
         if self.input_password.get() == self.input_password2.get():
             return True
         else:
-            self.pass_error.place(
+            self.pass_error1.place(
                 relx=0.43, rely=0.50
             )
             return False
@@ -296,7 +334,10 @@ class frameRegister (CTkFrame):
         self.mail_input.delete(0, 'end')
 
     def limpiar_errores(self):
-        self.cedula_error.place_forget()
-        self.pass_error.place_forget()
+        self.username_error.place_forget()
+        self.cedula_error1.place_forget()
+        self.cedula_error2.place_forget()
+        self.pass_error1.place_forget()
+        self.pass_error2.place_forget()
         self.email_error.place_forget()
         self.fecha_error.place_forget()

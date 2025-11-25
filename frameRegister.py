@@ -290,8 +290,6 @@ class frameRegister (CTkFrame):
         self.limpiar_errores()
         self.limpiar_campos()
         self.main.frameRegister.place_forget()
-        go = frameRegister(self.main.ventana, self)
-        self.main.frameRegister = go
         self.main.frameLogin.place(
             relx=0, rely=0,
             relwidth=1, relheight=1

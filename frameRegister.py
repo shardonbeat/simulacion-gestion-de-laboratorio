@@ -42,22 +42,23 @@ class frameRegister (CTkFrame):
 
         self.input_username = CTkEntry(
 			master=self,
-			font=('Arial', 15), text_color='black',
+			font=('Arial', 12, "bold"), text_color='black',
 			placeholder_text="Nombre de Usuario", placeholder_text_color='black',
+            justify='center',
 			border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
-        self.input_username.place(relx=0.35, rely=0.30,
-			relwidth=0.12, relheight=0.05)
+        self.input_username.place(relx=0.36, rely=0.30,
+			relwidth=0.13, relheight=0.05)
         
         self.input_cedula = CTkEntry(
 			master=self,
-			font=('Arial', 15), text_color='black',
+			font=('Arial', 12, "bold"), text_color='black',
 			placeholder_text="Cédula", placeholder_text_color='black',
 			justify='center',
 			border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39",
         )
-        self.input_cedula.place(relx=0.53, rely=0.30,
-			relwidth=0.12, relheight=0.05)
+        self.input_cedula.place(relx=0.52, rely=0.30,
+			relwidth=0.13, relheight=0.05)
         
         self.cedula_error = CTkLabel(
             master=self,
@@ -69,24 +70,24 @@ class frameRegister (CTkFrame):
         
         self.input_password = CTkEntry(
 			master=self,
-			font=('Arial', 15), text_color='black',
+			font=('Arial', 12, "bold"), text_color='black',
             show='*',
 			placeholder_text="Contraseña", placeholder_text_color='black',
 			justify='center',
 			border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
-        self.input_password.place(relx=0.35, rely=0.45,
-			relwidth=0.12, relheight=0.05)
+        self.input_password.place(relx=0.36, rely=0.45,
+			relwidth=0.13, relheight=0.05)
         
         self.input_password2 = CTkEntry(
 			master=self,
-			font=('Arial', 15), text_color='black',
+			font=('Arial', 12, "bold"), text_color='black',
             show='*',
 			placeholder_text="Confirmar Contraseña", placeholder_text_color='black',
 			justify='center',
 			border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
-        self.input_password2.place(relx=0.53, rely=0.45,
+        self.input_password2.place(relx=0.52, rely=0.45,
 			relwidth=0.13, relheight=0.05)
         
         self.pass_error = CTkLabel(
@@ -96,17 +97,28 @@ class frameRegister (CTkFrame):
             font=("Times New Roman", 15, "bold"),
             bg_color="#2b2b39"
         )
-        
+
+        self.input_nacimiento_label = CTkLabel(
+            master=self,
+            text="Formato: YYYY-MM-DD",
+            text_color="#FFFFFF",
+            bg_color="#2b2b39",
+            font=("Times New Roman", 12, "bold"),
+        )
+        self.input_nacimiento_label.place(relx=0.585, rely=0.59,
+            anchor=CENTER
+        )
+
         self.input_nacimiento = CTkEntry(
             master=self,
-            font=('Arial', 15), text_color='black',
-            placeholder_text="Fecha de Nacimiento (YYYY-MM-DD)", 
+            font=('Arial', 12, "bold"), text_color='black',
+            placeholder_text="Fecha de Nacimiento", 
             placeholder_text_color='black',
             justify='center',
             border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
-        self.input_nacimiento.place(relx=0.53, rely=0.60,
-			relwidth=0.12, relheight=0.05)
+        self.input_nacimiento.place(relx=0.52, rely=0.60,
+			relwidth=0.13, relheight=0.05)
         
         self.fecha_error = CTkLabel(
             master=self,
@@ -118,14 +130,14 @@ class frameRegister (CTkFrame):
         
         self.mail_input = CTkEntry(
             master=self,
-            font=('Arial', 15), text_color='black',
+            font=('Arial', 12, "bold"), text_color='black',
             placeholder_text="Correo Electrónico",
             placeholder_text_color='black',
             justify='center',
             border_color='black', fg_color="#BCB4B4", bg_color="#2b2b39"
         )
-        self.mail_input.place(relx=0.35, rely=0.60,
-            relwidth=0.12, relheight=0.05,)
+        self.mail_input.place(relx=0.36, rely=0.60,
+            relwidth=0.13, relheight=0.05,)
         
         self.email_error = CTkLabel(
             master=self,

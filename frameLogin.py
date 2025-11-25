@@ -62,7 +62,7 @@ class frameLogin (CTkFrame):
 
 		self.input_user = CTkEntry(
 			master=self,
-			font=('Arial', 15), text_color='black',
+			font=('Arial', 15, "bold"), text_color='black',
 			placeholder_text="Cédula", placeholder_text_color='black',
 			justify='center',
 			border_color='black', fg_color="#BCB4B4",
@@ -76,7 +76,7 @@ class frameLogin (CTkFrame):
 
 		self.input_password = CTkEntry(
 			master=self,
-			font=('Arial', 15), text_color='black',
+			font=('Arial', 15, "bold"), text_color='black',
 			placeholder_text="Contraseña", placeholder_text_color='black',
 			justify='center',
 			border_color='black', fg_color="#BCB4B4",

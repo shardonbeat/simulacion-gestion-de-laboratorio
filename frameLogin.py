@@ -147,6 +147,8 @@ class frameLogin (CTkFrame):
 
 	def registrarse(self):
 		self.main.frameLogin.place_forget()
+		go = frameLogin(self.main.ventana, self.main)
+		self.main.frameLogin = go
 		self.main.frameRegister.place(
 			relx=0, rely=0,
 			relwidth=1, relheight=1

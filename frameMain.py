@@ -8,7 +8,7 @@ class frameMain (CTkFrame):
 		data = self.main.bdd.obtener_usuario()
 		self.configure(
 			fg_color = "#A79D8A",
-			corner_radius = 0,
+			corner_radius = 0
 		)
 
 		## Labels
@@ -19,29 +19,8 @@ class frameMain (CTkFrame):
 		)
 		self.labelWelcome.place(
 			relx=0, rely=0,
-			relwidth=0.2, relheight=2,
+			relwidth=0.2, relheight=2
 		)
-
-		# Safely extract username and rol from the returned data (may be None or shorter than expected)
-		if isinstance(data, dict):
-			username = data.get('username', 'Usuario')
-		elif isinstance(data, tuple) and len(data) > 0:
-			username = data[0]
-		else:
-			username = 'Usuario'
-
-		self.texto_usuario = CTkLabel(
-			master = self,
-			text = f"Hola, {username}!",
-			font = ("Arial", 15, "bold"),
-			text_color = "#ffffff",
-			fg_color = "#2b2b39"
-		)
-		self.texto_usuario.place(
-			relx=0, rely=0.6,
-			relwidth=0.2, relheight=0.1,
-		)
-		
 
 		self.image = CTkImage(
 			Image.open("Img/Laboratorio.ico"),
@@ -56,7 +35,7 @@ class frameMain (CTkFrame):
 		)
 		self.logoImage.place(
 			relx=0, rely=0.01,
-			relwidth=0.2, relheight=0.3,
+			relwidth=0.2, relheight=0.3
 		)
 
 		self.logotitulo = CTkLabel(
@@ -68,7 +47,7 @@ class frameMain (CTkFrame):
         )
 		self.logotitulo.place(
             relx=0, rely=0.27,
-            relwidth=0.2, relheight=0.05,
+            relwidth=0.2, relheight=0.05
         )
 
 		self.Inicio = CTkButton(
@@ -78,11 +57,11 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			hover_color="#898995",
             font = ("Times New Roman", 20, "bold"),
-			command=self.volver_main
+			command= self.volver_main
         )
 		self.Inicio.place(
             relx=0.05, rely=0.33,
-            relwidth=0.09, relheight=0.05,
+            relwidth=0.09, relheight=0.05
         )
 
 		self.Niveles = CTkLabel(
@@ -94,7 +73,7 @@ class frameMain (CTkFrame):
         )
 		self.Niveles.place(
             relx=0, rely=0.4,
-            relwidth=0.2, relheight=0.05,
+            relwidth=0.2, relheight=0.05
         )
 
 		self.Nivel_1 = CTkButton(
@@ -104,11 +83,11 @@ class frameMain (CTkFrame):
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
-			command=self.laboratorioNivel1
+			command= self.laboratorioNivel1
 		)
 		self.Nivel_1.place(
 			relx=0.02, rely=0.46,
-			relwidth=0.1, relheight=0.04,
+			relwidth=0.1, relheight=0.04
 		)
 
 		self.Nivel_2 = CTkButton(
@@ -118,11 +97,11 @@ class frameMain (CTkFrame):
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),	
-			command= self.laboratorioNivel2
+			command= self.laboratorioNivel2 if data in ["2", "3"] else self.AccesoDenegado
 		)
 		self.Nivel_2.place(
 			relx=0.02, rely=0.50,
-			relwidth=0.1, relheight=0.04,
+			relwidth=0.1, relheight=0.04
 		)
 
 		self.Nivel_3 = CTkButton(
@@ -132,11 +111,11 @@ class frameMain (CTkFrame):
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
-			command=self.laboratorioNivel3
+			command= self.laboratorioNivel3 if data == "3" else self.AccesoDenegado
 		)
 		self.Nivel_3.place(
 			relx=0.02, rely=0.54,
-			relwidth=0.1, relheight=0.04,
+			relwidth=0.1, relheight=0.04
 		)
 
 		self.labelFondo = CTkLabel(
@@ -148,7 +127,7 @@ class frameMain (CTkFrame):
 		)
 		self.labelFondo.place(
 			relx=0.25, rely=0.12,
-			relwidth=0.7, relheight=0.75,
+			relwidth=0.7, relheight=0.75
 		)
 
 		self.labelContenido = CTkLabel(
@@ -161,7 +140,7 @@ class frameMain (CTkFrame):
 		)
 		self.labelContenido.place(
 			relx=0.49, rely=0.15,
-			relwidth=0.22, relheight=0.05,
+			relwidth=0.22, relheight=0.05
 		)
 
 		self.AccesoImage = CTkImage(
@@ -176,11 +155,11 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.AccesoImage,
+			image=self.AccesoImage
 		)
 		self.AccesoNivel.place(
 			relx=0.33, rely=0.25,	
-			relwidth=0.15, relheight=0.2,
+			relwidth=0.15, relheight=0.2
 		)
 
 		self.SustanciasImage = CTkImage(
@@ -196,11 +175,11 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.SustanciasImage,
+			image=self.SustanciasImage
 		)
 		self.Sustancias.place(
 			relx=0.53, rely=0.25,
-			relwidth=0.15, relheight=0.2,
+			relwidth=0.15, relheight=0.2
 		)
 
 		self.RegistrosImage = CTkImage(
@@ -216,11 +195,11 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.RegistrosImage,
+			image=self.RegistrosImage
 		)
 		self.Registros.place(
 			relx=0.73, rely=0.25,
-			relwidth=0.15, relheight=0.2,
+			relwidth=0.15, relheight=0.2
 		)
 
 		self.reportesImage = CTkImage(
@@ -236,11 +215,11 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.reportesImage,
+			image=self.reportesImage
 		)
 		self.Reportes.place(
 			relx=0.43, rely=0.5,
-			relwidth=0.15, relheight=0.2,
+			relwidth=0.15, relheight=0.2
 		)
 
 		self.HistorialImage = CTkImage(
@@ -256,11 +235,11 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.HistorialImage,
+			image=self.HistorialImage
 		)
 		self.Historial.place(
 			relx=0.63, rely=0.5,
-			relwidth=0.15, relheight=0.2,
+			relwidth=0.15, relheight=0.2
 		)
 
 		self.cerrar_sesion = CTkButton(
@@ -270,7 +249,7 @@ class frameMain (CTkFrame):
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
-			command=self.cerrar
+			command= self.cerrar
 		)
 		self.cerrar_sesion.place(
 			relx=0.06, rely=0.9,
@@ -279,6 +258,7 @@ class frameMain (CTkFrame):
 	
 	def laboratorioNivel1(self):
 		self.AccesoNivel.destroy()
+		self.Acceso.destroy() if hasattr(self, 'Acceso') else None
 		self.Sustancias.destroy()
 		self.Registros.destroy()
 		self.Reportes.destroy()
@@ -290,7 +270,7 @@ class frameMain (CTkFrame):
 		)
 		self.labelContenido.place(
 			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05,
+			relwidth=0.3, relheight=0.05
 		)
 
 		self.back_image = CTkImage(
@@ -300,6 +280,7 @@ class frameMain (CTkFrame):
 
 	def laboratorioNivel2(self):
 		self.AccesoNivel.destroy()
+		self.Acceso.destroy()
 		self.Sustancias.destroy()
 		self.Registros.destroy()
 		self.Reportes.destroy()
@@ -311,7 +292,7 @@ class frameMain (CTkFrame):
 		)
 		self.labelContenido.place(
 			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05,
+			relwidth=0.3, relheight=0.05
 		)
 
 		self.back_image = CTkImage(
@@ -321,6 +302,7 @@ class frameMain (CTkFrame):
 	
 	def laboratorioNivel3(self):
 		self.AccesoNivel.destroy()
+		self.Acceso.destroy()
 		self.Sustancias.destroy()
 		self.Registros.destroy()
 		self.Reportes.destroy()
@@ -332,8 +314,37 @@ class frameMain (CTkFrame):
 		)
 		self.labelContenido.place(
 			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05,
+			relwidth=0.3, relheight=0.05
 		)
+
+	def AccesoDenegado(self):
+
+		# Si ya existe un mensaje anterior, lo eliminamos primero
+		if hasattr(self, 'Acceso') and self.Acceso is not None:
+			try:
+				self.Acceso.destroy()
+			except Exception:
+				pass
+
+		self.Acceso = CTkLabel(
+			master=self,
+			text="Acceso denegado",
+			text_color="#ff0000",
+			fg_color="#2b2b39",
+			bg_color="#2b2b39",
+			font=("Times New Roman", 15, "bold")
+		)
+		self.Acceso.place(
+			relx=0.03, rely=0.6,
+			relwidth=0.15, relheight=0.04
+		)
+
+		# Programar que el mensaje se elimine automáticamente después de 1 segundo (1000 ms)
+		try:
+			self.after(1000, lambda: self.Acceso.destroy() if hasattr(self, 'Acceso') else None)
+		except Exception:
+			# En caso de que after no esté disponible, ignoramos silenciosamente
+			pass
 	
 	def volver_main(self):
 		self.main.frameMain.place_forget()

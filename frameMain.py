@@ -2,6 +2,8 @@ from customtkinter import *
 from PIL import Image
 
 from frameHacerRegistros import HacerRegistros
+from frameHacerReportes import HacerReportes
+from frameMostrarHistorial import MostrarHistorial
 from frameSolicitudAcceso import solicitudAcceso
 from frameSolicitudSustancias import solicitudSustancia
 
@@ -20,6 +22,8 @@ class frameMain (CTkFrame):
 		self.frameSolicitudAcceso = solicitudAcceso(self.main.ventana, self.main)
 		self.frameSolicitudSustancia = solicitudSustancia(self.main.ventana, self.main)
 		self.frameHacerRegistros = HacerRegistros(self.main.ventana, self.main)
+		self.frameHacerReportes = HacerReportes(self.main.ventana, self.main)
+		self.frameMostrarHistorial = MostrarHistorial(self.main.ventana, self.main)
 
 		## Labels
 		self.labelWelcome = CTkLabel(
@@ -228,7 +232,8 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.reportesImage
+			image=self.reportesImage,
+			command = lambda: self.frame_manager(4)
 		)
 		self.Reportes.place(
 			relx=0.43, rely=0.5,
@@ -248,7 +253,8 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.HistorialImage
+			image=self.HistorialImage,
+			command = lambda: self.frame_manager(5)
 		)
 		self.Historial.place(
 			relx=0.63, rely=0.5,
@@ -363,6 +369,8 @@ class frameMain (CTkFrame):
 		self.frameSolicitudAcceso.place_forget()
 		self.frameSolicitudSustancia.place_forget()
 		self.frameHacerRegistros.place_forget()
+		self.frameHacerReportes.place_forget()
+		self.frameMostrarHistorial.place_forget()
 
 	def borrar_niveles(self):
 		self.Niveles.place_forget()
@@ -388,6 +396,18 @@ class frameMain (CTkFrame):
 		elif frame == 3:
 			self.removerfunciones()
 			self.frameHacerRegistros.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		elif frame == 4:
+			self.removerfunciones()
+			self.frameHacerReportes.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		elif frame == 5:
+			self.removerfunciones()
+			self.frameMostrarHistorial.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)

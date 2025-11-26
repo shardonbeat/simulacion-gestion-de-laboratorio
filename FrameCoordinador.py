@@ -78,6 +78,7 @@ class FrameCoordinador(CTkFrame):
 			fg_color="#2b2b39",
 			bg_color="#2b2b39",
 			font=("Times New Roman", 15, "bold"),
+			command= self.laboratorioNivel1
 		)
 		self.Nivel_1.place(
 			relx=0.02, rely=0.46,
@@ -91,6 +92,7 @@ class FrameCoordinador(CTkFrame):
 			fg_color="#2b2b39",
 			bg_color="#2b2b39",
 			font=("Times New Roman", 15, "bold"),
+			command= self.laboratorioNivel2
 		)
 		self.Nivel_2.place(
 			relx=0.02, rely=0.50,
@@ -104,6 +106,7 @@ class FrameCoordinador(CTkFrame):
 			fg_color="#2b2b39",
 			bg_color="#2b2b39",
 			font=("Times New Roman", 15, "bold"),
+			command= self.laboratorioNivel3
 		)
 		self.Nivel_3.place(
 			relx=0.02, rely=0.54,
@@ -145,6 +148,69 @@ class FrameCoordinador(CTkFrame):
 		self.main.frameCoordinador.place(
 			relx=0, rely=0,
 			relwidth=1, relheight=1,
+		)
+	
+	def laboratorioNivel1(self):
+		self.AccesoNivel.destroy()
+		self.Acceso.destroy() if hasattr(self, 'Acceso') else None
+		self.Sustancias.destroy()
+		self.Registros.destroy()
+		self.Reportes.destroy()
+		self.Historial.destroy()
+		self.cerrar_sesion.destroy()
+
+		self.labelContenido.configure(
+		text = "¡ Acceso al laboratorio nivel 1 otorgado !"
+		)
+		self.labelContenido.place(
+			relx=0.43, rely=0.15,
+			relwidth=0.3, relheight=0.05
+		)
+	def laboratorioNivel2(self):
+		self.AccesoNivel.destroy()
+		# destruir mensaje de acceso si existe
+		self.Acceso.destroy() if hasattr(self, 'Acceso') else None
+		self.Sustancias.destroy()
+		self.Registros.destroy()
+		self.Reportes.destroy()
+		self.Historial.destroy()
+		self.cerrar_sesion.destroy()
+
+		self.labelContenido.configure(
+			text = "¡ Acceso al laboratorio nivel 2 otorgado !"
+		)
+		self.labelContenido.place(
+			relx=0.43, rely=0.15,
+			relwidth=0.3, relheight=0.05
+		)
+
+		self.back_image = CTkImage(
+			Image.open("Img/Back_image.png"),
+			size=(30, 30)
+		)
+	def laboratorioNivel3(self):
+		self.AccesoNivel.destroy()
+		# destruir mensaje de acceso si existe
+		self.Acceso.destroy() if hasattr(self, 'Acceso') else None
+		self.Sustancias.destroy()
+		self.Registros.destroy()
+		self.Reportes.destroy()
+		self.Historial.destroy()
+		self.cerrar_sesion.destroy()
+
+		self.labelContenido.configure(
+			text = "¡ Acceso al laboratorio nivel 3 otorgado !"
+		)
+		self.labelContenido.place(
+			relx=0.43, rely=0.15,
+			relwidth=0.3, relheight=0.05
+		)
+		self.labelContenido.configure(
+			text = "¡ Acceso al laboratorio nivel 3 otorgado !"
+		)
+		self.labelContenido.place(
+			relx=0.43, rely=0.15,
+			relwidth=0.3, relheight=0.05
 		)
 
 	def cerrar(self):

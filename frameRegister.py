@@ -276,8 +276,7 @@ class frameRegister (CTkFrame):
             username, cedula, password, nacimiento, mail, role, nivel_autorizacion
         )
         
-        if success and self.validar_username() and self.validar_cedula() and self.comprobar_contraseñas() \
-            and self.comprobar_email() and self.comprobar_fecha():
+        if success and acceso:
             print("Usuario registrado exitosamente.")
             self.limpiar_campos()
             self.texto_exito.place(

@@ -20,6 +20,7 @@ class BDD:
         self.crear_tabla_reportes()
         self.crear_tabla_solicitudes_acceso()
         self.crear_tabla_solicitudes_sustancias()
+        self.crear_tabla_registros_sustancias_residuos()
 
     def crear_tabla_usuarios(self):
         try:
@@ -150,6 +151,21 @@ class BDD:
             self.cursor.executescript(query)
             self.conn.commit()
 
+    def crear_tabla_registros_sustancias_residuos(self):
+        query = '''
+                CREATE TABLE IF NOT EXISTS registros_sustancias_residuos
+                (id_registro INTEGER PRIMARY KEY AUTOINCREMENT,
+                id_usuario INTEGER NOT NULL,
+                sustancia TEXT NOT NULL,
+                residuo TEXT NOT NULL,
+                contenedor TEXT NOT NULL,
+                fecha_almacenamiento TEXT NOT NULL,
+                fecha_retiro TEXT NOT NULL
+                );
+                '''
+        self.cursor.executescript(query)
+        self.conn.commit()
+
     ## Funciones de la base de datos
     def verificarLogin(self, cedula, password):
             query = "SELECT 1 FROM usuarios WHERE cedula = ? AND password = ? LIMIT 1"
@@ -223,3 +239,16 @@ class BDD:
 
     def cerrar_conexion(self):
         self.conn.close()
+
+    def guardar_registro_sustancia_residuo(self, id_usuario, sustancia, residuo, contenedor, fecha_almacenamiento, fecha_retiro):
+        query = '''
+            INSERT INTO registros_sustancias_residuos (id_usuario, sustancia, residuo, contenedor, fecha_almacenamiento, fecha_retiro)
+            VALUES (?, ?, ?, ?, ?, ?);
+            '''
+        try:
+            self.cursor.execute(query, (id_usuario, sustancia, residuo, contenedor, fecha_almacenamiento, fecha_retiro))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al guardar registro de sustancia y residuo: {e}")
+            return False

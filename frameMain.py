@@ -2,6 +2,7 @@ from customtkinter import *
 from PIL import Image
 
 from frameSolicitudAcceso import solicitudAcceso
+from frameSolicitudSustancias import solicitudSustancia
 
 class frameMain (CTkFrame):
 	def __init__(self, master, main):
@@ -14,6 +15,8 @@ class frameMain (CTkFrame):
 		)
 
 		self.frameSolicitudAcceso = solicitudAcceso(self.main.ventana, self.main)
+		self.frameSolicitudSustancia = solicitudSustancia(self.main.ventana, self.main)
+
 		## Labels
 		self.labelWelcome = CTkLabel(
 			master = self, text="",
@@ -182,7 +185,11 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.SustanciasImage
+			image=self.SustanciasImage,
+			command= lambda: self.frameSolicitudSustancia.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
 		)
 		self.Sustancias.place(
 			relx=0.53, rely=0.25,
@@ -354,6 +361,7 @@ class frameMain (CTkFrame):
 			pass
 
 	def removerfunciones(self):
+		self.frameSolicitudAcceso.place_forget()
 		self.frameSolicitudAcceso.place_forget()
 	
 	def volver_main(self):

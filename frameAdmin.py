@@ -89,101 +89,101 @@ class frameAdmin (CTkFrame):
 
 		self.labelContenido = CTkLabel(
 			master = self,
-			text = "¡ Bienvenido al laboratorio !",
+			text = "Sistema De Gestión Del Laboratorio",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 20, "bold"), corner_radius = 15,
 		)
 		self.labelContenido.place(
-			relx=0.49, rely=0.15,
-			relwidth=0.22, relheight=0.05
+			relx=0.4, rely=0.15,
+			relwidth=0.4, relheight=0.05
 		)
 
-		self.AccesoImage = CTkImage(
-			Image.open("Img/Acceso-nivel.png"),
+		self.PoliticasImage = CTkImage(
+			Image.open("Img/Politicas.png"),
 			size = (64, 64)
 		)
-		self.AccesoNivel = CTkButton(
-			master = self, text = "Solicitar acceso",
+		self.Politicas = CTkButton(
+			master = self, text = "Definir políticas",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.AccesoImage
+			image=self.PoliticasImage
 		)
-		self.AccesoNivel.place(
+		self.Politicas.place(
 			relx=0.33, rely=0.25,	
 			relwidth=0.15, relheight=0.2
 		)
 
-		self.SustanciasImage = CTkImage(
-			Image.open("Img/sustancias-quimicas.png"),
+		self.ReportesImage = CTkImage(
+			Image.open("Img/GenerarReporte.png"),
 			size = (64, 64)
 		)
 
-		self.Sustancias = CTkButton(
-			master = self, text = "Solicitar sustancias",
+		self.Reportes = CTkButton(
+			master = self, text = "Generar reportes",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.SustanciasImage
+			image=self.ReportesImage
 		)
-		self.Sustancias.place(
+		self.Reportes.place(
 			relx=0.53, rely=0.25,
 			relwidth=0.15, relheight=0.2
 		)
 
-		self.RegistrosImage = CTkImage(
-			Image.open("Img/Registros.png"),
+		self.AccionesImage = CTkImage(
+			Image.open("Img/AuditarAcciones.png"),
 			size = (64, 64)
 		)
 
-		self.Registros = CTkButton(
-			master = self, text = "Hacer registros",
+		self.Acciones = CTkButton(
+			master = self, text = "Auditar acciones",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.RegistrosImage
+			image=self.AccionesImage
 		)
-		self.Registros.place(
+		self.Acciones.place(
 			relx=0.73, rely=0.25,
 			relwidth=0.15, relheight=0.2
 		)
 
-		self.reportesImage = CTkImage(
-			Image.open("Img/Reportes.png"),
+		self.ExportarImage = CTkImage(
+			Image.open("Img/ExportarInformes.png"),
 			size = (64, 64)
 		)
-		self.Reportes = CTkButton(
-			master = self, text = "Reportar incidencias",
+		self.ExportarInformes = CTkButton(
+			master = self, text = "Exportar informes",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.reportesImage
+			image=self.ExportarImage
 		)
-		self.Reportes.place(
+		self.ExportarInformes.place(
 			relx=0.43, rely=0.5,
 			relwidth=0.15, relheight=0.2
 		)
 
 		self.HistorialImage = CTkImage(
-			Image.open("Img/Historial.png"),
+			Image.open("Img/Mejoras.png"),
 			size = (64, 64)
 		)
-		self.Historial = CTkButton(
-			master = self, text = "Ver historial",
+		self.MejorasCierres = CTkButton(
+			master = self, text = "Mejoras o cierres",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
@@ -192,7 +192,7 @@ class frameAdmin (CTkFrame):
 			compound="top",
 			image=self.HistorialImage
 		)
-		self.Historial.place(
+		self.MejorasCierres.place(
 			relx=0.63, rely=0.5,
 			relwidth=0.15, relheight=0.2
 		)

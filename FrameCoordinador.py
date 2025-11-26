@@ -89,7 +89,7 @@ class FrameCoordinador(CTkFrame):
 
 		self.labelContenido = CTkLabel(
 			master = self,
-			text = " Sistema de Gestión de Laboratorio",
+			text = " Sistema de Gestión Del Laboratorio",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",

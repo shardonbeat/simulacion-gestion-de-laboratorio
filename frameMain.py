@@ -1,6 +1,7 @@
 from customtkinter import *
 from PIL import Image
 
+from frameHacerRegistros import HacerRegistros
 from frameSolicitudAcceso import solicitudAcceso
 from frameSolicitudSustancias import solicitudSustancia
 
@@ -16,6 +17,7 @@ class frameMain (CTkFrame):
 
 		self.frameSolicitudAcceso = solicitudAcceso(self.main.ventana, self.main)
 		self.frameSolicitudSustancia = solicitudSustancia(self.main.ventana, self.main)
+		self.frameHacerRegistros = HacerRegistros(self.main.ventana, self.main)
 
 		## Labels
 		self.labelWelcome = CTkLabel(
@@ -162,10 +164,7 @@ class frameMain (CTkFrame):
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
 			image=self.AccesoImage,
-			command = lambda: self.frameSolicitudAcceso.place(
-				relx=0.25, rely=0.12,
-				relwidth=0.7, relheight=0.75
-			)
+			command = lambda: self.frame_manager(1)
 		)
 		self.AccesoNivel.place(
 			relx=0.33, rely=0.25,	
@@ -186,10 +185,7 @@ class frameMain (CTkFrame):
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
 			image=self.SustanciasImage,
-			command= lambda: self.frameSolicitudSustancia.place(
-				relx=0.25, rely=0.12,
-				relwidth=0.7, relheight=0.75
-			)
+			command = lambda: self.frame_manager(2)
 		)
 		self.Sustancias.place(
 			relx=0.53, rely=0.25,
@@ -209,7 +205,8 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.RegistrosImage
+			image=self.RegistrosImage,
+			command = lambda: self.frame_manager(3)
 		)
 		self.Registros.place(
 			relx=0.73, rely=0.25,
@@ -362,7 +359,37 @@ class frameMain (CTkFrame):
 
 	def removerfunciones(self):
 		self.frameSolicitudAcceso.place_forget()
-		self.frameSolicitudAcceso.place_forget()
+		self.frameSolicitudSustancia.place_forget()
+		self.frameHacerRegistros.place_forget()
+
+	def borrar_niveles(self):
+		self.Niveles.place_forget()
+		self.Nivel_1.place_forget()
+		self.Nivel_2.place_forget()
+		self.Nivel_3.place_forget()
+
+	def frame_manager(self, frame):
+		self.borrar_niveles()
+
+		if frame == 1:
+			self.removerfunciones()
+			self.frameSolicitudAcceso.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		elif frame == 2:
+			self.removerfunciones()
+			self.frameSolicitudSustancia.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		elif frame == 3:
+			self.removerfunciones()
+			self.frameHacerRegistros.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		
 	
 	def volver_main(self):
 		self.removerfunciones()
@@ -378,6 +405,8 @@ class frameMain (CTkFrame):
 	def cerrar(self):
 		self.removerfunciones()
 		self.main.frameMain.place_forget()
+		go = frameMain(self.main.ventana, self.main)
+		self.main.frameMain = go
 		self.main.frameLogin.place(
             relx=0, rely=0,
             relwidth=1, relheight=1

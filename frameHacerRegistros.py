@@ -1,6 +1,6 @@
 from customtkinter import *
 
-class solicitudSustancia(CTkFrame):
+class HacerRegistros(CTkFrame):
     def __init__(self, master, main):
         super().__init__(master)
         self.main = main
@@ -23,7 +23,7 @@ class solicitudSustancia(CTkFrame):
         
         self.labelContenido = CTkLabel(
 			master = self,
-			text = "Solicitud de Sustancias Peligrosas",
+			text = "Hacer Registros de Sustancias Peligrosas",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",

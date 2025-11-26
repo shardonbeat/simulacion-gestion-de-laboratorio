@@ -1,5 +1,7 @@
 from customtkinter import *
 
+from datetime import datetime
+
 class solicitudAcceso(CTkFrame):
     def __init__(self, master, main):
         super().__init__(master)
@@ -8,6 +10,7 @@ class solicitudAcceso(CTkFrame):
             fg_color="#2b2b39",
             corner_radius=0,
         )
+        self.nivel = None
 
         self.labelFondo = CTkLabel(
 			master = self,
@@ -42,6 +45,7 @@ class solicitudAcceso(CTkFrame):
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
+            command = lambda: self.seleccion_nivel(2)
 		)
         self.nivel2Button.place(
 			relx=0.20, rely=0.20,
@@ -55,6 +59,7 @@ class solicitudAcceso(CTkFrame):
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
+            command = lambda: self.seleccion_nivel(3)
 		)
         self.nivel3Button.place(
 			relx=0.60, rely=0.20,
@@ -91,8 +96,23 @@ class solicitudAcceso(CTkFrame):
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
+            command = self.enviar_solicitud
 		)
         self.enviarButton.place(
 			relx=0.4, rely=0.85,
 			relwidth=0.2, relheight=0.1,
 		)
+
+    def seleccion_nivel(self, nivel):
+        self.nivel = nivel
+
+    def enviar_solicitud(self):
+        nivel = self.nivel
+        motivo = self.Motivo.get("1.0", "end-1c")
+        id_usuario = self.main.frameMain.id
+        fecha_solicitud = datetime.now().date()
+        print(f"Solicitud enviada por usuario de id {id_usuario} para nivel {nivel} con motivo: {motivo}")
+
+        self.main.bdd.crear_solicitud_acceso(
+            id_usuario, nivel, motivo, fecha_solicitud, "Pendiente"
+        )

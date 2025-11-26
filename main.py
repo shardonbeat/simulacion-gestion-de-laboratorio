@@ -27,10 +27,18 @@ class App:
             relwidth=1, relheight=1
         )
 
-        self.frameAdmin = frameAdmin(self.ventana, self)
+    def mostrar_main(self):
+        self.frameMain = frameMain(self.ventana, self)
+        self.frameMain.place(
+            relx=0, rely=0,
+            relwidth=1, relheight=1
+        )
+
+        '''
         self.frameMain = frameMain(self.ventana, self)
         self.frameRegister = frameRegister(self.ventana, self)
         self.FrameCoordinador = FrameCoordinador(self.ventana, self)
+        '''
 
     def iniciar(self):
         self.ventana.mainloop()

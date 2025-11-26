@@ -8,7 +8,7 @@ class BDD:
         self.crear_bdd()
 
     def obtener_usuario(self):
-        query = "SELECT username, password FROM usuarios LIMIT 1"
+        query = "SELECT cedula, password FROM usuarios LIMIT 1"
         self.cursor.execute(query)
         return self.cursor.fetchone()
     
@@ -16,6 +16,9 @@ class BDD:
     def crear_bdd(self):
         self.crear_tabla_usuarios()
         self.crear_tabla_sustancias()
+        self.crear_tabla_residuos()
+        self.crear_tabla_reportes()
+        self.crear_tabla_solicitudes_acceso()
 
     def crear_tabla_usuarios(self):
         try:
@@ -182,4 +185,24 @@ class BDD:
             'role': r[5],
             'nivel_autorizacion': r[6]
         }
-        
+    
+    def obtener_id_usuario(self, cedula):
+        query = "SELECT id_usuario FROM usuarios WHERE cedula = ? LIMIT 1"
+        self.cursor.execute(query, (cedula,))
+        r = self.cursor.fetchone()
+        if not r:
+            return None
+        return r[0]
+    
+    def crear_solicitud_acceso(self, id_usuario, nivel_solicitado, motivo, fecha_solicitud, estado):
+        query = '''
+            INSERT INTO solicitudes_acceso (id_usuario, nivel_solicitado, motivo, fecha_solicitud, estado)
+            VALUES (?, ?, ?, ?, ?);
+            '''
+        try:
+            self.cursor.execute(query, (id_usuario, nivel_solicitado, motivo, fecha_solicitud, estado))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al crear solicitud de acceso: {e}")
+            return False

@@ -1,3 +1,4 @@
+from datetime import datetime
 from customtkinter import *
 
 class solicitudSustancia(CTkFrame):
@@ -116,8 +117,27 @@ class solicitudSustancia(CTkFrame):
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
+            command = self.enviar_solicitud
 		)
         self.enviarButton.place(
 			relx=0.4, rely=0.85,
 			relwidth=0.2, relheight=0.1,
 		)
+        
+    def enviar_solicitud(self):
+           
+           for i, sustancia in enumerate(self.Sustancias.get().split(',')):
+            sustancia = sustancia.strip()
+            cantidad = self.Cantidades.get().split(',')[i].strip()
+            justificacion = self.Justificacion.get("1.0", "end-1c").strip()
+            fecha_solicitud = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            id_usuario = self.main.bdd.obtener_id_usuario(self.main.usuario_actual['cedula'])
+            
+            self.main.bdd.guardar_solicitud_sustancias(
+				id_usuario,
+				sustancia,
+				cantidad,
+				justificacion,
+				fecha_solicitud,
+                'Pendiente'
+			)

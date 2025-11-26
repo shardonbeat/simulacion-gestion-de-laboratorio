@@ -19,6 +19,7 @@ class BDD:
         self.crear_tabla_residuos()
         self.crear_tabla_reportes()
         self.crear_tabla_solicitudes_acceso()
+        self.crear_tabla_solicitudes_sustancias()
 
     def crear_tabla_usuarios(self):
         try:
@@ -207,5 +208,18 @@ class BDD:
             print(f"Error al crear solicitud de acceso: {e}")
             return False
         
+    def guardar_solicitud_sustancias(self, id_usuario, sustancias, cantidades, justificacion, fecha_solicitud, estado):
+        query = '''
+            INSERT INTO solicitudes_sustancias (id_usuario, nombre_sustancia, cantidad_solicitada, motivo, fecha_solicitud, estado)
+            VALUES (?, ?, ?, ?, ?, ?);
+            '''
+        try:
+            self.cursor.execute(query, (id_usuario, sustancias, cantidades, justificacion, fecha_solicitud, estado))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al guardar solicitud de sustancias: {e}")
+            return False
+
     def cerrar_conexion(self):
         self.conn.close()

@@ -1,7 +1,11 @@
 from customtkinter import *
 from PIL import Image
 
+from CoordinadorEmitirAlertas import EmitirAlertas
+from CoordinadorGestionarInventario import GestionarInventario
+from CoordinadorRegistrarCapacitaciones import RegistrarCapacitaciones
 from CoordinadorSolicitudesAcceso import SolicitudesAcceso
+from CoordinadorSolicitudesSustancias import SolicitudesSustancias
 
 
 class FrameCoordinador(CTkFrame):
@@ -14,6 +18,10 @@ class FrameCoordinador(CTkFrame):
 		)
 
 		self.CoordinadorSolicitudesAcceso = SolicitudesAcceso(self.main.ventana, self.main)
+		self.CoordinadorSolicitudesSustancias = SolicitudesSustancias(self.main.ventana, self.main)
+		self.CoordinadorRegistrarCapacitaciones = RegistrarCapacitaciones(self.main.ventana, self.main)
+		self.CoordinadorGestionarInventario = GestionarInventario(self.main.ventana, self.main)
+		self.CoordinadorEmitirAlertas = EmitirAlertas(self.main.ventana, self.main)
 
 		# Labels
 		self.labelWelcome = CTkLabel(
@@ -123,7 +131,8 @@ class FrameCoordinador(CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.SustanciasImage
+			image=self.SustanciasImage,
+			command=lambda: self.frame_manager(2)
 		)
 		self.Sustancias.place(
 			relx=0.53, rely=0.25,
@@ -143,7 +152,8 @@ class FrameCoordinador(CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.CapacitacionesImage
+			image=self.CapacitacionesImage,
+			command=lambda: self.frame_manager(3)
 		)
 		self.Capacitaciones.place(
 			relx=0.73, rely=0.25,
@@ -163,7 +173,8 @@ class FrameCoordinador(CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.InventarioSustanciasImage
+			image=self.InventarioSustanciasImage,
+			command=lambda: self.frame_manager(4)
 		)
 		self.InventarioSustancias.place(
 			relx=0.33, rely=0.5,
@@ -183,7 +194,8 @@ class FrameCoordinador(CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.AlertasImage
+			image=self.AlertasImage,
+			command=lambda: self.frame_manager(5)
 		)
 		self.Alertas.place(
 			relx=0.53, rely=0.5,
@@ -239,6 +251,10 @@ class FrameCoordinador(CTkFrame):
 		)
 	def removerfunciones(self):
 		self.CoordinadorSolicitudesAcceso.place_forget()
+		self.CoordinadorSolicitudesSustancias.place_forget()
+		self.CoordinadorRegistrarCapacitaciones.place_forget()
+		self.CoordinadorGestionarInventario.place_forget()
+		self.CoordinadorEmitirAlertas.place_forget()
 
 	def frame_manager(self, frame):
 
@@ -248,7 +264,32 @@ class FrameCoordinador(CTkFrame):
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
+		elif frame == 2:
+			self.removerfunciones()
+			self.CoordinadorSolicitudesSustancias.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		elif frame == 3:
+			self.removerfunciones()
+			self.CoordinadorRegistrarCapacitaciones.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		elif frame == 4:
+			self.removerfunciones()
+			self.CoordinadorGestionarInventario.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		elif frame == 5:
+			self.removerfunciones()
+			self.CoordinadorEmitirAlertas.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
 
+		
 	def volver_main(self):
 		self.removerfunciones()
 		self.main.FrameCoordinador.place_forget()

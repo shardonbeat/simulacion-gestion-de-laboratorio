@@ -78,7 +78,8 @@ class solicitudAcceso(CTkFrame):
             relwidth=0.25, relheight=0.06,
 		)
         
-        self.Motivo = CTkTextbox(master=self,
+        self.Motivo = CTkTextbox(
+            master=self,
 		 	fg_color="#5e5e72",
 			bg_color="#2b2b39",
 			font = ("Times New Roman", 15),

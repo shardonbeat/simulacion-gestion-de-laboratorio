@@ -23,7 +23,7 @@ class HacerRegistros(CTkFrame):
         
         self.labelContenido = CTkLabel(
 			master = self,
-			text = "Hacer Registros de Sustancias Peligrosas",
+			text = "Registros de Sustancias y Residuos",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
@@ -35,29 +35,29 @@ class HacerRegistros(CTkFrame):
             anchor=CENTER
 		)
 
-        self.labelSustancias = CTkLabel(
+        self.labelSustancia = CTkLabel(
 			master = self,
-			text = "Ingresar sustancias separadas por comas:",
+			text = "Sustancia utilizada:",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"), corner_radius = 15
 		)
-        self.labelSustancias.place(
+        self.labelSustancia.place(
 			relx=0.12, rely=0.2,
             relwidth=0.4, relheight=0.06,
 		)
 
-        self.Sustancias = CTkEntry(
+        self.SustanciaUtilizada = CTkEntry(
             master=self,
             fg_color="#5e5e72",
             bg_color="#2b2b39",
             font = ("Times New Roman", 15),
             corner_radius=10
         )
-        self.Sustancias.place(
+        self.SustanciaUtilizada.place(
 			relx=0.16, rely=0.25,
-            relwidth=0.5, relheight=0.06,
+            relwidth=0.2, relheight=0.06,
 		)
 
         self.labelCantidad = CTkLabel(

@@ -38,7 +38,7 @@ class frameAdmin (CTkFrame):
 		)
 
 		self.logotitulo = CTkLabel(
-            master = self, text = "Laboratorio científico // Admin",
+            master = self, text = "Laboratorio Científico",
             text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
@@ -48,6 +48,18 @@ class frameAdmin (CTkFrame):
             relx=0, rely=0.27,
             relwidth=0.2, relheight=0.05
         )
+
+		self.labelAdmin = CTkLabel(
+			master=self, text="Administrador De Cumplimiento",
+			text_color="#ffffff",
+			fg_color="#2b2b39",
+			bg_color="#2b2b39",
+			font=("Times New Roman", 15, "bold"),
+		)
+		self.labelAdmin.place(
+			relx=0.015, rely=0.33,
+			relwidth=0.17, relheight=0.05,
+		)
 
 		self.Inicio = CTkButton(
             master = self, text = "Inicio",
@@ -59,63 +71,9 @@ class frameAdmin (CTkFrame):
 			command= self.volver_main
         )
 		self.Inicio.place(
-            relx=0.05, rely=0.33,
+            relx=0.05, rely=0.40,
             relwidth=0.09, relheight=0.05
         )
-
-		self.Niveles = CTkLabel(
-            master = self, text = "Niveles de acceso",
-            text_color = "#ffffff",
-			fg_color= "#2b2b39",
-			bg_color= "#2b2b39",
-            font = ("Times New Roman", 20, "bold")
-        )
-		self.Niveles.place(
-            relx=0, rely=0.4,
-            relwidth=0.2, relheight=0.05
-        )
-		
-		self.Nivel_1 = CTkButton(
-			master = self, text = "‣  Nivel 1",
-			text_color = "#ffffff",
-			hover_color="#898995",
-			fg_color= "#2b2b39",
-			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold"),
-			command= self.laboratorioNivel1
-		)
-		self.Nivel_1.place(
-			relx=0.02, rely=0.46,
-			relwidth=0.1, relheight=0.04
-		)
-
-		self.Nivel_2 = CTkButton(
-			master = self, text = "‣  Nivel 2",
-			text_color = "#ffffff",
-			hover_color="#898995",
-			fg_color= "#2b2b39",
-			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold"),	
-			command= self.laboratorioNivel2
-		)
-		self.Nivel_2.place(
-			relx=0.02, rely=0.50,
-			relwidth=0.1, relheight=0.04
-		)
-
-		self.Nivel_3 = CTkButton(
-			master = self, text = "‣  Nivel 3",
-			text_color = "#ffffff",
-			hover_color="#898995",
-			fg_color= "#2b2b39",
-			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold"),
-			command= self.laboratorioNivel3
-		)
-		self.Nivel_3.place(
-			relx=0.02, rely=0.54,
-			relwidth=0.1, relheight=0.04
-		)
 
 		self.labelFondo = CTkLabel(
 			master = self,
@@ -251,54 +209,6 @@ class frameAdmin (CTkFrame):
 		self.cerrar_sesion.place(
 			relx=0.06, rely=0.9,
 			relwidth=0.08, relheight=0.04
-		)
-	
-	def laboratorioNivel1(self):
-		self.AccesoNivel.destroy()
-		self.Sustancias.destroy()
-		self.Registros.destroy()
-		self.Reportes.destroy()
-		self.Historial.destroy()
-		self.cerrar_sesion.destroy()
-
-		self.labelContenido.configure(
-		text = "¡ Acceso al laboratorio nivel 1 !"
-		)
-		self.labelContenido.place(
-			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05
-		)
-
-	def laboratorioNivel2(self):
-		self.AccesoNivel.destroy()
-		self.Sustancias.destroy()
-		self.Registros.destroy()
-		self.Reportes.destroy()
-		self.Historial.destroy()
-		self.cerrar_sesion.destroy()
-
-		self.labelContenido.configure(
-			text = "¡ Acceso al laboratorio nivel 2 !"
-		)
-		self.labelContenido.place(
-			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05
-		)
-
-	def laboratorioNivel3(self):
-		self.AccesoNivel.destroy()
-		self.Sustancias.destroy()
-		self.Registros.destroy()
-		self.Reportes.destroy()
-		self.Historial.destroy()
-		self.cerrar_sesion.destroy()
-
-		self.labelContenido.configure(
-			text = "¡ Acceso al laboratorio nivel 3 !"
-		)
-		self.labelContenido.place(
-			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05
 		)
 
 	def volver_main(self):

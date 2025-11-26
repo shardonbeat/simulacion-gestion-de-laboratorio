@@ -38,7 +38,7 @@ class FrameCoordinador(CTkFrame):
 		)
 
 		self.logotitulo = CTkLabel(
-			master=self, text="Laboratorio científico // Coordinador",
+			master=self, text="Laboratorio Científico",
 			text_color="#ffffff",
 			fg_color="#2b2b39",
 			bg_color="#2b2b39",
@@ -49,58 +49,16 @@ class FrameCoordinador(CTkFrame):
 			relwidth=0.2, relheight=0.05,
 		)
 
-		self.Niveles = CTkLabel(
-			master=self, text="Niveles de acceso",
+		self.labelCoordinador = CTkLabel(
+			master=self, text="Coordinador De Seguridad",
 			text_color="#ffffff",
-			fg_color="#2b2b39",
-			bg_color="#2b2b39",
-			font=("Times New Roman", 20, "bold"),
-		)
-		self.Niveles.place(
-			relx=0, rely=0.4,
-			relwidth=0.2, relheight=0.05,
-		)
-
-		self.Nivel_1 = CTkButton(
-			master=self, text="‣  Nivel 1",
-			text_color="#ffffff",
-			hover_color="#898995",
 			fg_color="#2b2b39",
 			bg_color="#2b2b39",
 			font=("Times New Roman", 15, "bold"),
-			command= self.laboratorioNivel1
 		)
-		self.Nivel_1.place(
-			relx=0.02, rely=0.46,
-			relwidth=0.1, relheight=0.04,
-		)
-
-		self.Nivel_2 = CTkButton(
-			master=self, text="‣  Nivel 2",
-			text_color="#ffffff",
-			hover_color="#898995",
-			fg_color="#2b2b39",
-			bg_color="#2b2b39",
-			font=("Times New Roman", 15, "bold"),
-			command= self.laboratorioNivel2
-		)
-		self.Nivel_2.place(
-			relx=0.02, rely=0.50,
-			relwidth=0.1, relheight=0.04,
-		)
-
-		self.Nivel_3 = CTkButton(
-			master=self, text="‣  Nivel 3",
-			text_color="#ffffff",
-			hover_color="#898995",
-			fg_color="#2b2b39",
-			bg_color="#2b2b39",
-			font=("Times New Roman", 15, "bold"),
-			command= self.laboratorioNivel3
-		)
-		self.Nivel_3.place(
-			relx=0.02, rely=0.54,
-			relwidth=0.1, relheight=0.04,
+		self.labelCoordinador.place(
+			relx=0.02, rely=0.33,
+			relwidth=0.16, relheight=0.05,
 		)
 
 		self.labelFondo = CTkLabel(
@@ -117,15 +75,15 @@ class FrameCoordinador(CTkFrame):
 
 		self.labelContenido = CTkLabel(
 			master = self,
-			text = "¡ Bienvenido al laboratorio !",
+			text = " Sistema de Gestión de Laboratorio",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
-			font = ("Times New Roman", 20, "bold"), corner_radius = 15,
+			font = ("Times New Roman", 20, "bold"), corner_radius = 15
 		)
 		self.labelContenido.place(
-			relx=0.49, rely=0.15,
-			relwidth=0.22, relheight=0.05
+			relx=0.4, rely=0.15,
+			relwidth=0.4, relheight=0.05
 		)
 
 		self.AccesoImage = CTkImage(
@@ -133,7 +91,7 @@ class FrameCoordinador(CTkFrame):
 			size = (64, 64)
 		)
 		self.AccesoNivel = CTkButton(
-			master = self, text = "Solicitar acceso",
+			master = self, text = "Solicitudes de acceso",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
@@ -153,7 +111,7 @@ class FrameCoordinador(CTkFrame):
 		)
 
 		self.Sustancias = CTkButton(
-			master = self, text = "Solicitar sustancias",
+			master = self, text = "Solicitudes de sustancias",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
@@ -167,63 +125,83 @@ class FrameCoordinador(CTkFrame):
 			relwidth=0.15, relheight=0.2
 		)
 
-		self.RegistrosImage = CTkImage(
-			Image.open("Img/Registros.png"),
+		self.CapacitacionesImage = CTkImage(
+			Image.open("Img/Capacitaciones.png"),
 			size = (64, 64)
 		)
 
-		self.Registros = CTkButton(
-			master = self, text = "Hacer registros",
+		self.Capacitaciones = CTkButton(
+			master = self, text = "Registrar capacitaciones",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.RegistrosImage
+			image=self.CapacitacionesImage
 		)
-		self.Registros.place(
+		self.Capacitaciones.place(
 			relx=0.73, rely=0.25,
 			relwidth=0.15, relheight=0.2
 		)
 
-		self.reportesImage = CTkImage(
-			Image.open("Img/Reportes.png"),
+		self.InventarioSustanciasImage = CTkImage(
+			Image.open("Img/sustancias-peligrosas.png"),
 			size = (64, 64)
 		)
 
-		self.Reportes = CTkButton(
-			master = self, text = "Reportar incidencias",
+		self.InventarioSustancias = CTkButton(
+			master = self, text = "Gestionar inventario",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.reportesImage
+			image=self.InventarioSustanciasImage
 		)
-		self.Reportes.place(
-			relx=0.43, rely=0.5,
+		self.InventarioSustancias.place(
+			relx=0.33, rely=0.5,
 			relwidth=0.15, relheight=0.2
 		)
 
-		self.HistorialImage = CTkImage(
-			Image.open("Img/Historial.png"),
+		self.AlertasImage = CTkImage(
+			Image.open("Img/Alertas.png"),
 			size = (64, 64)
 		)
 
-		self.Historial = CTkButton(
-			master = self, text = "Ver historial",
+		self.Alertas = CTkButton(
+			master = self, text = "Emitir alertas",
 			text_color = "#ffffff",
 			hover_color="#898995",
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.HistorialImage
+			image=self.AlertasImage
 		)
-		self.Historial.place(
-			relx=0.63, rely=0.5,
+		self.Alertas.place(
+			relx=0.53, rely=0.5,
+			relwidth=0.15, relheight=0.2
+		)
+
+		self.BloquearUsuariosImage = CTkImage(
+			Image.open("Img/bloquear-usuario.png"),
+			size = (64, 64)
+		)
+
+		self.BloquearUsuarios = CTkButton(
+			master = self, text = "Bloquear usuarios",
+			text_color = "#ffffff",
+			hover_color="#898995",
+			fg_color= "#5e5e72",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),
+			compound="top",
+			image=self.BloquearUsuariosImage
+		)
+		self.BloquearUsuarios.place(
+			relx=0.73, rely=0.5,
 			relwidth=0.15, relheight=0.2
 		)
 
@@ -234,11 +212,11 @@ class FrameCoordinador(CTkFrame):
 			bg_color="#2b2b39",
 			hover_color="#898995",
 			font=("Times New Roman", 20, "bold"),
-			command=self.volver_main,
+			command=self.volver_main
 		)
 		self.Inicio.place(
-			relx=0.05, rely=0.33,
-			relwidth=0.09, relheight=0.05,
+			relx=0.05, rely=0.40,
+			relwidth=0.09, relheight=0.05
 		)
 
 		self.cerrar_sesion = CTkButton(
@@ -248,11 +226,11 @@ class FrameCoordinador(CTkFrame):
 			fg_color="#2b2b39",
 			bg_color="#2b2b39",
 			font=("Times New Roman", 15, "bold"),
-			command=self.cerrar,
+			command=self.cerrar
 		)
 		self.cerrar_sesion.place(
 			relx=0.06, rely=0.9,
-			relwidth=0.08, relheight=0.04,
+			relwidth=0.08, relheight=0.04
 		)
 
 	def volver_main(self):
@@ -261,59 +239,12 @@ class FrameCoordinador(CTkFrame):
 		self.main.FrameCoordinador = go
 		self.main.FrameCoordinador.place(
 			relx=0, rely=0,
-			relwidth=1, relheight=1,
-		)
-	
-	def laboratorioNivel1(self):
-		self.AccesoNivel.destroy()
-		self.Sustancias.destroy()
-		self.Registros.destroy()
-		self.Reportes.destroy()
-		self.Historial.destroy()
-		self.cerrar_sesion.destroy()
-
-		self.labelContenido.configure(
-		text = "¡ Acceso al laboratorio nivel 1 !"
-		)
-		self.labelContenido.place(
-			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05
-		)
-	def laboratorioNivel2(self):
-		self.AccesoNivel.destroy()
-		self.Sustancias.destroy()
-		self.Registros.destroy()
-		self.Reportes.destroy()
-		self.Historial.destroy()
-		self.cerrar_sesion.destroy()
-
-		self.labelContenido.configure(
-			text = "¡ Acceso al laboratorio nivel 2 !"
-		)
-		self.labelContenido.place(
-			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05
-		)
-
-	def laboratorioNivel3(self):
-		self.AccesoNivel.destroy()
-		self.Sustancias.destroy()
-		self.Registros.destroy()
-		self.Reportes.destroy()
-		self.Historial.destroy()
-		self.cerrar_sesion.destroy()
-
-		self.labelContenido.configure(
-			text = "¡ Acceso al laboratorio nivel 3 !"
-		)
-		self.labelContenido.place(
-			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05
+			relwidth=1, relheight=1
 		)
 
 	def cerrar(self):
 		self.main.FrameCoordinador.place_forget()
 		self.main.frameLogin.place(
 			relx=0, rely=0,
-			relwidth=1, relheight=1,
+			relwidth=1, relheight=1
 		)

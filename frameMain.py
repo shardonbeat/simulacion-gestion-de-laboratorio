@@ -9,7 +9,9 @@ class frameMain (CTkFrame):
 	def __init__(self, master, main):
 		super().__init__(master)
 		self.main = main
-		data = self.main.bdd.obtener_usuario()
+		data = self.main.bdd.obtener_usuario(self.main.frameLogin.input_cedula.get())
+		self.id = self.main.bdd.obtener_id_usuario(self.main.frameLogin.input_cedula.get())
+		print(f"ID del usuario actual: {self.id}")
 		self.configure(
 			fg_color = "#A79D8A",
 			corner_radius = 0
@@ -400,14 +402,7 @@ class frameMain (CTkFrame):
 			relx=0, rely=0,
 			relwidth=1, relheight=1
 		)
-		
 
 	def cerrar(self):
 		self.removerfunciones()
-		self.main.frameMain.place_forget()
-		go = frameMain(self.main.ventana, self.main)
-		self.main.frameMain = go
-		self.main.frameLogin.place(
-            relx=0, rely=0,
-            relwidth=1, relheight=1
-        )
+		self.main.mostrar_login()

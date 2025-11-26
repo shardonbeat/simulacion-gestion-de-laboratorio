@@ -152,10 +152,7 @@ class frameLogin (CTkFrame):
 		self.main.frameLogin.place_forget()
 		go = frameLogin(self.main.ventana, self.main)
 		self.main.frameLogin = go
-		self.main.frameRegister.place(
-			relx=0, rely=0,
-			relwidth=1, relheight=1
-		)
+		self.main.mostrar_register()
 		self.limpiar_inputs()
 	
 	def limpiar_inputs(self):
@@ -172,17 +169,8 @@ class frameLogin (CTkFrame):
 		self.main.frameLogin.place_forget()
 
 		if nivel == "Administrador de Cumplimiento":
-			self.main.frameAdmin.place(
-				relx=0, rely=0,
-				relwidth=1, relheight=1
-			)
+			self.main.mostrar_admin()
 		elif nivel == "Coordinador de Seguridad":
-			self.main.FrameCoordinador.place(
-				relx=0, rely=0,
-				relwidth=1, relheight=1
-			)
+			self.main.mostrar_coordinador()
 		else:
-			self.main.frameMain.place(
-				relx=0, rely=0,
-				relwidth=1, relheight=1
-			)
+			self.main.mostrar_main()

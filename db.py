@@ -7,9 +7,9 @@ class BDD:
         self.cursor = self.conn.cursor()
         self.crear_bdd()
 
-    def obtener_usuario(self):
-        query = "SELECT cedula, password FROM usuarios LIMIT 1"
-        self.cursor.execute(query)
+    def obtener_usuario(self, cedula):
+        query = "SELECT cedula, password FROM usuarios WHERE cedula = ? LIMIT 1"
+        self.cursor.execute(query, (cedula,))
         return self.cursor.fetchone()
     
     ## Crear la base de datos y las tablas necesarias
@@ -206,3 +206,6 @@ class BDD:
         except Exception as e:
             print(f"Error al crear solicitud de acceso: {e}")
             return False
+        
+    def cerrar_conexion(self):
+        self.conn.close()

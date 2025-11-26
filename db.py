@@ -226,7 +226,7 @@ class BDD:
         
     def obtener_solicitudes_acceso(self):
         query = '''
-            SELECT id_solicitud, username, fecha_solicitud, estado
+            SELECT id_solicitud, username, motivo, fecha_solicitud, estado
             FROM solicitudes_acceso
             JOIN usuarios ON solicitudes_acceso.id_usuario = usuarios.id_usuario;
             '''
@@ -242,8 +242,9 @@ class BDD:
             solicitudes.append({
                 'id_solicitud': row[0],
                 'username': row[1],
-                'fecha_solicitud': row[2],
-                'estado': row[3]
+                'motivo': row[2],
+                'fecha_solicitud': row[3],
+                'estado': row[4]
             })
         
         return solicitudes

@@ -100,9 +100,16 @@ class solicitudAcceso(CTkFrame):
             command = self.enviar_solicitud
 		)
         self.enviarButton.place(
-			relx=0.4, rely=0.85,
+			relx=0.4, rely=0.75,
 			relwidth=0.2, relheight=0.1,
 		)
+        
+        self.texto_exito = CTkLabel(
+			master=self,
+			text="Solicitud enviada exitosamente.",
+			text_color="#00ff00",
+			font=("Times New Roman", 12, "bold"),
+            )
 
     def seleccion_nivel(self, nivel):
         self.nivel = nivel
@@ -116,4 +123,8 @@ class solicitudAcceso(CTkFrame):
 
         self.main.bdd.crear_solicitud_acceso(
             id_usuario, nivel, motivo, fecha_solicitud, "Pendiente"
+        )
+        self.texto_exito.place(
+            relx=0.4, rely=0.85,
+            relwidth=0.2, relheight=0.05,
         )

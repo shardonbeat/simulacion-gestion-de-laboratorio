@@ -140,8 +140,11 @@ class frameLogin (CTkFrame):
 		validar = self.main.bdd.verificarLogin(cedula, password)
 		if validar:
 			data = self.main.bdd.obtenerUsuario(cedula)
-			self.obtener_nivel_autorizacion(data)
-			self.limpiar_inputs()
+
+			if data:
+				self.main.usuario_actual = data
+				self.obtener_nivel_autorizacion(data)
+				self.limpiar_inputs()
 		else:
 			self.error_label.place(
 				relx=0.5, rely=0.77,

@@ -21,6 +21,7 @@ class App:
         icono = "Img/Laboratorio.ico"
         self.ventana.iconbitmap(icono)
         self.ventana_actual = None
+        self.usuario_actual = None
 
         self.frameLogin = frameLogin(self.ventana, self)
         self.frameLogin.place(
@@ -35,15 +36,20 @@ class App:
 
         self.ventana_actual = self.frameLogin
 
-    def mostrar_main(self):
+    def mostrar_main(self, data=None):
         self.cerrar_ventanas()
-        self.frameLogin.place_forget()
-        self.frameMain = frameMain(self.ventana, self)
-        self.frameMain.place(
-            relx=0, rely=0,
-            relwidth=1, relheight=1
-        )
-        self.ventana_actual = self.frameMain
+
+        if data:
+            self.usuario_actual = data
+        
+        if self.usuario_actual:
+            self.frameLogin.place_forget()
+            self.frameMain = frameMain(self.ventana, self)
+            self.frameMain.place(
+                relx=0, rely=0,
+                relwidth=1, relheight=1
+            )
+            self.ventana_actual = self.frameMain
 
     def mostrar_register(self):
         self.cerrar_ventanas()

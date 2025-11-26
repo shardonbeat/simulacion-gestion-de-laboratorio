@@ -1,6 +1,6 @@
 from customtkinter import *
 
-class EmitirAlertas(CTkFrame):
+class BloquearUsuario(CTkFrame):
     def __init__(self, master, main):
         super().__init__(master)
         self.main = main
@@ -23,7 +23,7 @@ class EmitirAlertas(CTkFrame):
 
         self.labelContenido = CTkLabel(
 			master=self,
-			text="Alertas De Seguridad",
+			text="Bloqueo De Usuarios",
 			text_color="#ffffff",
 			fg_color="#2b2b39",
 			bg_color="#2b2b39",
@@ -35,60 +35,35 @@ class EmitirAlertas(CTkFrame):
 			anchor=CENTER
 		)
 
-        self.labelAlerta = CTkLabel(
+        self.labelCedula = CTkLabel(
             master=self,
-            text="Tipo de Alerta:",
+            text="Cédula:",
             text_color="#ffffff",
             fg_color="#2b2b39",
             bg_color="#2b2b39",
             font=("Times New Roman", 15, "bold"),
         )
-        self.labelAlerta.place(
+        self.labelCedula.place(
             relx=0.1, rely=0.3,
             relwidth=0.3, relheight=0.05
         )
 
-        self.entryAlerta = CTkEntry(
+        self.entryCedula = CTkEntry(
             master=self,
             fg_color="#5e5e72",
 			bg_color="#2b2b39",
-            placeholder_text="Alerta de vencimiento | stock critico | riesgo de exposición",
+            placeholder_text="Ingrese la cédula del usuario a bloquear",
 			font=("Times New Roman", 15),
 			corner_radius=10
         )
-        self.entryAlerta.place(
+        self.entryCedula.place(
             relx=0.35, rely=0.3,
-            relwidth=0.6, relheight=0.05
-        )
-
-        self.labelMensaje = CTkLabel(
-            master=self,
-            text="Mensaje:",
-            text_color="#ffffff",
-            fg_color="#2b2b39",
-            bg_color="#2b2b39",
-            font=("Times New Roman", 15, "bold"),
-        )
-        self.labelMensaje.place(
-            relx=0.072, rely=0.4,
-            relwidth=0.4, relheight=0.05
-        )
-
-        self.entryMensaje = CTkTextbox(
-            master=self,
-            fg_color="#5e5e72",
-			bg_color="#2b2b39",
-			font = ("Times New Roman", 15),
-			corner_radius=10
-        )
-        self.entryMensaje.place(
-            relx=0.35, rely=0.4,
-            relwidth=0.6, relheight=0.3
+            relwidth=0.3, relheight=0.05
         )
 
         self.botonRegistrar = CTkButton(
             master=self,
-            text="Emitir Alerta",
+            text="Bloquear Usuario",
             hover_color="#4a4a5e",
             text_color="#ffffff",
             fg_color="#5e5e72",

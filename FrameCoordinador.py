@@ -1,6 +1,7 @@
 from customtkinter import *
 from PIL import Image
 
+from CoordinadorBloquearUsuario import BloquearUsuario
 from CoordinadorEmitirAlertas import EmitirAlertas
 from CoordinadorGestionarInventario import GestionarInventario
 from CoordinadorRegistrarCapacitaciones import RegistrarCapacitaciones
@@ -22,6 +23,7 @@ class FrameCoordinador(CTkFrame):
 		self.CoordinadorRegistrarCapacitaciones = RegistrarCapacitaciones(self.main.ventana, self.main)
 		self.CoordinadorGestionarInventario = GestionarInventario(self.main.ventana, self.main)
 		self.CoordinadorEmitirAlertas = EmitirAlertas(self.main.ventana, self.main)
+		self.CoordinadorBloquearUsuario = BloquearUsuario(self.main.ventana, self.main)
 
 		# Labels
 		self.labelWelcome = CTkLabel(
@@ -215,7 +217,8 @@ class FrameCoordinador(CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.BloquearUsuariosImage
+			image=self.BloquearUsuariosImage,
+			command=lambda: self.frame_manager(6)
 		)
 		self.BloquearUsuarios.place(
 			relx=0.73, rely=0.5,
@@ -255,6 +258,7 @@ class FrameCoordinador(CTkFrame):
 		self.CoordinadorRegistrarCapacitaciones.place_forget()
 		self.CoordinadorGestionarInventario.place_forget()
 		self.CoordinadorEmitirAlertas.place_forget()
+		self.CoordinadorBloquearUsuario.place_forget()
 
 	def frame_manager(self, frame):
 
@@ -285,6 +289,12 @@ class FrameCoordinador(CTkFrame):
 		elif frame == 5:
 			self.removerfunciones()
 			self.CoordinadorEmitirAlertas.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+		elif frame == 6:
+			self.removerfunciones()
+			self.CoordinadorBloquearUsuario.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)

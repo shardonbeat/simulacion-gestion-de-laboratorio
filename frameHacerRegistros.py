@@ -44,7 +44,7 @@ class HacerRegistros(CTkFrame):
 			font = ("Times New Roman", 15, "bold"), corner_radius = 15
 		)
         self.labelSustancia.place(
-			relx=0.12, rely=0.2,
+			relx=0.1, rely=0.2,
             relwidth=0.4, relheight=0.06,
 		)
 
@@ -56,20 +56,20 @@ class HacerRegistros(CTkFrame):
             corner_radius=10
         )
         self.SustanciaUtilizada.place(
-			relx=0.16, rely=0.25,
+			relx=0.25, rely=0.25,
             relwidth=0.2, relheight=0.06,
 		)
 
         self.labelCantidad = CTkLabel(
 			master = self,
-			text = "Ingresar cantidades separadas por comas:",
+			text = "Tipo de residuo:",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"), corner_radius = 15
 		)
         self.labelCantidad.place(
-			relx=0.12, rely=0.35,
+			relx=0.25, rely=0.35,
             relwidth=0.4, relheight=0.06,
 		)
 
@@ -81,32 +81,33 @@ class HacerRegistros(CTkFrame):
             corner_radius=10
         )
         self.Cantidades.place(
-			relx=0.16, rely=0.4,
-            relwidth=0.5, relheight=0.06,
+			relx=0.25, rely=0.4,
+            relwidth=0.2, relheight=0.06
 		)
 
-        self.labelJustificacion = CTkLabel(
+        self.labelContenedor = CTkLabel(
 			master = self,
-			text = "Justificación:",
+			text = "Contenedor usado:",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"), corner_radius = 15
 		)
-        self.labelJustificacion.place(
+        self.labelContenedor.place(
 			relx=0.085, rely=0.5,
-            relwidth=0.25, relheight=0.06,
+            relwidth=0.25, relheight=0.06
 		)
         
-        self.Justificacion = CTkTextbox(master=self,
+        self.Contenedor = CTkEntry(
+            master=self,
 		 	fg_color="#5e5e72",
 			bg_color="#2b2b39",
 			font = ("Times New Roman", 15),
 			corner_radius=10
 		)
-        self.Justificacion.place(
-			relx=0.16, rely=0.55,
-			relwidth=0.7, relheight=0.15,
+        self.Contenedor.place(
+			relx=0.25, rely=0.55,
+            relwidth=0.2, relheight=0.06
 		)
         
         self.enviarButton = CTkButton(

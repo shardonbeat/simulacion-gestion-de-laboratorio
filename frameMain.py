@@ -13,6 +13,7 @@ class frameMain (CTkFrame):
 		self.main = main
 		data = self.main.usuario_actual
 		self.nombre = data['username']
+		self.capacitación = data['capacitacion']
 		self.id = self.main.bdd.obtener_id_usuario(data['cedula'])
 		print(f"ID del usuario actual: {self.id}")
 		self.configure(

@@ -132,12 +132,16 @@ class solicitudSustancia(CTkFrame):
             justificacion = self.Justificacion.get("1.0", "end-1c").strip()
             fecha_solicitud = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             id_usuario = self.main.bdd.obtener_id_usuario(self.main.usuario_actual['cedula'])
+            capacitacion = self.main.usuario_actual['capacitacion']
+            nivel_riesgo = "Medio"  # Asignar un valor predeterminado o calcular según la sustancia
             
             self.main.bdd.guardar_solicitud_sustancias(
 				id_usuario,
 				sustancia,
-				cantidad,
-				justificacion,
+                nivel_riesgo,
+                cantidad,
+                justificacion,
 				fecha_solicitud,
+                capacitacion,
                 'Pendiente'
 			)

@@ -5,7 +5,7 @@ from CoordinadorBloquearUsuario import BloquearUsuario
 from CoordinadorEmitirAlertas import EmitirAlertas
 from CoordinadorGestionarInventario import GestionarInventario
 from CoordinadorRegistrarCapacitaciones import RegistrarCapacitaciones
-from CoordinadorSolicitudesAcceso import SolicitudesAcceso
+from CoordinadorSolicitudesAcceso import FrameSolicitudes
 from CoordinadorSolicitudesSustancias import SolicitudesSustancias
 
 
@@ -18,7 +18,7 @@ class FrameCoordinador(CTkFrame):
 			corner_radius=0,
 		)
 
-		self.CoordinadorSolicitudesAcceso = SolicitudesAcceso(self.main.ventana, self.main)
+		self.CoordinadorSolicitudesAcceso = FrameSolicitudes(self.main.ventana, self.main)
 		self.CoordinadorSolicitudesSustancias = SolicitudesSustancias(self.main.ventana, self.main)
 		self.CoordinadorRegistrarCapacitaciones = RegistrarCapacitaciones(self.main.ventana, self.main)
 		self.CoordinadorGestionarInventario = GestionarInventario(self.main.ventana, self.main)
@@ -259,47 +259,42 @@ class FrameCoordinador(CTkFrame):
 		self.CoordinadorGestionarInventario.place_forget()
 		self.CoordinadorEmitirAlertas.place_forget()
 		self.CoordinadorBloquearUsuario.place_forget()
+		self.CoordinadorSolicitudesAcceso.cerrar()
 
 	def frame_manager(self, frame):
+		self.removerfunciones()
 
 		if frame == 1:
-			self.removerfunciones()
 			self.CoordinadorSolicitudesAcceso.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
 		elif frame == 2:
-			self.removerfunciones()
 			self.CoordinadorSolicitudesSustancias.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
 		elif frame == 3:
-			self.removerfunciones()
 			self.CoordinadorRegistrarCapacitaciones.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
 		elif frame == 4:
-			self.removerfunciones()
 			self.CoordinadorGestionarInventario.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
 		elif frame == 5:
-			self.removerfunciones()
 			self.CoordinadorEmitirAlertas.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
 		elif frame == 6:
-			self.removerfunciones()
 			self.CoordinadorBloquearUsuario.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
 
-		
 	def volver_main(self):
 		self.removerfunciones()
 		self.main.FrameCoordinador.place_forget()

@@ -122,7 +122,7 @@ class BDD:
     def crear_tabla_solicitudes_acceso(self):
         query = '''
                 CREATE TABLE IF NOT EXISTS solicitudes_acceso
-                (id_solicitud INTEGER PRIMARY KEY AUTOINCREMENT,
+                (id_solicitud_a INTEGER PRIMARY KEY AUTOINCREMENT,
                 id_usuario INTEGER NOT NULL,
                 nivel_solicitado INTEGER NOT NULL,
                 motivo TEXT NOT NULL,
@@ -138,18 +138,58 @@ class BDD:
     def crear_tabla_solicitudes_sustancias(self):
             query = '''
                     CREATE TABLE IF NOT EXISTS solicitudes_sustancias
-                    (id_solicitud INTEGER PRIMARY KEY AUTOINCREMENT,
+                    (id_solicitud_s INTEGER PRIMARY KEY AUTOINCREMENT,
                     id_usuario INTEGER NOT NULL,
                     nombre_sustancia TEXT NOT NULL,
+                    nivel_riesgo INTEGER NOT NULL,
                     cantidad_solicitada INTEGER NOT NULL,
                     motivo TEXT NOT NULL,
                     fecha_solicitud TEXT NOT NULL,
+                    capacitacion TEXT,
                     estado TEXT NOT NULL,
-                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+                    FOREIGN KEY (capacitacion) REFERENCES usuarios(capacitacion)
                     );
                     '''
             self.cursor.executescript(query)
             self.conn.commit()
+
+    def obtener_solicitudes_sustancias(self):
+        query = '''
+            SELECT id_solicitud_s,
+                   solicitudes_sustancias.id_solicitud_s,
+                   solicitudes_sustancias.id_usuario,
+                   solicitudes_sustancias.nombre_sustancia,
+                   solicitudes_sustancias.nivel_riesgo,
+                   solicitudes_sustancias.cantidad_solicitada,
+                   solicitudes_sustancias.motivo,
+                   solicitudes_sustancias.fecha_solicitud,
+                   solicitudes_sustancias.capacitacion,
+                   solicitudes_sustancias.estado
+            FROM solicitudes_sustancias
+            JOIN usuarios ON solicitudes_sustancias.id_usuario = usuarios.id_usuario;
+            '''
+        self.cursor.execute(query)
+        r = self.cursor.fetchall()
+        
+        if not r:
+            return None
+        
+        solicitudes = []
+        for row in r:
+            solicitudes.append({
+                'id_solicitud_s': row[0],
+                'id_usuario': row[1],
+                'nombre_sustancia': row[2],
+                'nivel_riesgo': row[3],
+                'cantidad_solicitada': row[4],
+                'motivo': row[5],
+                'fecha_solicitud': row[6],
+                'capacitacion': row[7],
+                'estado': row[8]
+            })
+        
+        return solicitudes
 
     def crear_tabla_registros_sustancias_residuos(self):
         query = '''
@@ -187,7 +227,7 @@ class BDD:
             return False
     
     def obtenerUsuario(self, cedula):
-        query = "SELECT username, cedula, password, nacimiento, mail, role, nivel_autorizacion FROM usuarios WHERE cedula = ? LIMIT 1"
+        query = "SELECT username, cedula, password, nacimiento, mail, capacitacion, role, nivel_autorizacion FROM usuarios WHERE cedula = ? LIMIT 1"
         cur = self.cursor.execute(query, (cedula,))
         r = cur.fetchone()
         if not r:
@@ -199,8 +239,9 @@ class BDD:
             'password': r[2],
             'nacimiento': r[3],
             'mail': r[4],
-            'role': r[5],
-            'nivel_autorizacion': r[6]
+            'capacitacion': r[5],
+            'role': r[6],
+            'nivel_autorizacion': r[7]
         }
     
     def obtener_id_usuario(self, cedula):
@@ -226,7 +267,7 @@ class BDD:
         
     def obtener_solicitudes_acceso(self):
         query = '''
-            SELECT id_solicitud, username, motivo, fecha_solicitud, estado
+            SELECT id_solicitud_a, username, motivo, fecha_solicitud, estado
             FROM solicitudes_acceso
             JOIN usuarios ON solicitudes_acceso.id_usuario = usuarios.id_usuario;
             '''
@@ -240,7 +281,7 @@ class BDD:
         solicitudes = []
         for row in r:
             solicitudes.append({
-                'id_solicitud': row[0],
+                'id_solicitud_a': row[0],
                 'username': row[1],
                 'motivo': row[2],
                 'fecha_solicitud': row[3],
@@ -249,9 +290,9 @@ class BDD:
         
         return solicitudes
     
-    def actualizar_estado_solicitud(self, id_solicitud, nuevo_estado):
+    def actualizar_estado_solicitud_acceso(self, id_solicitud, nuevo_estado):
          try:
-            query = "UPDATE solicitudes_acceso SET estado = ? WHERE id_solicitud = ?"
+            query = "UPDATE solicitudes_accesos SET estado = ? WHERE id_solicitud = ?"
             self.cursor.execute(query, (nuevo_estado, id_solicitud))
             self.conn.commit()
             print(f"Estado actualizado: ID {id_solicitud} -> {nuevo_estado}")
@@ -259,14 +300,26 @@ class BDD:
          except Exception as e:
             print(f"Error al actualizar estado de la solicitud: {e}")
             return False
+         
+    def actualizar_estado_solicitud_sustancias(self, id_sustancia_s, nuevo_estado):
+         try:
+            query = "UPDATE solicitudes_sustancias SET estado = ? WHERE id_solicitud_s = ?"
+            self.cursor.execute(query, (nuevo_estado, id_sustancia_s))
+            self.conn.commit()
+            print(f"Estado actualizado: ID {id_sustancia_s} -> {nuevo_estado}")
+            return True
+         except Exception as e:
+            print(f"Error al actualizar estado de la solicitud: {e}")
+            return False
         
-    def guardar_solicitud_sustancias(self, id_usuario, sustancias, cantidades, justificacion, fecha_solicitud, estado):
+    def guardar_solicitud_sustancias(self, id_usuario, sustancias, nivel_riesgo, cantidades, justificacion, fecha_solicitud, capacitacion, estado):
         query = '''
-            INSERT INTO solicitudes_sustancias (id_usuario, nombre_sustancia, cantidad_solicitada, motivo, fecha_solicitud, estado)
-            VALUES (?, ?, ?, ?, ?, ?);
+            INSERT INTO solicitudes_sustancias (id_usuario, nombre_sustancia, nivel_riesgo,
+            cantidad_solicitada, motivo, fecha_solicitud, capacitacion, estado)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
             '''
         try:
-            self.cursor.execute(query, (id_usuario, sustancias, cantidades, justificacion, fecha_solicitud, estado))
+            self.cursor.execute(query, (id_usuario, sustancias, nivel_riesgo, cantidades, justificacion, fecha_solicitud, capacitacion, estado))
             self.conn.commit()
             return True
         except Exception as e:

@@ -1,9 +1,7 @@
 from customtkinter import *
 from PIL import Image
 
-from frameFuncUsuario import funcionesUsuario
-
-class frameMain (CTkFrame):
+class funcionesUsuario(CTkFrame):
 	def __init__(self, master, main):
 		super().__init__(master)
 		self.main = main

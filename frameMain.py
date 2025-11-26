@@ -1,7 +1,7 @@
 from customtkinter import *
 from PIL import Image
 
-from funcUsuario import funcionesUsuario
+from frameSolicitudAcceso import solicitudAcceso
 
 class frameMain (CTkFrame):
 	def __init__(self, master, main):
@@ -12,9 +12,8 @@ class frameMain (CTkFrame):
 			fg_color = "#A79D8A",
 			corner_radius = 0
 		)
-		
-		self.funcionesUsuario = funcionesUsuario(self.main.ventana, self)
-		
+
+		self.frameSolicitudAcceso = solicitudAcceso(self.main.ventana, self.main)
 		## Labels
 		self.labelWelcome = CTkLabel(
 			master = self, text="",
@@ -159,7 +158,11 @@ class frameMain (CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.AccesoImage
+			image=self.AccesoImage,
+			command = lambda: self.frameSolicitudAcceso.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
 		)
 		self.AccesoNivel.place(
 			relx=0.33, rely=0.25,	

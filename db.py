@@ -224,6 +224,41 @@ class BDD:
             print(f"Error al crear solicitud de acceso: {e}")
             return False
         
+    def obtener_solicitudes_acceso(self):
+        query = '''
+            SELECT id_solicitud, username, fecha_solicitud, estado
+            FROM solicitudes_acceso
+            JOIN usuarios ON solicitudes_acceso.id_usuario = usuarios.id_usuario;
+            '''
+        self.cursor.execute(query)
+        r = self.cursor.fetchall()
+        print(r)
+        
+        if not r:
+            return None
+        
+        solicitudes = []
+        for row in r:
+            solicitudes.append({
+                'id_solicitud': row[0],
+                'username': row[1],
+                'fecha_solicitud': row[2],
+                'estado': row[3]
+            })
+        
+        return solicitudes
+    
+    def actualizar_estado_solicitud(self, id_solicitud, nuevo_estado):
+         try:
+            query = "UPDATE solicitudes_acceso SET estado = ? WHERE id_solicitud = ?"
+            self.cursor.execute(query, (nuevo_estado, id_solicitud))
+            self.conn.commit()
+            print(f"Estado actualizado: ID {id_solicitud} -> {nuevo_estado}")
+            return True
+         except Exception as e:
+            print(f"Error al actualizar estado de la solicitud: {e}")
+            return False
+        
     def guardar_solicitud_sustancias(self, id_usuario, sustancias, cantidades, justificacion, fecha_solicitud, estado):
         query = '''
             INSERT INTO solicitudes_sustancias (id_usuario, nombre_sustancia, cantidad_solicitada, motivo, fecha_solicitud, estado)
@@ -265,3 +300,5 @@ class BDD:
         except Exception as e:
             print(f"Error al guardar reporte de incidente: {e}")
             return False
+        
+    

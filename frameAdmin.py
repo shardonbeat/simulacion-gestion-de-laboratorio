@@ -5,6 +5,10 @@ class frameAdmin (CTkFrame):
 	def __init__(self, master, main):
 		super().__init__(master)
 		self.main = main
+		self.configure(
+			fg_color = "#A79D8A",
+			corner_radius = 0
+		)
 
 		## Labels
 		self.labelWelcome = CTkLabel(
@@ -253,7 +257,6 @@ class frameAdmin (CTkFrame):
 	
 	def laboratorioNivel1(self):
 		self.AccesoNivel.destroy()
-		self.Acceso.destroy() if hasattr(self, 'Acceso') else None
 		self.Sustancias.destroy()
 		self.Registros.destroy()
 		self.Reportes.destroy()
@@ -269,8 +272,6 @@ class frameAdmin (CTkFrame):
 		)
 	def laboratorioNivel2(self):
 		self.AccesoNivel.destroy()
-		# destruir mensaje de acceso si existe
-		self.Acceso.destroy() if hasattr(self, 'Acceso') else None
 		self.Sustancias.destroy()
 		self.Registros.destroy()
 		self.Reportes.destroy()
@@ -291,8 +292,6 @@ class frameAdmin (CTkFrame):
 		)
 	def laboratorioNivel3(self):
 		self.AccesoNivel.destroy()
-		# destruir mensaje de acceso si existe
-		self.Acceso.destroy() if hasattr(self, 'Acceso') else None
 		self.Sustancias.destroy()
 		self.Registros.destroy()
 		self.Reportes.destroy()
@@ -314,35 +313,6 @@ class frameAdmin (CTkFrame):
 			relwidth=0.3, relheight=0.05
 		)
 
-	def AccesoDenegado(self):
-
-		# Si ya existe un mensaje anterior, lo eliminamos primero
-		if hasattr(self, 'Acceso') and self.Acceso is not None:
-			try:
-				self.Acceso.destroy()
-			except Exception:
-				pass
-
-		self.Acceso = CTkLabel(
-			master=self,
-			text="Acceso denegado",
-			text_color="#ff0000",
-			fg_color="#2b2b39",
-			bg_color="#2b2b39",
-			font=("Times New Roman", 15, "bold")
-		)
-		self.Acceso.place(
-			relx=0.03, rely=0.6,
-			relwidth=0.15, relheight=0.04
-		)
-
-		# Programar que el mensaje se elimine automáticamente después de 1 segundo (1000 ms)
-		try:
-			self.after(1000, lambda: self.Acceso.destroy() if hasattr(self, 'Acceso') else None)
-		except Exception:
-			# En caso de que after no esté disponible, ignoramos silenciosamente
-			pass
-	
 	def volver_main(self):
 		self.main.frameAdmin.place_forget()
 		go = frameAdmin(self.main.ventana, self.main)

@@ -352,8 +352,12 @@ class frameMain (CTkFrame):
 		except Exception:
 			# En caso de que after no esté disponible, ignoramos silenciosamente
 			pass
+
+	def removerfunciones(self):
+		self.frameSolicitudAcceso.place_forget()
 	
 	def volver_main(self):
+		self.removerfunciones()
 		self.main.frameMain.place_forget()
 		go = frameMain(self.main.ventana, self.main)
 		self.main.frameMain = go
@@ -364,6 +368,7 @@ class frameMain (CTkFrame):
 		
 
 	def cerrar(self):
+		self.removerfunciones()
 		self.main.frameMain.place_forget()
 		self.main.frameLogin.place(
             relx=0, rely=0,

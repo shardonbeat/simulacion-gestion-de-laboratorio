@@ -1,6 +1,8 @@
 from customtkinter import *
 from PIL import Image
 
+from CoordinadorSolicitudesAcceso import SolicitudesAcceso
+
 
 class FrameCoordinador(CTkFrame):
 	def __init__(self, master, main):
@@ -10,6 +12,8 @@ class FrameCoordinador(CTkFrame):
 			fg_color="#A79D8A",
 			corner_radius=0,
 		)
+
+		self.CoordinadorSolicitudesAcceso = SolicitudesAcceso(self.main.ventana, self.main)
 
 		# Labels
 		self.labelWelcome = CTkLabel(
@@ -98,7 +102,8 @@ class FrameCoordinador(CTkFrame):
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
 			compound="top",
-			image=self.AccesoImage
+			image=self.AccesoImage,
+			command=lambda: self.frame_manager(1)
 		)
 		self.AccesoNivel.place(
 			relx=0.33, rely=0.25,	
@@ -232,8 +237,20 @@ class FrameCoordinador(CTkFrame):
 			relx=0.06, rely=0.9,
 			relwidth=0.08, relheight=0.04
 		)
+	def removerfunciones(self):
+		self.CoordinadorSolicitudesAcceso.place_forget()
+
+	def frame_manager(self, frame):
+
+		if frame == 1:
+			self.removerfunciones()
+			self.CoordinadorSolicitudesAcceso.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
 
 	def volver_main(self):
+		self.removerfunciones()
 		self.main.FrameCoordinador.place_forget()
 		go = FrameCoordinador(self.main.ventana, self.main)
 		self.main.FrameCoordinador = go
@@ -243,8 +260,5 @@ class FrameCoordinador(CTkFrame):
 		)
 
 	def cerrar(self):
-		self.main.FrameCoordinador.place_forget()
-		self.main.frameLogin.place(
-			relx=0, rely=0,
-			relwidth=1, relheight=1
-		)
+		self.removerfunciones()
+		self.main.mostrar_login()

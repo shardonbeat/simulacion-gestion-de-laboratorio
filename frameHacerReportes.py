@@ -117,8 +117,40 @@ class HacerReportes(CTkFrame):
 			fg_color= "#5e5e72",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),
+            command= self.hacer_reporte
 		)
         self.enviarButton.place(
-			relx=0.4, rely=0.85,
+			relx=0.4, rely=0.80,
 			relwidth=0.2, relheight=0.1,
 		)
+        
+        self.mensaje_exito_label = CTkLabel(
+			master=self,
+			text="Reporte enviado exitosamente.",
+			text_color="#00ff00",
+			font=("Times New Roman", 12, "bold"),
+		)
+        
+    def hacer_reporte(self):
+        self.limpiar_campos()
+        try:
+            titulo = self.Nombre.get()
+            tipo = self.Tipo.get()
+            descripcion = self.Descripcion.get("1.0", "end-1c")
+            fecha = datetime.now().date()
+            autor = self.main.usuario_actual['username']
+            
+            self.main.bdd.guardar_reporte_incidente(
+				titulo, tipo, descripcion, fecha, autor
+			)
+            self.mensaje_exito_label.place(
+				relx=0.4, rely=0.93,
+			)
+            print("Reporte enviado exitosamente.")
+        except Exception as e:
+            print(f'Error al enviar el reporte: {e}')
+            
+    def limpiar_campos(self):
+        self.Nombre.delete(0, 'end')
+        self.Tipo.delete(0, 'end')
+        self.Descripcion.delete("1.0", "end")

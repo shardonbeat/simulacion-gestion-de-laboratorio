@@ -252,3 +252,16 @@ class BDD:
         except Exception as e:
             print(f"Error al guardar registro de sustancia y residuo: {e}")
             return False
+        
+    def guardar_reporte_incidente(self, titulo, tipo, descripcion, fecha_creacion, autor):
+        query = '''
+            INSERT INTO reportes (titulo, tipo_reporte, contenido, fecha_creacion, autor)
+            VALUES (?, ?, ?, ?, ?);
+            '''
+        try:
+            self.cursor.execute(query, (titulo, tipo, descripcion, fecha_creacion, autor))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al guardar reporte de incidente: {e}")
+            return False

@@ -133,7 +133,10 @@ class frameLogin (CTkFrame):
 	## Funciones
 
 		#@ Función iniciar sesión
-	def iniciar_sesion(self, cedula: str, password: str):
+	def iniciar_sesion(self, cedula, password):
+		cedula = self.input_cedula.get()
+		password = self.input_password.get()
+
 		validar = self.main.bdd.verificarLogin(cedula, password)
 		if validar:
 			data = self.main.bdd.obtenerUsuario(cedula)

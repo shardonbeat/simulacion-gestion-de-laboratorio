@@ -64,7 +64,7 @@ class BDD:
 
                 # Crear un usuario coordinador por defectos
                 self.cursor.execute(insert_q, ('coordinador', '11111111', '1234', '1980-01-01', 
-                                            'coordinador@example.com', 'Coordinador de Laboratorio', 2))
+                                            'coordinador@example.com', 'Coordinador de Seguridad', 3))
                 self.conn.commit()
             else:
                 print("El usuario coordinador ya existe.")

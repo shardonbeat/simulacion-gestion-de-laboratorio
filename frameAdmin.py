@@ -205,7 +205,6 @@ class frameAdmin (CTkFrame):
 			Image.open("Img/Reportes.png"),
 			size = (64, 64)
 		)
-
 		self.Reportes = CTkButton(
 			master = self, text = "Reportar incidencias",
 			text_color = "#ffffff",
@@ -225,7 +224,6 @@ class frameAdmin (CTkFrame):
 			Image.open("Img/Historial.png"),
 			size = (64, 64)
 		)
-
 		self.Historial = CTkButton(
 			master = self, text = "Ver historial",
 			text_color = "#ffffff",
@@ -264,12 +262,13 @@ class frameAdmin (CTkFrame):
 		self.cerrar_sesion.destroy()
 
 		self.labelContenido.configure(
-		text = "¡ Acceso al laboratorio nivel 1 otorgado !"
+		text = "¡ Acceso al laboratorio nivel 1 !"
 		)
 		self.labelContenido.place(
 			relx=0.43, rely=0.15,
 			relwidth=0.3, relheight=0.05
 		)
+
 	def laboratorioNivel2(self):
 		self.AccesoNivel.destroy()
 		self.Sustancias.destroy()
@@ -279,17 +278,13 @@ class frameAdmin (CTkFrame):
 		self.cerrar_sesion.destroy()
 
 		self.labelContenido.configure(
-			text = "¡ Acceso al laboratorio nivel 2 otorgado !"
+			text = "¡ Acceso al laboratorio nivel 2 !"
 		)
 		self.labelContenido.place(
 			relx=0.43, rely=0.15,
 			relwidth=0.3, relheight=0.05
 		)
 
-		self.back_image = CTkImage(
-			Image.open("Img/Back_image.png"),
-			size=(30, 30)
-		)
 	def laboratorioNivel3(self):
 		self.AccesoNivel.destroy()
 		self.Sustancias.destroy()
@@ -299,14 +294,7 @@ class frameAdmin (CTkFrame):
 		self.cerrar_sesion.destroy()
 
 		self.labelContenido.configure(
-			text = "¡ Acceso al laboratorio nivel 3 otorgado !"
-		)
-		self.labelContenido.place(
-			relx=0.43, rely=0.15,
-			relwidth=0.3, relheight=0.05
-		)
-		self.labelContenido.configure(
-			text = "¡ Acceso al laboratorio nivel 3 otorgado !"
+			text = "¡ Acceso al laboratorio nivel 3 !"
 		)
 		self.labelContenido.place(
 			relx=0.43, rely=0.15,

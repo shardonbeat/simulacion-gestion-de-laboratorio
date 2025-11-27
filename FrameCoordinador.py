@@ -382,5 +382,5 @@ class FrameCoordinador(CTkFrame):
 		self.ventana_actual = None
 
 	def cerrar(self):
-		self.ventana_actual.place_forget()
+		self.cerrar_ventanas()
 		self.main.mostrar_login()

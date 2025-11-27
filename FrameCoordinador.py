@@ -367,20 +367,29 @@ class FrameCoordinador(CTkFrame):
 
 	def cerrar_ventanas(self):
 		ventanas = [
-            self.CoordinadorSolicitudesAcceso, 
-            self.CoordinadorSolicitudesSustancias,
-            self.CoordinadorRegistrarCapacitaciones, 
-            self.CoordinadorGestionarInventario,
+			self.CoordinadorSolicitudesAcceso,
+			self.CoordinadorSolicitudesSustancias,
+			self.CoordinadorRegistrarCapacitaciones,
+			self.CoordinadorGestionarInventario,
 			self.CoordinadorEmitirAlertas,
 			self.CoordinadorBloquearUsuario
-        ]
+		]
 
 		for ventana in ventanas:
 			if ventana is not None:
-				ventana.place_forget()
-				
+				try:
+					ventana.cerrar_ventanas()
+				except Exception:
+					pass
+				try:
+					ventana.place_forget()
+				except Exception:
+					pass
+
 		self.ventana_actual = None
 
 	def cerrar(self):
+		# Close any open child frames (this also asks nested frames to close their sub-views)
 		self.cerrar_ventanas()
+		# Show login screen
 		self.main.mostrar_login()

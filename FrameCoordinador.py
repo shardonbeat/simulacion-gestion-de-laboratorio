@@ -13,6 +13,13 @@ class FrameCoordinador(CTkFrame):
 	def __init__(self, master, main):
 		super().__init__(master)
 		self.main = main
+		data = self.main.usuario_actual
+		self.nombre = data['username']
+		self.cedula = data['cedula']
+		self.nivel_autorizacion = data['nivel_autorizacion']
+		self.capacitación = data['capacitacion']
+		self.id = self.main.bdd.obtener_id_usuario(data['cedula'])
+		print(f"ID del usuario actual: {self.id}")
 		self.configure(
 			fg_color="#A79D8A",
 			corner_radius=0,
@@ -238,6 +245,54 @@ class FrameCoordinador(CTkFrame):
 		self.Inicio.place(
 			relx=0.05, rely=0.40,
 			relwidth=0.09, relheight=0.05
+		)
+
+		self.Informacion = CTkLabel(
+            master = self, text = "Información del usuario",
+            text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+            font = ("Times New Roman", 20, "bold")
+        )
+		self.Informacion.place(
+            relx=0, rely=0.46,
+            relwidth=0.2, relheight=0.05
+        )
+
+		self.nombre_label = CTkLabel(
+			master = self, text = f"‣ Nombre: {self.nombre}",
+			text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold")
+		)
+		self.nombre_label.place(
+			relx=0.009, rely=0.515,
+			relwidth=0.15, relheight=0.04
+		)
+
+		self.cedula_label = CTkLabel(
+			master = self, text = f"‣ Cédula: {self.cedula}",
+			text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),	
+		)
+		self.cedula_label.place(
+			relx=0.020, rely=0.565,
+			relwidth=0.1, relheight=0.04
+		)
+
+		self.nivel_autorizacion_label = CTkLabel(
+			master = self, text = f"‣ Nivel de Autorización: {self.nivel_autorizacion}",
+			text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold")
+		)
+		self.nivel_autorizacion_label.place(
+			relx=0.010, rely=0.60,
+			relwidth=0.15, relheight=0.07
 		)
 
 		self.cerrar_sesion = CTkButton(

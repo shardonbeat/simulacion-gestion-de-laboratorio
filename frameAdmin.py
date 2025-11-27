@@ -6,12 +6,10 @@ from AdministradorDefinirPoliticas import DefinirPoliticas
 from AdministradorExportarInformes import ExportarInformes
 from AdministradorGenerarReportes import GenerarReportes
 from AdministradorMejoras import MejorasCierres
-from Mostrar_ConfiguracionAdmin import MostrarConfiguracion
 
 class frameAdmin (CTkFrame):
 	def __init__(self, master, main):
 		super().__init__(master)
-		self.main = main
 		self.main = main
 		data = self.main.usuario_actual
 		self.nombre = data['username']
@@ -30,8 +28,6 @@ class frameAdmin (CTkFrame):
 		self.AuditarAcciones = AuditarAcciones(self.main.ventana, self.main)
 		self.ExportarInformes = ExportarInformes(self.main.ventana, self.main)
 		self.MejorasCierres = MejorasCierres(self.main.ventana, self.main)
-
-		self.MostrarConfiguracion = MostrarConfiguracion(self.main.ventana, self.main)
 
 		## Labels
 		self.labelWelcome = CTkLabel(
@@ -169,22 +165,6 @@ class frameAdmin (CTkFrame):
 		self.labelContenido.place(
 			relx=0.4, rely=0.15,
 			relwidth=0.4, relheight=0.05
-		)
-
-		self.configurar= CTkButton(
-			master = self, 
-			text = "Configuración",
-			text_color = "#ffffff",
-			hover_color="#898995",
-			fg_color= "#2b2b39",
-			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold"),
-			compound="left",
-			command= lambda: self.configuracion(1)
-		)
-		self.configurar.place(
-			relx=0.06, rely=0.8,
-			relwidth=0.08, relheight=0.04
 		)
 
 		 ## Botones de funciones
@@ -337,15 +317,6 @@ class frameAdmin (CTkFrame):
 			)
 		elif frame == 5:
 			self.MejorasCierres.place(
-				relx=0.25, rely=0.12,
-				relwidth=0.7, relheight=0.75
-			)
-	
-	def configuracion(self, valor):
-		self.removerfunciones()
-		
-		if valor == 1:
-			self.MostrarConfiguracion.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)

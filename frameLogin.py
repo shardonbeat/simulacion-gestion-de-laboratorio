@@ -140,8 +140,11 @@ class frameLogin (CTkFrame):
 		validar = self.main.bdd.verificarLogin(cedula, password)
 		if validar:
 			data = self.main.bdd.obtenerUsuario(cedula)
-
 			if data:
+				if data.get('role') == 'Bloqueado':
+					self.error_label.configure(text='Error: Usuario Bloqueado')
+					self.error_label.place(relx=0.5, rely=0.77, anchor=CENTER)
+					return
 				self.main.usuario_actual = data
 				self.obtener_nivel_autorizacion(data)
 				self.limpiar_inputs()

@@ -6,11 +6,20 @@ from AdministradorDefinirPoliticas import DefinirPoliticas
 from AdministradorExportarInformes import ExportarInformes
 from AdministradorGenerarReportes import GenerarReportes
 from AdministradorMejoras import MejorasCierres
+from mostrar_configuracion import MostrarConfiguracion
 
 class frameAdmin (CTkFrame):
 	def __init__(self, master, main):
 		super().__init__(master)
 		self.main = main
+		self.main = main
+		data = self.main.usuario_actual
+		self.nombre = data['username']
+		self.cedula = data['cedula']
+		self.nivel_autorizacion = data['nivel_autorizacion']
+		self.capacitación = data['id_capacitacion']
+		self.id = self.main.bdd.obtener_id_usuario(data['cedula'])
+		print(f"ID del usuario actual: {self.id}")
 		self.configure(
 			fg_color = "#A79D8A",
 			corner_radius = 0
@@ -21,6 +30,8 @@ class frameAdmin (CTkFrame):
 		self.AuditarAcciones = AuditarAcciones(self.main.ventana, self.main)
 		self.ExportarInformes = ExportarInformes(self.main.ventana, self.main)
 		self.MejorasCierres = MejorasCierres(self.main.ventana, self.main)
+
+		self.mostrar_configuracion = MostrarConfiguracion(self.main.ventana, self.main)
 
 		## Labels
 		self.labelWelcome = CTkLabel(
@@ -61,18 +72,6 @@ class frameAdmin (CTkFrame):
             relwidth=0.2, relheight=0.05
         )
 
-		self.labelAdmin = CTkLabel(
-			master=self, text="Administrador De Cumplimiento",
-			text_color="#ffffff",
-			fg_color="#2b2b39",
-			bg_color="#2b2b39",
-			font=("Times New Roman", 15, "bold"),
-		)
-		self.labelAdmin.place(
-			relx=0.015, rely=0.33,
-			relwidth=0.17, relheight=0.05,
-		)
-
 		self.Inicio = CTkButton(
             master = self, text = "Inicio",
             text_color = "#ffffff",
@@ -86,6 +85,66 @@ class frameAdmin (CTkFrame):
             relx=0.05, rely=0.40,
             relwidth=0.09, relheight=0.05
         )
+
+		self.Informacion = CTkLabel(
+            master = self, text = "Información del usuario",
+            text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+            font = ("Times New Roman", 20, "bold")
+        )
+		self.Informacion.place(
+            relx=0, rely=0.46,
+            relwidth=0.2, relheight=0.05
+        )
+
+		self.nombre_label = CTkLabel(
+			master = self, text = f"‣ Nombre: {self.nombre}",
+			text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold")
+		)
+		self.nombre_label.place(
+			relx=0.015, rely=0.515,
+			relwidth=0.1, relheight=0.04
+		)
+
+		self.cedula_label = CTkLabel(
+			master = self, text = f"‣ Cédula: {self.cedula}",
+			text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),	
+		)
+		self.cedula_label.place(
+			relx=0.020, rely=0.565,
+			relwidth=0.1, relheight=0.04
+		)
+
+		self.nivel_autorizacion_label = CTkLabel(
+			master = self, text = f"‣ Nivel de Autorización: {self.nivel_autorizacion}",
+			text_color = "#ffffff",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold")
+		)
+		self.nivel_autorizacion_label.place(
+			relx=0.010, rely=0.60,
+			relwidth=0.15, relheight=0.07
+		)
+
+		self.labelAdmin = CTkLabel(
+			master=self, text="Administrador De Cumplimiento",
+			text_color="#ffffff",
+			fg_color="#2b2b39",
+			bg_color="#2b2b39",
+			font=("Times New Roman", 15, "bold"),
+		)
+		self.labelAdmin.place(
+			relx=0.015, rely=0.33,
+			relwidth=0.17, relheight=0.05,
+		)
 
 		self.labelFondo = CTkLabel(
 			master = self,
@@ -111,6 +170,24 @@ class frameAdmin (CTkFrame):
 			relx=0.4, rely=0.15,
 			relwidth=0.4, relheight=0.05
 		)
+
+		self.configurar= CTkButton(
+			master = self, 
+			text = "Configuración",
+			text_color = "#ffffff",
+			hover_color="#898995",
+			fg_color= "#2b2b39",
+			bg_color= "#2b2b39",
+			font = ("Times New Roman", 15, "bold"),
+			compound="left",
+			command= lambda: self.configuracion(1)
+		)
+		self.configurar.place(
+			relx=0.06, rely=0.8,
+			relwidth=0.08, relheight=0.04
+		)
+
+		 ## Botones de funciones
 
 		self.PoliticasImage = CTkImage(
 			Image.open("Img/Politicas.png"),
@@ -260,6 +337,15 @@ class frameAdmin (CTkFrame):
 			)
 		elif frame == 5:
 			self.MejorasCierres.place(
+				relx=0.25, rely=0.12,
+				relwidth=0.7, relheight=0.75
+			)
+	
+	def configuracion(self, valor):
+		self.removerfunciones()
+		
+		if valor == 1:
+			self.mostrar_configuracion.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)

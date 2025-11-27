@@ -82,53 +82,52 @@ class frameMain (CTkFrame):
             relwidth=0.09, relheight=0.05
         )
 
-		self.Niveles = CTkLabel(
-            master = self, text = "Niveles de acceso",
+		self.Informacion = CTkLabel(
+            master = self, text = "Información del usuario",
             text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
             font = ("Times New Roman", 20, "bold")
         )
-		self.Niveles.place(
+		self.Informacion.place(
             relx=0, rely=0.4,
             relwidth=0.2, relheight=0.05
         )
 
 		self.nombre_label = CTkLabel(
-			master = self, text = f"Nombre: {self.nombre}",
+			master = self, text = f"‣ Nombre: {self.nombre}",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold")
 		)
 		self.nombre_label.place(
-			relx=0.02, rely=0.46,
+			relx=0.015, rely=0.46,
 			relwidth=0.1, relheight=0.04
 		)
 
 		self.cedula_label = CTkLabel(
-			master = self, text = f"Cédula: {self.cedula}",
+			master = self, text = f"‣ Cédula: {self.cedula}",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),	
 		)
 		self.cedula_label.place(
-			relx=0.02, rely=0.50,
+			relx=0.020, rely=0.52,
 			relwidth=0.1, relheight=0.04
 		)
 
-		self.Nivel_3 = CTkLabel(
-			master = self, text = "Nivel de Autozicacion: " \
-				 				 f"{self.nivel_autorizacion}",
+		self.nivel_autorizacion_label = CTkLabel(
+			master = self, text = f"‣ Nivel de Autorización: {self.nivel_autorizacion}",
 			text_color = "#ffffff",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold")
 		)
-		self.Nivel_3.place(
-			relx=0.02, rely=0.54,
-			relwidth=0.1, relheight=0.07
+		self.nivel_autorizacion_label.place(
+			relx=0.010, rely=0.56,
+			relwidth=0.15, relheight=0.07
 		)
 
 		self.labelFondo = CTkLabel(

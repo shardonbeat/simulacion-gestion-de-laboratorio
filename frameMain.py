@@ -13,6 +13,8 @@ class frameMain (CTkFrame):
 		self.main = main
 		data = self.main.usuario_actual
 		self.nombre = data['username']
+		self.cedula = data['cedula']
+		self.nivel_autorizacion = data['nivel_autorizacion']
 		self.capacitación = data['capacitacion']
 		self.id = self.main.bdd.obtener_id_usuario(data['cedula'])
 		print(f"ID del usuario actual: {self.id}")
@@ -92,46 +94,41 @@ class frameMain (CTkFrame):
             relwidth=0.2, relheight=0.05
         )
 
-		self.Nivel_1 = CTkButton(
-			master = self, text = "‣  Nivel 1",
+		self.nombre_label = CTkLabel(
+			master = self, text = f"Nombre: {self.nombre}",
 			text_color = "#ffffff",
-			hover_color="#898995",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold"),
-			command= self.laboratorioNivel1
+			font = ("Times New Roman", 15, "bold")
 		)
-		self.Nivel_1.place(
+		self.nombre_label.place(
 			relx=0.02, rely=0.46,
 			relwidth=0.1, relheight=0.04
 		)
 
-		self.Nivel_2 = CTkButton(
-			master = self, text = "‣  Nivel 2",
+		self.cedula_label = CTkLabel(
+			master = self, text = f"Cédula: {self.cedula}",
 			text_color = "#ffffff",
-			hover_color="#898995",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
 			font = ("Times New Roman", 15, "bold"),	
-			command= self.laboratorioNivel2 if data in ["2", "3"] else self.AccesoDenegado
 		)
-		self.Nivel_2.place(
+		self.cedula_label.place(
 			relx=0.02, rely=0.50,
 			relwidth=0.1, relheight=0.04
 		)
 
-		self.Nivel_3 = CTkButton(
-			master = self, text = "‣  Nivel 3",
+		self.Nivel_3 = CTkLabel(
+			master = self, text = "Nivel de Autozicacion: " \
+				 				 f"{self.nivel_autorizacion}",
 			text_color = "#ffffff",
-			hover_color="#898995",
 			fg_color= "#2b2b39",
 			bg_color= "#2b2b39",
-			font = ("Times New Roman", 15, "bold"),
-			command= self.laboratorioNivel3 if data == "3" else self.AccesoDenegado
+			font = ("Times New Roman", 15, "bold")
 		)
 		self.Nivel_3.place(
 			relx=0.02, rely=0.54,
-			relwidth=0.1, relheight=0.04
+			relwidth=0.1, relheight=0.07
 		)
 
 		self.labelFondo = CTkLabel(
@@ -374,14 +371,7 @@ class frameMain (CTkFrame):
 		self.frameHacerReportes.place_forget()
 		self.frameMostrarHistorial.place_forget()
 
-	def borrar_niveles(self):
-		self.Niveles.place_forget()
-		self.Nivel_1.place_forget()
-		self.Nivel_2.place_forget()
-		self.Nivel_3.place_forget()
-
 	def frame_manager(self, frame):
-		self.borrar_niveles()
 
 		if frame == 1:
 			self.removerfunciones()

@@ -1,4 +1,5 @@
 from customtkinter import *
+from datetime import datetime
 
 class RegistrarCapacitaciones(CTkFrame):
     def __init__(self, master, main):
@@ -87,6 +88,13 @@ class RegistrarCapacitaciones(CTkFrame):
             relwidth=0.15, relheight=0.05
         )
 
+        self.error_fecha = CTkLabel(
+			master=self,
+			text="Fecha invalida",
+			text_color="#ff0000",
+			font=("Times New Roman", 12, "bold"),
+		)
+
         self.labelFechaCaducidad = CTkLabel(
             master=self,
             text="Fecha de Caducidad:",
@@ -121,9 +129,51 @@ class RegistrarCapacitaciones(CTkFrame):
             fg_color="#5e5e72",
             bg_color="#2b2b39",
             font=("Times New Roman", 15, "bold"),
-            corner_radius=10
+            corner_radius=10,
+            command = self.registrar_capacitacion
         )
         self.botonRegistrar.place(
             relx=0.35, rely=0.8,
             relwidth=0.3, relheight=0.07
         )
+    
+    def registrar_capacitacion(self):
+        capacitacion = self.entryCapacitacion.get()
+        fecha_vigencia = self.entryFecha.get()
+        fecha_caducidad = self.entryFechaCaducidad.get()
+
+        paso = True
+        if not self.validar_fecha():
+            paso = False
+
+        if not paso:
+            print('Datos invalidos')
+            return
+        
+        success = self.main.bdd.guardar_capacitacion(
+			capacitacion, fecha_vigencia, fecha_caducidad
+		)
+
+        if success and paso:
+            self.limpiar_campos()
+
+    def validar_fecha(self):
+        try:
+            fecha_vigencia = self.entryFecha().get()
+            fecha = datetime.strp(fecha_vigencia, '%Y,%m,%d').date()
+        except Exception as e:
+            print(f'Error: {e}')
+            return False
+
+        if fecha <= datetime.now():
+            return fecha
+        else:
+            self.error_fecha.place(
+				relx=0.35, rely=0.45
+			)
+            return False
+        
+    def limpiar_campos(self):
+        self.entryCapacitacion.delete(0, 'end')
+        self.entryFecha.delete(0, 'end')
+        self.entryFechaCaducidad.delete(0, 'end')

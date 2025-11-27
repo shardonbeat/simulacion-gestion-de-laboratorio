@@ -5,7 +5,7 @@ from CoordinadorBloquearUsuario import BloquearUsuario
 from CoordinadorEmitirAlertas import EmitirAlertas
 from CoordinadorGestionarInventario import GestionarInventario
 from CoordinadorRegistrarCapacitaciones import RegistrarCapacitaciones
-from CoordinadorSolicitudesAcceso import FrameSolicitudes
+from CoordinadorSolicitudesAcceso import SolicitudesAcceso
 from CoordinadorSolicitudesSustancias import SolicitudesSustancias
 
 
@@ -18,7 +18,7 @@ class FrameCoordinador(CTkFrame):
 			corner_radius=0,
 		)
 
-		self.CoordinadorSolicitudesAcceso = FrameSolicitudes(self.main.ventana, self.main)
+		self.CoordinadorSolicitudesAcceso = SolicitudesAcceso(self.main.ventana, self.main)
 		self.CoordinadorSolicitudesSustancias = SolicitudesSustancias(self.main.ventana, self.main)
 		self.CoordinadorRegistrarCapacitaciones = RegistrarCapacitaciones(self.main.ventana, self.main)
 		self.CoordinadorGestionarInventario = GestionarInventario(self.main.ventana, self.main)
@@ -259,7 +259,6 @@ class FrameCoordinador(CTkFrame):
 		self.CoordinadorGestionarInventario.place_forget()
 		self.CoordinadorEmitirAlertas.place_forget()
 		self.CoordinadorBloquearUsuario.place_forget()
-		self.CoordinadorSolicitudesAcceso.cerrar()
 
 	def frame_manager(self, frame):
 		self.removerfunciones()

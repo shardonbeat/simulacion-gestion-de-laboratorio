@@ -32,10 +32,11 @@ class BDD:
                     password TEXT NOT NULL,
                     nacimiento TEXT NOT NULL,
                     mail TEXT NOT NULL,
-                    capacitacion TEXT,
                     role TEXT NOT NULL,
                     nivel_autorizacion INTEGER NOT NULL,
-                    CONSTRAINT user UNIQUE (cedula, password)
+                    id_capacitacion TEXT,
+                    CONSTRAINT user UNIQUE (cedula, password),
+                    FOREIGN KEY (id_capacitacion) REFERENCES capacitaciones(id_capacitacion)
                     );
                     '''
             self.cursor.executescript(query)
@@ -76,6 +77,33 @@ class BDD:
             
         except Exception as e:
             print(f"Error al crear tabla usuarios: {e}")
+
+    def crear_tabla_capacitaciones(self):
+        query = '''
+                CREATE TABLE IF NOT EXISTS capacitaciones
+                (id_capacitacion INTEGER PRIMARY KEY AUTOINCREMENT,
+                capacitacion TEXT,
+                id_usuario INTEGER NOT NULL,
+                fecha_vigencia TEXT NO NULL,
+                fecha_caducidad TEXT NO NULL,
+                FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+                )
+                '''
+        self.cursor.executescript(query)
+        self.conn.commit()
+        
+    def guardar_capacitacion(self, capacitacion, id_usuario, fecha_vigencia, fecha_caducidad):
+        query = '''
+            INSERT INTO capacitaciones (capacitacion, id_usuario, fecha_vigencia, fecha_caducidad)
+            VALUES (?, ?, ?);
+            '''
+        try:
+            self.cursor.execute(query, (capacitacion, id_usuario, fecha_vigencia, fecha_caducidad))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al guardar la capacitacion: {e}")
+            return False
 
     def crear_tabla_sustancias(self):
         query = '''
@@ -227,7 +255,7 @@ class BDD:
             return False
     
     def obtenerUsuario(self, cedula):
-        query = "SELECT username, cedula, password, nacimiento, mail, capacitacion, role, nivel_autorizacion FROM usuarios WHERE cedula = ? LIMIT 1"
+        query = "SELECT username, cedula, password, nacimiento, mail, role, nivel_autorizacion, id_capacitacion FROM usuarios WHERE cedula = ? LIMIT 1"
         cur = self.cursor.execute(query, (cedula,))
         r = cur.fetchone()
         if not r:
@@ -239,9 +267,9 @@ class BDD:
             'password': r[2],
             'nacimiento': r[3],
             'mail': r[4],
-            'capacitacion': r[5],
-            'role': r[6],
-            'nivel_autorizacion': r[7]
+            'role': r[5],
+            'nivel_autorizacion': r[6],
+            'id_capacitacion': r[7]
         }
     
     def obtener_id_usuario(self, cedula):

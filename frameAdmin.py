@@ -6,7 +6,7 @@ from AdministradorDefinirPoliticas import DefinirPoliticas
 from AdministradorExportarInformes import ExportarInformes
 from AdministradorGenerarReportes import GenerarReportes
 from AdministradorMejoras import MejorasCierres
-from mostrar_configuracion import MostrarConfiguracion
+from Mostrar_ConfiguracionAdmin import MostrarConfiguracion
 
 class frameAdmin (CTkFrame):
 	def __init__(self, master, main):
@@ -31,7 +31,7 @@ class frameAdmin (CTkFrame):
 		self.ExportarInformes = ExportarInformes(self.main.ventana, self.main)
 		self.MejorasCierres = MejorasCierres(self.main.ventana, self.main)
 
-		self.mostrar_configuracion = MostrarConfiguracion(self.main.ventana, self.main)
+		self.MostrarConfiguracion = MostrarConfiguracion(self.main.ventana, self.main)
 
 		## Labels
 		self.labelWelcome = CTkLabel(
@@ -345,7 +345,7 @@ class frameAdmin (CTkFrame):
 		self.removerfunciones()
 		
 		if valor == 1:
-			self.mostrar_configuracion.place(
+			self.MostrarConfiguracion.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)

@@ -144,6 +144,7 @@ class RegistrarCapacitaciones(CTkFrame):
 
         paso = True
         if not self.validar_fecha():
+            print(self.validar_fecha())
             paso = False
 
         if not paso:

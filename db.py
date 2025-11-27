@@ -509,5 +509,19 @@ class BDD:
         except Exception as e:
             print(f"Error al guardar reporte de incidente: {e}")
             return False
-        
     
+    def _ensure_column(self, table, column, col_type):
+        """
+        Añade la columna 'column' de tipo 'col_type' a 'table' si no existe.
+        """
+        try:
+            # Obtener info de columnas
+            self.cursor.execute(f"PRAGMA table_info({table});")
+            cols = [row[1] for row in self.cursor.fetchall()]  # row[1] es el nombre de la columna
+            if column not in cols:
+                alter_q = f"ALTER TABLE {table} ADD COLUMN {column} {col_type};"
+                self.cursor.execute(alter_q)
+                self.conn.commit()
+        except Exception as e:
+            print(f"Error en _ensure_column para {table}.{column}: {e}")
+

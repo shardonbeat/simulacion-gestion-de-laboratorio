@@ -119,10 +119,11 @@ class solicitudAcceso(CTkFrame):
         motivo = self.Motivo.get("1.0", "end-1c")
         id_usuario = self.main.frameMain.id
         fecha_solicitud = datetime.now().date()
+        capacitacion = self.main.bdd.obtener_capacitacion(id_usuario)
         print(f"Solicitud enviada por usuario de id {id_usuario} para nivel {nivel} con motivo: {motivo}")
 
         self.main.bdd.crear_solicitud_acceso(
-            id_usuario, nivel, motivo, fecha_solicitud, "Pendiente"
+            id_usuario, nivel, motivo, fecha_solicitud, capacitacion, "Pendiente"
         )
         self.texto_exito.place(
             relx=0.4, rely=0.85,

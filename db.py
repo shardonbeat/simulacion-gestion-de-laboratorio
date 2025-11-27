@@ -12,6 +12,11 @@ class BDD:
         self.cursor.execute(query, (cedula,))
         return self.cursor.fetchone()
     
+    def obtener_capacitacion(self, id):
+        query = "SELECT capacitacion FROM capacitaciones WHERE id_usuario = ? LIMIT 1"
+        self.cursor.execute(query, (id,))
+        return self.cursor.fetchone()
+    
     ## Crear la base de datos y las tablas necesarias
     def crear_bdd(self):
         self.crear_tabla_usuarios()
@@ -21,6 +26,7 @@ class BDD:
         self.crear_tabla_solicitudes_acceso()
         self.crear_tabla_solicitudes_sustancias()
         self.crear_tabla_registros_sustancias_residuos()
+        self.crear_tabla_capacitaciones()
 
     def crear_tabla_usuarios(self):
         try:
@@ -79,23 +85,26 @@ class BDD:
             print(f"Error al crear tabla usuarios: {e}")
 
     def crear_tabla_capacitaciones(self):
-        query = '''
-                CREATE TABLE IF NOT EXISTS capacitaciones
-                (id_capacitacion INTEGER PRIMARY KEY AUTOINCREMENT,
-                capacitacion TEXT,
-                id_usuario INTEGER NOT NULL,
-                fecha_vigencia TEXT NO NULL,
-                fecha_caducidad TEXT NO NULL,
-                FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
-                )
-                '''
-        self.cursor.executescript(query)
-        self.conn.commit()
+        try:
+            query = '''
+                    CREATE TABLE IF NOT EXISTS capacitaciones
+                    (id_capacitacion INTEGER PRIMARY KEY AUTOINCREMENT,
+                    capacitacion TEXT,
+                    id_usuario INTEGER NOT NULL,
+                    fecha_vigencia TEXT NOT NULL,
+                    fecha_caducidad TEXT NOT NULL,
+                    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+                    )
+                    '''
+            self.cursor.executescript(query)
+            self.conn.commit()
+        except Exception as e:
+            print(f'Error: {e}')
         
     def guardar_capacitacion(self, capacitacion, id_usuario, fecha_vigencia, fecha_caducidad):
         query = '''
             INSERT INTO capacitaciones (capacitacion, id_usuario, fecha_vigencia, fecha_caducidad)
-            VALUES (?, ?, ?);
+            VALUES (?, ?, ?, ?);
             '''
         try:
             self.cursor.execute(query, (capacitacion, id_usuario, fecha_vigencia, fecha_caducidad))
@@ -155,8 +164,10 @@ class BDD:
                 nivel_solicitado INTEGER NOT NULL,
                 motivo TEXT NOT NULL,
                 fecha_solicitud TEXT NOT NULL,
+                capacitacion TEXT,
                 estado TEXT NOT NULL,
-                FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+                FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+                FOREIGN KEY (capacitacion) REFERENCES usuarios(capacitacion)
                 );
                 '''
 
@@ -272,6 +283,18 @@ class BDD:
             'id_capacitacion': r[7]
         }
     
+    def obtener_usuarios(self):
+        query = '''
+                SELECT id_usuario, username FROM usuarios
+                '''
+        self.cursor.execute(query)
+        try:
+            usuarios = self.cursor.fetchall()
+            return usuarios
+        except Exception as e:
+            print(f"Error al obtener usuarios: {e}")
+            return []
+    
     def obtener_id_usuario(self, cedula):
         query = "SELECT id_usuario FROM usuarios WHERE cedula = ? LIMIT 1"
         self.cursor.execute(query, (cedula,))
@@ -280,13 +303,13 @@ class BDD:
             return None
         return r[0]
     
-    def crear_solicitud_acceso(self, id_usuario, nivel_solicitado, motivo, fecha_solicitud, estado):
+    def crear_solicitud_acceso(self, id_usuario, nivel_solicitado, motivo, fecha_solicitud, capacitacion, estado):
         query = '''
-            INSERT INTO solicitudes_acceso (id_usuario, nivel_solicitado, motivo, fecha_solicitud, estado)
-            VALUES (?, ?, ?, ?, ?);
+            INSERT INTO solicitudes_acceso (id_usuario, nivel_solicitado, motivo, fecha_solicitud, capacitacion, estado)
+            VALUES (?, ?, ?, ?, ?, ?);
             '''
         try:
-            self.cursor.execute(query, (id_usuario, nivel_solicitado, motivo, fecha_solicitud, estado))
+            self.cursor.execute(query, (id_usuario, nivel_solicitado, motivo, fecha_solicitud, capacitacion, estado))
             self.conn.commit()
             return True
         except Exception as e:
@@ -295,7 +318,7 @@ class BDD:
         
     def obtener_solicitudes_acceso(self):
         query = '''
-            SELECT id_solicitud_a, username, motivo, fecha_solicitud, estado
+            SELECT id_solicitud_a, username, nivel_solicitado, motivo, fecha_solicitud, capacitacion, estado
             FROM solicitudes_acceso
             JOIN usuarios ON solicitudes_acceso.id_usuario = usuarios.id_usuario;
             '''
@@ -311,32 +334,34 @@ class BDD:
             solicitudes.append({
                 'id_solicitud_a': row[0],
                 'username': row[1],
-                'motivo': row[2],
-                'fecha_solicitud': row[3],
-                'estado': row[4]
+                'nivel_solicitado': row[2],
+                'motivo': row[3],
+                'fecha_solicitud': row[4],
+                'capacitacion': row[5],
+                'estado': row[6]
             })
         
         return solicitudes
     
     def actualizar_estado_solicitud_acceso(self, id_solicitud, nuevo_estado):
-         try:
-            query = "UPDATE solicitudes_accesos SET estado = ? WHERE id_solicitud = ?"
+        try:
+            query = "UPDATE solicitudes_acceso SET estado = ? WHERE id_solicitud_a = ?"
             self.cursor.execute(query, (nuevo_estado, id_solicitud))
             self.conn.commit()
             print(f"Estado actualizado: ID {id_solicitud} -> {nuevo_estado}")
             return True
-         except Exception as e:
+        except Exception as e:
             print(f"Error al actualizar estado de la solicitud: {e}")
             return False
          
     def actualizar_estado_solicitud_sustancias(self, id_sustancia_s, nuevo_estado):
-         try:
+        try:
             query = "UPDATE solicitudes_sustancias SET estado = ? WHERE id_solicitud_s = ?"
             self.cursor.execute(query, (nuevo_estado, id_sustancia_s))
             self.conn.commit()
             print(f"Estado actualizado: ID {id_sustancia_s} -> {nuevo_estado}")
             return True
-         except Exception as e:
+        except Exception as e:
             print(f"Error al actualizar estado de la solicitud: {e}")
             return False
         

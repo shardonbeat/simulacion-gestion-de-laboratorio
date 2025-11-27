@@ -88,7 +88,7 @@ class RegistrarCapacitaciones(CTkFrame):
             relwidth=0.15, relheight=0.05
         )
 
-        self.error_fecha = CTkLabel(
+        self.error_fecha1 = CTkLabel(
 			master=self,
 			text="Fecha invalida",
 			text_color="#ff0000",
@@ -120,7 +120,46 @@ class RegistrarCapacitaciones(CTkFrame):
             relx=0.35, rely=0.5,
             relwidth=0.15, relheight=0.05
         )
+        
+        self.error_fecha2 = CTkLabel(
+			master=self,
+			text="Fecha invalida",
+			text_color="#ff0000",
+			font=("Times New Roman", 12, "bold"),
+		)
 
+        self.seleccionar_usuario_l = CTkLabel(
+            master=self,
+            text="Usuario:",
+            text_color="#ffffff",
+            fg_color="#2b2b39",
+            bg_color="#2b2b39",
+            font=("Times New Roman", 15, "bold"),
+        )
+        self.seleccionar_usuario_l.place(
+            relx=0.052, rely=0.65,
+            relwidth=0.4, relheight=0.05
+        )
+
+        self.seleccionar_usuario = CTkComboBox(
+            master = self,
+            width=0.3,
+            height=0.5,
+            fg_color="#5e5e72",
+            bg_color="#2b2b39",
+            dropdown_fg_color="#5e5e72",
+            dropdown_font=("Arial", 12, "bold"),
+            corner_radius=10,
+            values=[],
+            hover=True
+        )
+        self.seleccionar_usuario.place(
+            relx=0.35, rely=0.65,
+            relwidth=0.15, relheight=0.05
+        )
+
+        # Cargar usuarios en el combobox ahora que el widget existe
+        self.obtener_usuarios()
         self.botonRegistrar = CTkButton(
             master=self,
             text="Registrar Capacitación",
@@ -143,8 +182,7 @@ class RegistrarCapacitaciones(CTkFrame):
         fecha_caducidad = self.entryFechaCaducidad.get()
 
         paso = True
-        if not self.validar_fecha():
-            print(self.validar_fecha())
+        if not self.validar_fecha(fecha_vigencia, fecha_caducidad):
             paso = False
 
         if not paso:
@@ -158,21 +196,68 @@ class RegistrarCapacitaciones(CTkFrame):
         if success and paso:
             self.limpiar_campos()
 
-    def validar_fecha(self):
+    def validar_fecha(self, fecha_vigencia, fecha_caducidad):
         try:
-            fecha_vigencia = self.entryFecha().get()
-            fecha = datetime.strp(fecha_vigencia, '%Y,%m,%d').date()
+            self.error_fecha1.place_forget()
+            self.error_fecha2.place_forget()
+        except Exception:
+            pass
+
+        try:
+            fecha_vig = datetime.strptime(fecha_vigencia, "%Y-%m-%d").date()
         except Exception as e:
-            print(f'Error: {e}')
+            print(f'Error parsing fecha_vigencia: {e}')
+            self.error_fecha1.place(
+                relx=0.35, rely=0.45
+            )
             return False
 
-        if fecha <= datetime.now():
-            return fecha
-        else:
-            self.error_fecha.place(
-				relx=0.35, rely=0.45
-			)
+        try:
+            fecha_cad = datetime.strptime(fecha_caducidad, "%Y-%m-%d").date()
+        except Exception as e:
+            print(f'Error parsing fecha_caducidad: {e}')
+            self.error_fecha2.place(
+                relx=0.35, rely=0.55
+            )
             return False
+
+        if fecha_vig < datetime.now().date():
+            self.error_fecha1.place(
+                relx=0.35, rely=0.45
+            )
+            return False
+
+        if fecha_cad < fecha_vig:
+            self.error_fecha2.place(
+                relx=0.35, rely=0.55
+            )
+            return False
+
+        return True
+    
+    def obtener_usuarios(self):
+        usuarios = self.main.bdd.obtener_usuarios()
+        
+        try:
+            if usuarios:
+                # Limpiar y cargar nuevos valores
+                self.mapa_usuarios = {username: id_usuario for id_usuario, username in usuarios}
+                nombres_usuarios = list(self.mapa_usuarios.keys())
+                
+                # Actualizar el combobox de usuarios
+                self.seleccionar_usuario.configure(values=nombres_usuarios)
+                self.seleccionar_usuario.set("Seleccione un usuario")
+                
+                print(f"Usuarios cargados: {len(nombres_usuarios)}")
+            else:
+                self.seleccionar_usuario.set("No hay usuarios disponibles")
+                self.seleccionar_usuario.configure(values=[])
+                
+        except Exception as e:
+            print(f"Error al cargar usuarios: {e}")
+        except Exception as e:
+            print(f"Error al cargar usuarios: {e}")
+
         
     def limpiar_campos(self):
         self.entryCapacitacion.delete(0, 'end')

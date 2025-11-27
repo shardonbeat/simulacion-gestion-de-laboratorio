@@ -18,12 +18,13 @@ class FrameCoordinador(CTkFrame):
 			corner_radius=0,
 		)
 
-		self.CoordinadorSolicitudesAcceso = SolicitudesAcceso(self.main.ventana, self.main)
-		self.CoordinadorSolicitudesSustancias = SolicitudesSustancias(self.main.ventana, self.main)
-		self.CoordinadorRegistrarCapacitaciones = RegistrarCapacitaciones(self.main.ventana, self.main)
-		self.CoordinadorGestionarInventario = GestionarInventario(self.main.ventana, self.main)
-		self.CoordinadorEmitirAlertas = EmitirAlertas(self.main.ventana, self.main)
-		self.CoordinadorBloquearUsuario = BloquearUsuario(self.main.ventana, self.main)
+		self.ventana_actual = self.main.FrameCoordinador
+		self.CoordinadorSolicitudesAcceso = None
+		self.CoordinadorSolicitudesSustancias = None
+		self.CoordinadorRegistrarCapacitaciones = None
+		self.CoordinadorGestionarInventario = None
+		self.CoordinadorEmitirAlertas = None
+		self.CoordinadorBloquearUsuario = None
 
 		# Labels
 		self.labelWelcome = CTkLabel(
@@ -252,50 +253,55 @@ class FrameCoordinador(CTkFrame):
 			relx=0.06, rely=0.9,
 			relwidth=0.08, relheight=0.04
 		)
-	def removerfunciones(self):
-		self.CoordinadorSolicitudesAcceso.place_forget()
-		self.CoordinadorSolicitudesSustancias.place_forget()
-		self.CoordinadorRegistrarCapacitaciones.place_forget()
-		self.CoordinadorGestionarInventario.place_forget()
-		self.CoordinadorEmitirAlertas.place_forget()
-		self.CoordinadorBloquearUsuario.place_forget()
-
+	
 	def frame_manager(self, frame):
-		self.removerfunciones()
+		self.cerrar_ventanas()
 
 		if frame == 1:
+			self.CoordinadorSolicitudesAcceso = SolicitudesAcceso(self.main.ventana, self.main)
 			self.CoordinadorSolicitudesAcceso.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
+			self.ventana_actual = self.CoordinadorSolicitudesAcceso
 		elif frame == 2:
+			self.CoordinadorSolicitudesSustancias = SolicitudesSustancias(self.main.ventana, self.main)
 			self.CoordinadorSolicitudesSustancias.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
+			self.ventana_actual = self.CoordinadorSolicitudesSustancias
 		elif frame == 3:
+			self.CoordinadorRegistrarCapacitaciones = RegistrarCapacitaciones(self.main.ventana, self.main)
 			self.CoordinadorRegistrarCapacitaciones.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
+			self.ventana_actual = self.CoordinadorRegistrarCapacitaciones
 		elif frame == 4:
+			self.CoordinadorGestionarInventario = GestionarInventario(self.main.ventana, self.main)
 			self.CoordinadorGestionarInventario.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
+			self.ventana_actual = self.CoordinadorGestionarInventario
 		elif frame == 5:
+			self.CoordinadorEmitirAlertas = EmitirAlertas(self.main.ventana, self.main)
 			self.CoordinadorEmitirAlertas.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
+			self.ventana_actual = self.CoordinadorEmitirAlertas
 		elif frame == 6:
+			self.CoordinadorBloquearUsuario = BloquearUsuario(self.main.ventana, self.main)
 			self.CoordinadorBloquearUsuario.place(
 				relx=0.25, rely=0.12,
 				relwidth=0.7, relheight=0.75
 			)
+			self.ventana_actual = self.CoordinadorBloquearUsuario
 
 	def volver_main(self):
-		self.removerfunciones()
+		self.cerrar_ventanas()
 		self.main.FrameCoordinador.place_forget()
 		go = FrameCoordinador(self.main.ventana, self.main)
 		self.main.FrameCoordinador = go
@@ -304,6 +310,22 @@ class FrameCoordinador(CTkFrame):
 			relwidth=1, relheight=1
 		)
 
+	def cerrar_ventanas(self):
+		ventanas = [
+            self.CoordinadorSolicitudesAcceso, 
+            self.CoordinadorSolicitudesSustancias,
+            self.CoordinadorRegistrarCapacitaciones, 
+            self.CoordinadorGestionarInventario,
+			self.CoordinadorEmitirAlertas,
+			self.CoordinadorBloquearUsuario
+        ]
+
+		for ventana in ventanas:
+			if ventana is not None:
+				ventana.place_forget()
+				
+		self.ventana_actual = None
+
 	def cerrar(self):
-		self.removerfunciones()
+		self.ventana_actual.place_forget()
 		self.main.mostrar_login()

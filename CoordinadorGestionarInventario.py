@@ -231,7 +231,7 @@ class AgregarSustancia(CTkFrame):
 			corner_radius=10
         )
         self.entryCantidad.place(
-            relx=0.2, rely=0.4,
+            relx=0.10, rely=0.45,
             relwidth=0.15, relheight=0.05
         )
 
@@ -521,8 +521,6 @@ class ModificarSustancia(CTkFrame):
 
         self.seleccionar_sustancia = CTkComboBox(
             master=self,
-            width=0.3,
-            height=0.5,
             fg_color="#5e5e72",
             bg_color="#2b2b39",
             dropdown_fg_color="#5e5e72",
@@ -532,7 +530,7 @@ class ModificarSustancia(CTkFrame):
             hover=True
         )
         self.seleccionar_sustancia.place(
-            relx=0.25, rely=0.17,
+            relx=0.3, rely=0.17,
             relwidth=0.4, relheight=0.06
         )
 
@@ -616,7 +614,7 @@ class ModificarSustancia(CTkFrame):
             corner_radius=10
         )
         self.entryCantidad.place(
-            relx=0.2, rely=0.4,
+            relx=0.1, rely=0.45,
             relwidth=0.15, relheight=0.05
         )
 
@@ -827,10 +825,10 @@ class ModificarSustancia(CTkFrame):
         try:
             cant = int(cantidad)
             if cant < 0:
-                self.error_cantidad.place(relx=0.2, rely=0.45, relwidth=0.15, relheight=0.05)
+                self.error_cantidad.place(relx=0.08, rely=0.5, relwidth=0.15, relheight=0.05)
                 paso = False
         except Exception:
-            self.error_cantidad.place(relx=0.2, rely=0.45, relwidth=0.15, relheight=0.05)
+            self.error_cantidad.place(relx=0.08, rely=0.5, relwidth=0.15, relheight=0.05)
             paso = False
 
         if not paso:
@@ -900,8 +898,6 @@ class EliminarSustancia(CTkFrame):
 
         self.seleccionar_sustancia = CTkComboBox(
             master=self,
-            width=0.3,
-            height=0.5,
             fg_color="#5e5e72",
             bg_color="#2b2b39",
             dropdown_fg_color="#5e5e72",
@@ -911,7 +907,7 @@ class EliminarSustancia(CTkFrame):
             hover=True
         )
         self.seleccionar_sustancia.place(
-            relx=0.25, rely=0.17,
+            relx=0.3, rely=0.17,
             relwidth=0.4, relheight=0.06
         )
 
@@ -995,7 +991,7 @@ class EliminarSustancia(CTkFrame):
             corner_radius=10
         )
         self.detalle_cantidad.place(
-            relx=0.2, rely=0.4,
+            relx=0.10, rely=0.45,
             relwidth=0.15, relheight=0.05
         )
 

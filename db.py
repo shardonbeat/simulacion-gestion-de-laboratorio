@@ -15,7 +15,10 @@ class BDD:
     def obtener_capacitacion(self, id):
         query = "SELECT capacitacion FROM capacitaciones WHERE id_usuario = ? LIMIT 1"
         self.cursor.execute(query, (id,))
-        return self.cursor.fetchone()
+        r = self.cursor.fetchone()
+        if not r:
+            return None
+        return r[0]
     
     ## Crear la base de datos y las tablas necesarias
     def crear_bdd(self):
@@ -40,9 +43,11 @@ class BDD:
                     mail TEXT NOT NULL,
                     role TEXT NOT NULL,
                     nivel_autorizacion INTEGER NOT NULL,
-                    id_capacitacion TEXT,
+                    id_capacitacion INTEGER,
+                    capacitacion TEXT,
                     CONSTRAINT user UNIQUE (cedula, password),
-                    FOREIGN KEY (id_capacitacion) REFERENCES capacitaciones(id_capacitacion)
+                    FOREIGN KEY (id_capacitacion) REFERENCES capacitaciones(id_capacitacion),
+                    FOREIGN KEY (capacitacion) REFERENCES capacitaciones(capacitacion)
                     );
                     '''
             self.cursor.executescript(query)
@@ -107,12 +112,23 @@ class BDD:
             VALUES (?, ?, ?, ?);
             '''
         try:
+            # Insertar la capacitación y obtener su id
             self.cursor.execute(query, (capacitacion, id_usuario, fecha_vigencia, fecha_caducidad))
+            id_cap = self.cursor.lastrowid
+
+            # Asignar la capacitación al usuario correspondiente
+            update_q = 'UPDATE usuarios SET id_capacitacion = ? WHERE id_usuario = ?'
+            self.cursor.execute(update_q, (id_cap, id_usuario))
+
+            update_u = 'UPDATE usuarios SET capacitacion = ? WHERE id_usuario = ?'
+            self.cursor.execute(update_u, (capacitacion, id_usuario))
+
             self.conn.commit()
             return True
         except Exception as e:
             print(f"Error al guardar la capacitacion: {e}")
             return False
+        
 
     def crear_tabla_sustancias(self):
         query = '''
@@ -122,11 +138,97 @@ class BDD:
                 nivel_riesgo INTEGER NOT NULL,
                 cantidad INTEGER NOT NULL,
                 ubicacion TEXT NOT NULL,
-                fecha_vencimiento TEXT NOT NULL
+                fecha_vencimiento TEXT NOT NULL,
+                lote TEXT
                 );
                 '''
         self.cursor.executescript(query)
         self.conn.commit()
+        # Asegurar columna 'lote' en instalaciones existentes
+        self._ensure_column('sustancias', 'lote', 'TEXT')
+
+    # Funciones CRUD para sustancias
+    def agregar_sustancia(self, name, nivel_riesgo, cantidad, ubicacion, fecha_vencimiento, lote=None):
+        """Agrega una nueva sustancia. Devuelve True/False."""
+        query = '''
+            INSERT INTO sustancias (name, nivel_riesgo, cantidad, ubicacion, fecha_vencimiento, lote)
+            VALUES (?, ?, ?, ?, ?, ?);
+            '''
+        try:
+            self.cursor.execute(query, (name, nivel_riesgo, cantidad, ubicacion, fecha_vencimiento, lote))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al agregar sustancia: {e}")
+            return False
+
+    def modificar_sustancia(self, id_sustancia, name=None, nivel_riesgo=None, cantidad=None, ubicacion=None, fecha_vencimiento=None, lote=None):
+        """Modifica los campos proporcionados de la sustancia indicada."""
+        updates = []
+        params = []
+        if name is not None:
+            updates.append('name = ?')
+            params.append(name)
+        if nivel_riesgo is not None:
+            updates.append('nivel_riesgo = ?')
+            params.append(nivel_riesgo)
+        if cantidad is not None:
+            updates.append('cantidad = ?')
+            params.append(cantidad)
+        if ubicacion is not None:
+            updates.append('ubicacion = ?')
+            params.append(ubicacion)
+        if fecha_vencimiento is not None:
+            updates.append('fecha_vencimiento = ?')
+            params.append(fecha_vencimiento)
+        if lote is not None:
+            updates.append('lote = ?')
+            params.append(lote)
+
+        if not updates:
+            # nothing to update
+            return False
+
+        params.append(id_sustancia)
+        query = f"UPDATE sustancias SET {', '.join(updates)} WHERE id_sustancia = ?"
+        try:
+            self.cursor.execute(query, tuple(params))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al modificar sustancia: {e}")
+            return False
+
+    def eliminar_sustancia(self, id_sustancia):
+        """Elimina la sustancia indicada por id."""
+        try:
+            self.cursor.execute('DELETE FROM sustancias WHERE id_sustancia = ?', (id_sustancia,))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error al eliminar sustancia: {e}")
+            return False
+
+    def obtener_sustancias(self):
+        """Devuelve la lista de sustancias como diccionarios."""
+        try:
+            self.cursor.execute('SELECT id_sustancia, name, nivel_riesgo, cantidad, ubicacion, fecha_vencimiento, lote FROM sustancias')
+            rows = self.cursor.fetchall()
+            result = []
+            for r in rows:
+                result.append({
+                    'id_sustancia': r[0],
+                    'name': r[1],
+                    'nivel_riesgo': r[2],
+                    'cantidad': r[3],
+                    'ubicacion': r[4],
+                    'fecha_vencimiento': r[5],
+                    'lote': r[6]
+                })
+            return result
+        except Exception as e:
+            print(f"Error al obtener sustancias: {e}")
+            return []
 
     def crear_tabla_residuos(self):
         query = '''
@@ -164,10 +266,10 @@ class BDD:
                 nivel_solicitado INTEGER NOT NULL,
                 motivo TEXT NOT NULL,
                 fecha_solicitud TEXT NOT NULL,
-                capacitacion TEXT,
+                capacitacion_acc TEXT,
                 estado TEXT NOT NULL,
                 FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
-                FOREIGN KEY (capacitacion) REFERENCES usuarios(capacitacion)
+                FOREIGN KEY (capacitacion_acc) REFERENCES usuarios(capacitacion)
                 );
                 '''
 
@@ -266,7 +368,7 @@ class BDD:
             return False
     
     def obtenerUsuario(self, cedula):
-        query = "SELECT username, cedula, password, nacimiento, mail, role, nivel_autorizacion, id_capacitacion FROM usuarios WHERE cedula = ? LIMIT 1"
+        query = "SELECT username, cedula, password, nacimiento, mail, role, nivel_autorizacion, capacitacion FROM usuarios WHERE cedula = ? LIMIT 1"
         cur = self.cursor.execute(query, (cedula,))
         r = cur.fetchone()
         if not r:
@@ -280,7 +382,7 @@ class BDD:
             'mail': r[4],
             'role': r[5],
             'nivel_autorizacion': r[6],
-            'id_capacitacion': r[7]
+            'capacitacion': r[7]
         }
     
     def obtener_usuarios(self):
@@ -305,7 +407,7 @@ class BDD:
     
     def crear_solicitud_acceso(self, id_usuario, nivel_solicitado, motivo, fecha_solicitud, capacitacion, estado):
         query = '''
-            INSERT INTO solicitudes_acceso (id_usuario, nivel_solicitado, motivo, fecha_solicitud, capacitacion, estado)
+            INSERT INTO solicitudes_acceso (id_usuario, nivel_solicitado, motivo, fecha_solicitud, capacitacion_acc, estado)
             VALUES (?, ?, ?, ?, ?, ?);
             '''
         try:
@@ -318,7 +420,7 @@ class BDD:
         
     def obtener_solicitudes_acceso(self):
         query = '''
-            SELECT id_solicitud_a, username, nivel_solicitado, motivo, fecha_solicitud, capacitacion, estado
+            SELECT id_solicitud_a, username, nivel_solicitado, motivo, fecha_solicitud, capacitacion_acc, estado
             FROM solicitudes_acceso
             JOIN usuarios ON solicitudes_acceso.id_usuario = usuarios.id_usuario;
             '''
@@ -337,7 +439,7 @@ class BDD:
                 'nivel_solicitado': row[2],
                 'motivo': row[3],
                 'fecha_solicitud': row[4],
-                'capacitacion': row[5],
+                'capacitacion_acc': row[5],
                 'estado': row[6]
             })
         

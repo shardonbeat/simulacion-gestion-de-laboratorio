@@ -72,27 +72,17 @@ class SolicitudesAcceso(CTkFrame):
 			corner_radius=15
 		)
 		
-		columnas = ("ID", "Usuario", "Fecha Solicitud", "Estado", "Accion")
-
-		self.tablaSolicitudes_acceso = ttk.Treeview(
-			master=self,
-			columns=columnas,
-			show="headings"
-		)
-		self.tablaSolicitudes_acceso.heading("Usuario", text="Usuario")
-		self.tablaSolicitudes_acceso.heading("Fecha Solicitud", text="Fecha Solicitud")
-		self.tablaSolicitudes_acceso.heading("Estado", text="Estado")
-		self.tablaSolicitudes_acceso.heading("Accion", text="Accion")
-		self.tablaSolicitudes_acceso.column("Accion", width=100, anchor=CENTER)
-		self.tablaSolicitudes_acceso.place(
-			relx=0.5, rely=0.55,
-			relwidth=1, relheight=0.6,
-			anchor=CENTER
-		)
+		# Crear la tabla de solicitudes al cargar por primera vez
 		self.cargar_solicitudes()
 
 	def cargar_solicitudes(self):
-		self.tablaSolicitudes_acceso.destroy()
+		# Si la tabla ya existe, destruirla antes de recrearla. Si no existe (primera carga), evitar el error.
+		if hasattr(self, 'tablaSolicitudes_acceso') and self.tablaSolicitudes_acceso is not None:
+			try:
+				self.tablaSolicitudes_acceso.destroy()
+			except Exception:
+				# ignorar si la destrucción falla por cualquier razón
+				pass
 		columnas = ("ID", "Usuario", "Nivel Solicitado", "Descripción", "Fecha Solicitud", "Capacitacion", "Estado")
 		self.tablaSolicitudes_acceso = ttk.Treeview(
 			master=self,
@@ -106,6 +96,16 @@ class SolicitudesAcceso(CTkFrame):
 		self.tablaSolicitudes_acceso.heading("Fecha Solicitud", text="Fecha Solicitud")
 		self.tablaSolicitudes_acceso.heading("Capacitacion", text="Capacitacion")
 		self.tablaSolicitudes_acceso.heading("Estado", text="Estado")
+
+		# Asignar anchos y alineación para que el nivel sea visible
+		self.tablaSolicitudes_acceso.column("ID", width=50, anchor=CENTER)
+		self.tablaSolicitudes_acceso.column("Usuario", width=150, anchor=W)
+		self.tablaSolicitudes_acceso.column("Nivel Solicitado", width=120, anchor=CENTER)
+		self.tablaSolicitudes_acceso.column("Descripción", width=250, anchor=W)
+		self.tablaSolicitudes_acceso.column("Fecha Solicitud", width=120, anchor=CENTER)
+		self.tablaSolicitudes_acceso.column("Capacitacion", width=150, anchor=W)
+		self.tablaSolicitudes_acceso.column("Estado", width=100, anchor=CENTER)
+
 		self.tablaSolicitudes_acceso.place(relx=0.5, rely=0.4, relwidth=0.8, relheight=0.5, anchor="center")
 		
 		solicitudes = self.main.bdd.obtener_solicitudes_acceso()
@@ -128,10 +128,10 @@ class SolicitudesAcceso(CTkFrame):
 				if isinstance(solicitud, dict):
 					id_val = solicitud.get('id_solicitud_a') or solicitud.get('id_solicitud') or solicitud.get('id')
 					user = solicitud.get('username') or solicitud.get('user') or ""
-					nivel = solicitud.get('nivel_solicitud') or solicitud.get('nivel') or ""
+					nivel = solicitud.get('nivel_solicitado') or solicitud.get('nivel_solicitud') or solicitud.get('nivel') or ""
 					motivo = solicitud.get('motivo') or solicitud.get('descripcion') or ""
 					fecha = solicitud.get('fecha_solicitud') or solicitud.get('fecha') or ""
-					capacitacion = solicitud.get('capacitacion') or ""
+					capacitacion = solicitud.get('capacitacion_acc') or ""
 					estado = solicitud.get('estado') or ""
 				else:
 					# assume sequence-like
@@ -148,9 +148,10 @@ class SolicitudesAcceso(CTkFrame):
 						print(f"Fila de solicitud con formato inesperado, se omite: {e} -> {solicitud}")
 						continue
 
+				# Asegurar que todos los valores sean cadenas para evitar problemas al dibujar
 				self.tablaSolicitudes_acceso.insert(
 					"", "end",
-					values=(id_val, user, nivel, motivo, fecha, capacitacion, estado)
+					values=(str(id_val), str(user), str(nivel), str(motivo), str(fecha), str(capacitacion), str(estado))
 				)
 		except Exception as e:
 			# Fallback: show clear error message
@@ -186,7 +187,7 @@ class SolicitudesAcceso(CTkFrame):
 			return
 
 		nuevo_estado = "Aprobada" if estado_actual == "Pendiente" else "Pendiente"
-		self.main.bdd.actualizar_estado_solicitud(id_solicitud, nuevo_estado)
+		self.main.bdd.actualizar_estado_solicitud_acceso(id_solicitud, nuevo_estado)
 		self.cargar_solicitudes()
 		self.texto_exito.place(
 			relx=0.5, rely=0.75,

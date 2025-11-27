@@ -158,6 +158,13 @@ class RegistrarCapacitaciones(CTkFrame):
             relwidth=0.15, relheight=0.05
         )
 
+        self.texto_exito = CTkLabel(
+			master=self,
+			text="Capacitacion agregada exitosamente.",
+			text_color="#00ff00",
+			font=("Times New Roman", 12, "bold"),
+            )
+
         # Cargar usuarios en el combobox ahora que el widget existe
         self.obtener_usuarios()
         self.botonRegistrar = CTkButton(
@@ -180,6 +187,10 @@ class RegistrarCapacitaciones(CTkFrame):
         capacitacion = self.entryCapacitacion.get()
         fecha_vigencia = self.entryFecha.get()
         fecha_caducidad = self.entryFechaCaducidad.get()
+        usuario_nombre = self.seleccionar_usuario.get()
+
+        if usuario_nombre in self.mapa_usuarios:
+            id_usuario = self.mapa_usuarios[usuario_nombre]
 
         paso = True
         if not self.validar_fecha(fecha_vigencia, fecha_caducidad):
@@ -190,11 +201,16 @@ class RegistrarCapacitaciones(CTkFrame):
             return
         
         success = self.main.bdd.guardar_capacitacion(
-			capacitacion, fecha_vigencia, fecha_caducidad
+			capacitacion, id_usuario, fecha_vigencia, fecha_caducidad
 		)
 
         if success and paso:
             self.limpiar_campos()
+
+            self.texto_exito.place(
+            relx=0.35, rely=0.87,
+            relwidth=0.3, relheight=0.07
+        )
 
     def validar_fecha(self, fecha_vigencia, fecha_caducidad):
         try:
@@ -257,7 +273,6 @@ class RegistrarCapacitaciones(CTkFrame):
             print(f"Error al cargar usuarios: {e}")
         except Exception as e:
             print(f"Error al cargar usuarios: {e}")
-
         
     def limpiar_campos(self):
         self.entryCapacitacion.delete(0, 'end')
